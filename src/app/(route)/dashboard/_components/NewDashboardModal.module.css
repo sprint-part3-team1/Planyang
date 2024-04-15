@@ -33,7 +33,7 @@
   width: 100%;
   padding: 15px;
   border-radius: 6px;
-  border-color: var(--gray-gray_D9D9D9);
+  border-color: var(--gray_D9D9D9);
 
   &:focus {
     outline: none;
