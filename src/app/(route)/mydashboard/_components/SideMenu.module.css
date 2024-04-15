@@ -1,0 +1,76 @@
+.container {
+  top: 0;
+  position: fixed;
+  width: 30rem;
+  height: 100%;
+  padding: 2rem 1.2rem;
+  background-color: var(--white_FFFFFF);
+  border-right: 0.2rem solid var(--gray_D9D9D9);
+  transition: width 0.3s ease;
+  white-space: nowrap;
+}
+
+.logoFrame {
+  width: 100%;
+  margin-bottom: 4.4rem;
+}
+
+.titleWrapper {
+  padding: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--gray_787486);
+  font-size: var(--font12);
+  font-weight: 700;
+}
+
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.dashList {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--gray_787486);
+  font-size: var(--font18);
+}
+
+@media (max-width: 1023px) {
+  .container {
+    width: 16rem;
+  }
+  .dashList {
+    font-size: var(--font16);
+  }
+  #crown {
+    width: 1.5rem;
+    height: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    text-align: center;
+    width: 6.7rem;
+  }
+  .dashList {
+    display: block;
+  }
+  #title,
+  #logoTitle,
+  #dashBoardName,
+  #crown {
+    display: none;
+  }
+
+  #vector {
+    width: 1.7rem;
+  }
+}
