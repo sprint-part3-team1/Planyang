@@ -4,7 +4,7 @@ import {NumberIconProps} from "@/app/_types/NumberIconProps";
 
 const NumberIcon = ({count} : NumberIconProps) => {
     return(
-        <div className={styles.iconWrapper}>{`+${count}`}</div>
+        <div className={styles.iconWrapper}>{`+${Math.min(count, 99)}`}</div>
     )
 }
 
