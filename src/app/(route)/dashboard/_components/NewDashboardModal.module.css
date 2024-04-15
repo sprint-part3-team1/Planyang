@@ -6,6 +6,10 @@
   background-color: white;
   border-radius: 8px;
   padding: 28px;
+
+  @media (max-width: 480px) {
+    width: 32.7rem;
+  }
 }
 
 #title {
