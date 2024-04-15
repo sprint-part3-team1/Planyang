@@ -3,25 +3,32 @@ import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
 
-interface UserDataPayload {
+interface RegisterPayload {
   email: string;
   nickname: string;
   password: string;
 }
 
-interface UserDataState {
-  data: UserDataPayload | null;
+interface RegisterStateType {
+  data: {
+    id: number;
+    email: string;
+    nickname: string;
+    profileImageUrl: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 }
 
-const initialState: UserDataState = {
+const initialState: RegisterStateType = {
   data: null,
 };
 
 const asynchFetchSignUp = createAsyncThunk(
-  'userDataSlice/asynchFetchSignup',
+  'registerSlice/asynchFetchSignup',
 
-  async (userData: UserDataPayload) => {
-    const { email, nickname, password } = userData;
+  async (registerData: RegisterPayload) => {
+    const { email, nickname, password } = registerData;
 
     const response = await axios.post(
       'https://sp-taskify-api.vercel.app/4-1/users',
@@ -35,25 +42,24 @@ const asynchFetchSignUp = createAsyncThunk(
   },
 );
 
-const userDataSlice = createSlice({
-  name: 'userDataSlice',
+const registerSlice = createSlice({
+  name: 'registerSlice',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
       asynchFetchSignUp.fulfilled,
-      (state, action: PayloadAction<UserDataPayload>) => {
+      (state, action: PayloadAction<RegisterStateType['data']>) => {
         state.data = action.payload;
       },
     );
   },
 });
 
-export default userDataSlice.reducer;
+export default registerSlice.reducer;
 
-export const userActions = {
-  ...userDataSlice.actions,
+export const registerActions = {
+  ...registerSlice.actions,
   asynchFetchSignUp,
 };
-
-export const userData = (state: RootState) => state.userData.data;
+export const registerData = (state: RootState) => state.regsiterData.data;
