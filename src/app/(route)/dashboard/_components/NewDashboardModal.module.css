@@ -1,0 +1,70 @@
+.container {
+  width: 540px;
+  height: 334px;
+  flex-shrink: 0;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 8px;
+  padding: 28px;
+}
+
+#title {
+  color: #333236;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 4px;
+  margin-bottom: 32px;
+}
+
+#dashBaordNameinputTitle {
+  color: #333236;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 10px;
+}
+
+.dashboardNameInput {
+  width: 100%;
+  padding: 15px;
+  border-radius: 6px;
+  border-color: #d9d9d9;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.colorEclipseContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 29px 0px;
+}
+
+.colorEclipse {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+}
+
+.green {
+  background-color: #7ac555;
+}
+.purple {
+  background-color: #760dde;
+}
+.orange {
+  background-color: #ffa500;
+}
+.blue {
+  background-color: #76a5ea;
+}
+.pink {
+  background-color: #e876ea;
+}
