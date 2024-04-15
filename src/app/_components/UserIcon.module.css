@@ -1,0 +1,15 @@
+.iconWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border: 2px solid var(--white_FFFFFF);
+    border-radius: 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: var(--font16);
+    font-weight: 600;
+    color: var(--white_FFFFFF);
+}
