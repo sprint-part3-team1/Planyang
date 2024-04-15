@@ -1,4 +1,4 @@
 export default function Home() {
-  const a: String = 'bb';
+  const a: string = 'bb';
   return <div>{a}</div>;
 }
