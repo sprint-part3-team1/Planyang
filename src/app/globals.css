@@ -1,3 +1,10 @@
+const breakpoints = {
+  mobile: '480px',
+  tablet: '768px',
+  desktop: '1024px',
+  largeDesktop: '1200px',
+};
+
 :root {
   /* Black Palette */
   --black_000000: #000000;
@@ -50,6 +57,10 @@
   /* ==========FONT WEIGHT========== */
   --bold: 700;
   --regular: 400;
+
+  /* ==========BREAK POINTS==========*/
+  --breakpoints-mobile: 480px;
+  --breakpoints-tablet: 768px;
 }
 
 * {
