@@ -21,7 +21,7 @@
   justify-content: space-between;
   align-items: center;
   color: var(--gray_787486);
-  font-size: 1.2rem;
+  font-size: var(--font12);
   font-weight: 700;
 }
 
@@ -39,7 +39,7 @@
   transition: all 0.3s ease;
   text-decoration: none;
   color: var(--gray_787486);
-  font-size: 1.8rem;
+  font-size: var(--font18);
 }
 
 @media (max-width: 1023px) {
@@ -47,7 +47,7 @@
     width: 16rem;
   }
   .dashList {
-    font-size: 1.6rem;
+    font-size: var(--font16);
   }
   #crown {
     width: 1.5rem;
