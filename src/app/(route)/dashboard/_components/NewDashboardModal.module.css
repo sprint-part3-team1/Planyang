@@ -9,20 +9,20 @@
 }
 
 #title {
-  color: #333236;
+  color: var(--black-black_333236);
   font-family: Pretendard;
-  font-size: 24px;
+  font-size: var(--font24);
   font-style: normal;
-  font-weight: 700;
+  font-weight: var(--bold);
   line-height: normal;
   margin-top: 4px;
   margin-bottom: 32px;
 }
 
 #dashBaordNameinputTitle {
-  color: #333236;
+  color: var(--black_333236);
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: var(--font18);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -33,7 +33,7 @@
   width: 100%;
   padding: 15px;
   border-radius: 6px;
-  border-color: #d9d9d9;
+  border-color: var(--gray-gray_D9D9D9);
 
   &:focus {
     outline: none;
@@ -48,23 +48,29 @@
 }
 
 .colorEclipse {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  position: relative;
 }
 
 .green {
-  background-color: #7ac555;
+  background-color: var(--green_7AC555);
 }
 .purple {
-  background-color: #760dde;
+  background-color: var(--purple_760DDE);
 }
 .orange {
-  background-color: #ffa500;
+  background-color: var(--orange_FFA500);
 }
 .blue {
-  background-color: #76a5ea;
+  background-color: var(--blue_76A6EA);
 }
 .pink {
-  background-color: #e876ea;
+  background-color: var(--pink_E876EA);
 }
