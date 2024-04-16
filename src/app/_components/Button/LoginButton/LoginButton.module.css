@@ -1,0 +1,35 @@
+.loginButtonIsActive,
+.loginButtonNotActive {
+  display: flex;
+  width: 52rem;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  border-radius: 0.8rem;
+  color: var(--white_FFFFFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+  border: none;
+  cursor: pointer;
+}
+
+.loginButtonIsActive {
+  background: var(--violet_5534DA);
+}
+
+.loginButtonNotActive {
+  background: var(--gray_9FA6B2);
+}
+
+@media (max-width: 767px) {
+  .loginButtonIsActive,
+  .loginButtonNotActive {
+    width: 35.1rem;
+  }
+}
