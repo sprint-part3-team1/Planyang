@@ -1,12 +1,11 @@
 import Image from 'next/image';
-import styles from './AddColumnButton.module.css';
+import styles from './AddTodoButton.module.css';
 
-const AddColumnButton = () => {
+const AddTodoButton = () => {
   const COLORED_VECTOR_ICON = '/assets/icons/coloredVector.svg';
   return (
-    <button type="button" className={styles.addColumnButton}>
+    <button type="button" className={styles.addTodoButton}>
       <div className={styles.content}>
-        <span>새로운 컬럼 추가하기</span>
         <div className={styles.vectorBox}>
           <Image
             width={16}
@@ -21,4 +20,4 @@ const AddColumnButton = () => {
   );
 };
 
-export default AddColumnButton;
+export default AddTodoButton;
