@@ -39,7 +39,7 @@ const SideMenu = () => {
       </div>
 
       <div className={styles.listWrapper}>
-        {/* 반복문으로 대시보드 띄워주기*/}
+        {/* 반복문으로 대시보드 띄워주기 */}
         <a className={styles.dashList} href="/">
           <div>
             <Image
