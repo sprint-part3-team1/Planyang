@@ -50,6 +50,10 @@
   /* ==========FONT WEIGHT========== */
   --bold: 700;
   --regular: 400;
+
+  /* ==========BREAK POINTS==========*/
+  --breakpoints-mobile: 767px;
+  --breakpoints-tablet: 1023px;
 }
 
 * {

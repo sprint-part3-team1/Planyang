@@ -1,6 +1,4 @@
-'use client';
-
-import React from 'react';
+import Image from 'next/image';
 import logoImg from '@/../public/assets/images/logoImg.svg';
 import Image from 'next/image';
 import logoTitle from '@/../public/assets/images/logoTitle.svg';
