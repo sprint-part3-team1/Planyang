@@ -1,28 +1,25 @@
 import React from 'react';
-import Input from '@/app/_components/Input';
 import ModalContainer from '@/app/_components/modal/ModalContainer';
 import { ModalPropsType } from '@/app/_types/modalProps';
+import styles from './DeleteColumnCheckModal.module.css';
 
-const NewColumnModal = ({
+const DeleteColumnCheckModal = ({
   openModalType,
   setOpenModalType,
 }: ModalPropsType) => {
   return (
     <ModalContainer
-      title="새 컬럼 생성"
-      checkString="생성"
+      title=""
+      checkString="삭제"
       cancelString="취소"
       openModalType={openModalType}
       setOpenModalType={setOpenModalType}
       modalWidth={54}
+      modalHeight={24}
     >
-      <Input
-        inputName="이름"
-        inputType="text"
-        inputWidth={484}
-        errorState={false}
-      />
+      <div className={styles.deleteText}>컬럼의 모든 카드가 삭제됩니다.</div>
     </ModalContainer>
   );
 };
-export default NewColumnModal;
+
+export default DeleteColumnCheckModal;
