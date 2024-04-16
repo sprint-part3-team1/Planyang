@@ -39,6 +39,10 @@ export default function Home() {
       }),
     );
   };
+
+  const getUserInfo = () => {
+    dispatch(registerActions.asynchFetchgetUserInfo());
+  };
   return (
     <div>
       <button
@@ -60,6 +64,9 @@ export default function Home() {
         onClick={() => handleChangePassword('AS123456', 'AS1234567')}
       >
         비밀번호 변경
+      </button>
+      <button type="button" onClick={() => getUserInfo()}>
+        회원정보확인
       </button>
     </div>
   );

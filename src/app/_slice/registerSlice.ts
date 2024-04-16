@@ -73,6 +73,25 @@ const asynchFetchChangePassword = createAsyncThunk(
   },
 );
 
+const asynchFetchgetUserInfo = createAsyncThunk(
+  'registerSlice/asynchFetchgetUserInfo',
+
+  async () => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await axios.get(
+      'https://sp-taskify-api.vercel.app/4-1/users/me',
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    return response.data;
+  },
+);
+
 const registerSlice = createSlice({
   name: 'registerSlice',
   initialState,
@@ -89,6 +108,10 @@ const registerSlice = createSlice({
       asynchFetchChangePassword.fulfilled,
       (state, action: PayloadAction<ChangePasswordType>) => {},
     );
+
+    builder.addCase(asynchFetchgetUserInfo.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
   },
 });
 
@@ -98,5 +121,6 @@ export const registerActions = {
   ...registerSlice.actions,
   asynchFetchChangePassword,
   asynchFetchSignUp,
+  asynchFetchgetUserInfo,
 };
 export const registerData = (state: RootState) => state.regsiterData.data;
