@@ -1,0 +1,17 @@
+.container {
+  width: 54rem;
+  padding: 2.8rem;
+  background-color: var(--white_FFFFFF);
+  border-radius: 0.8rem;
+}
+
+#title {
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 4px;
+  margin-bottom: 32px;
+}
