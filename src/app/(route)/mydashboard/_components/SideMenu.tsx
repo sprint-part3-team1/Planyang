@@ -1,10 +1,10 @@
 import Image from 'next/image';
+import styles from './SideMenu.module.css';
 import logoImg from '@/../public/assets/images/logoImg.svg';
 import logoTitle from '@/../public/assets/images/logoTitle.svg';
 import vector from '@/../public/assets/icons/vector.svg';
 import profileEllipse from '@/../public/assets/icons/profileEllipse.svg';
 import crown from '@/../public/assets/icons/crown.svg';
-import styles from './SideMenu.module.css';
 
 const SideMenu = () => {
   return (
