@@ -30,21 +30,36 @@ export default function Home() {
       }),
     );
   };
+
+  const handleChangePassword = (password: string, newPassword: string) => {
+    dispatch(
+      registerActions.asynchFetchChangePassword({
+        password,
+        newPassword,
+      }),
+    );
+  };
   return (
     <div>
       <button
         type="button"
         onClick={() =>
-          handleSignUp('koe123123123@naver.com', '플래냥테스트계정', 'AS123456')
+          handleSignUp('ko1231235@naver.com', '플래냥테스트계정', 'AS123456')
         }
       >
         회원가입
       </button>
       <button
         type="button"
-        onClick={() => handleSignIn('koe123123123@naver.com', 'AS123456')}
+        onClick={() => handleSignIn('ko1231235@naver.com', 'AS1234567')}
       >
         로그인
+      </button>
+      <button
+        type="button"
+        onClick={() => handleChangePassword('AS123456', 'AS1234567')}
+      >
+        비밀번호 변경
       </button>
     </div>
   );

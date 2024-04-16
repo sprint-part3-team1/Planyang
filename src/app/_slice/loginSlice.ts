@@ -39,6 +39,8 @@ const asynchFetchSignIn = createAsyncThunk(
         password,
       },
     );
+    const aceessToken = response.data.accessToken;
+    localStorage.setItem('accessToken', aceessToken);
     return response.data;
   },
 );
