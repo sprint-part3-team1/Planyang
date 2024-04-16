@@ -1,4 +1,5 @@
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
+import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
 import ConfirmButton from '@/app/_components/Button/ConfirmButton/ConfirmButton';
@@ -15,8 +16,10 @@ export default function Main() {
       <AddColumnButton /> */}
       {/* <AddTodoButton />
       <DeleteDashBoardButton /> */}
-      &nbsp;
+      <br />
       <ArrowButton />
+      <br />
+      <AddDashBoardButton />
     </>
   );
 }
