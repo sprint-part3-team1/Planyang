@@ -1,10 +1,15 @@
 .outerContainer {
+  width: 54rem;
   padding: 2.8rem;
   background-color: var(--white_FFFFFF);
   border-radius: 0.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: 767px) {
+    width: 32.7rem;
+  }
 }
 
 #title {
@@ -32,18 +37,31 @@
   flex-direction: row;
   jusify-content: space-between;
   margin-top: 2.8rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
 }
 
 #deleteText {
   color: var(--gray_9FA6B2, #9fa6b2);
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: var(--font14);
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   text-decoration-line: underline;
   margin-top: auto;
   cursor: pointer;
+}
+
+.deleteButton {
+  border: none;
+  background-color: var(--white_FFFFFF);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .button {

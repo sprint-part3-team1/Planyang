@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '@/app/_components/Input';
-import ModalContainer from '@/app/_components/modal/ModalContainer';
+import ModalContainer from '@/app/(route)/modals/ModalContainer';
 import { ModalPropsType } from '@/app/_types/modalProps';
 
 const ColumnManageModal = ({
@@ -14,7 +14,6 @@ const ColumnManageModal = ({
       cancelString="취소"
       openModalType={openModalType}
       setOpenModalType={setOpenModalType}
-      modalWidth={54}
       deleteMode
     >
       <Input

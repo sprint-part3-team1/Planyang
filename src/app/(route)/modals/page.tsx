@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import modalTypes from '@/app/constants/modalTypes';
-import ModalPortal from '@/app/_components/modal/ModalPortal';
+import ModalPortal from '@/app/(route)/modals/ModalPortal';
 
 const ModalPage = () => {
   const [openModalType, setOpenModalType] = useState('');

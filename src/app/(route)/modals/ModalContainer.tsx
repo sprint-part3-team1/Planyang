@@ -1,16 +1,14 @@
 import { ModalContainerPropsType } from '@/app/_types/modalProps';
-import styles from './ModalContainer.module.css';
 import modalTypes from '@/app/constants/modalTypes';
+import styles from './ModalContainer.module.css';
 
 const ModalContainer = ({
   title,
-  openModalType,
   setOpenModalType,
   checkString,
   cancelString,
   children,
   deleteMode,
-  modalWidth,
   modalHeight,
 }: ModalContainerPropsType) => {
   const onCancelButtonHandler = () => {
@@ -22,7 +20,6 @@ const ModalContainer = ({
   };
 
   const customSizes = {
-    width: modalWidth ? `${modalWidth}rem` : 'auto',
     height: modalHeight ? `${modalHeight}rem` : 'auto',
   };
 
@@ -32,9 +29,13 @@ const ModalContainer = ({
       {children}
       <div className={styles.deleteModeContainer}>
         {deleteMode && (
-          <p id={styles.deleteText} onClick={deleteButtonHandler}>
-            삭제모드
-          </p>
+          <button
+            type="button"
+            className={styles.deleteButton}
+            onClick={deleteButtonHandler}
+          >
+            <p id={styles.deleteText}>삭제하기</p>
+          </button>
         )}
         <div className={styles.buttonContainer}>
           <button

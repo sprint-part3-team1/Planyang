@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalContainer from '@/app/_components/modal/ModalContainer';
+import ModalContainer from '@/app/(route)/modals/ModalContainer';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import styles from './DeleteColumnCheckModal.module.css';
 
@@ -14,7 +14,6 @@ const DeleteColumnCheckModal = ({
       cancelString="취소"
       openModalType={openModalType}
       setOpenModalType={setOpenModalType}
-      modalWidth={54}
       modalHeight={24}
     >
       <div className={styles.deleteText}>컬럼의 모든 카드가 삭제됩니다.</div>
