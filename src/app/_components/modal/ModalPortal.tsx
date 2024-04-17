@@ -7,6 +7,7 @@ import NewColumnModal from '@/app/_components/modal/NewColumnModal';
 import DeleteColumnCheckModal from '@/app/_components/modal/DeleteColumnCheckModal';
 import NewDashboardModal from './NewDashboardModal';
 import ModifyTaskModal from './ModifyTaskModal';
+import InviteByEmailModal from './InviteByEmailModal';
 
 import styles from './ModalPortal.module.css';
 
@@ -54,6 +55,14 @@ const ModalPortal = ({
     case modalTypes.modifyTask:
       modalContent = (
         <ModifyTaskModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case modalTypes.inviteByEmail:
+      modalContent = (
+        <InviteByEmailModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
         />

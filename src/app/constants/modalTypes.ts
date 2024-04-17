@@ -4,6 +4,7 @@ const modalTypes = {
   deleteColumnCheck: 'deleteColumnCheck',
   newDashboard: 'newDashboard',
   modifyTask: 'modifyTask',
+  inviteByEmail: 'inviteByEmail',
 };
 
 export default modalTypes;
