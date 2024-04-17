@@ -6,5 +6,4 @@ const modalTypes = {
   modifyTask: 'modifyTask',
   inviteByEmail: 'inviteByEmail',
 };
-
 export default modalTypes;
