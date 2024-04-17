@@ -37,21 +37,33 @@ const ModalContainer = ({
             <p id={styles.deleteText}>삭제하기</p>
           </button>
         )}
-        <div className={styles.buttonContainer}>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.cancleButton}`}
-            onClick={onCancelButtonHandler}
-          >
-            {cancelString}
-          </button>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.checkButton}`}
-          >
-            {checkString}
-          </button>
-        </div>
+        {cancelString === '' ? (
+          <div className={styles.buttonContainer}>
+            <button
+              type="button"
+              className={`${styles.button} ${styles.checkButton}`}
+              onClick={onCancelButtonHandler}
+            >
+              {checkString}
+            </button>
+          </div>
+        ) : (
+          <div className={styles.buttonContainer}>
+            <button
+              type="button"
+              className={`${styles.button} ${styles.cancleButton}`}
+              onClick={onCancelButtonHandler}
+            >
+              {cancelString}
+            </button>
+            <button
+              type="button"
+              className={`${styles.button} ${styles.checkButton}`}
+            >
+              {checkString}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
