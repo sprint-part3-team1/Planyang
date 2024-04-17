@@ -1,0 +1,48 @@
+.addTodoButton {
+  width: 31.4rem;
+  height: 4rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid var(--gray_D9D9D9);
+  background: var(--white_FFFFFF);
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vectorBox {
+  display: flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0.3rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 0.4rem;
+  background: var(--violet_8);
+}
+
+@media (max-width: 1023px) {
+  .addTodoButton {
+    width: 54.4rem;
+    height: 4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .addTodoButton {
+    width: 28.4rem;
+    height: 3.2rem;
+  }
+
+  .vectorBox {
+    width: 2rem;
+    height: 2rem;
+  }
+  .coloredVector {
+    width: 1.4545rem;
+    height: 1.4545rem;
+  }
+}

@@ -4,5 +4,5 @@ export interface InputProps {
   readonly inputWidth: number;
   readonly errorMessage?: string | null;
 
-  errorState: boolean;
+  errorState?: boolean;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalContainer from '@/app/(route)/modals/ModalContainer';
+import ModalContainer from '@/app/_components/modal/ModalContainer';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import styles from './DeleteColumnCheckModal.module.css';
 

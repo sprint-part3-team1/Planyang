@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { InputProps } from '@/app/_types/InputProps';
-import styles from './Input.module.css';
 import Image from 'next/image';
+import styles from './Input.module.css';
 
 const Input = ({
   inputName,

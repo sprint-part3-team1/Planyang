@@ -1,20 +1,19 @@
 import React from 'react';
-import Input from '@/app/_components/Input';
-import ModalContainer from '@/app/(route)/modals/ModalContainer';
+import ModalContainer from '@/app/_components/modal/ModalContainer';
 import { ModalPropsType } from '@/app/_types/modalProps';
+import Input from '@/app/_components/Input';
 
-const ColumnManageModal = ({
+const NewColumnModal = ({
   openModalType,
   setOpenModalType,
 }: ModalPropsType) => {
   return (
     <ModalContainer
-      title="컬럼 관리"
-      checkString="변경"
+      title="새 컬럼 생성"
+      checkString="생성"
       cancelString="취소"
       openModalType={openModalType}
       setOpenModalType={setOpenModalType}
-      deleteMode
     >
       <Input
         inputName="이름"
@@ -25,4 +24,4 @@ const ColumnManageModal = ({
     </ModalContainer>
   );
 };
-export default ColumnManageModal;
+export default NewColumnModal;

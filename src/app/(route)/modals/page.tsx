@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import modalTypes from '@/app/constants/modalTypes';
-import ModalPortal from '@/app/(route)/modals/ModalPortal';
+import ModalPortal from '@/app/_components/modal/ModalPortal';
 
 const ModalPage = () => {
   const [openModalType, setOpenModalType] = useState('');
@@ -20,6 +20,18 @@ const ModalPage = () => {
         type="button"
       >
         컬럼 관리
+      </button>
+      <button
+        onClick={() => setOpenModalType(modalTypes.newDashboard)}
+        type="button"
+      >
+        새로운 대시보드
+      </button>
+      <button
+        onClick={() => setOpenModalType(modalTypes.modifyTask)}
+        type="button"
+      >
+        할 일 수정
       </button>
       <ModalPortal
         openModalType={openModalType}
