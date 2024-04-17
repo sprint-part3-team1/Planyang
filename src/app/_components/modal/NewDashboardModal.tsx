@@ -1,21 +1,27 @@
 'use client';
 
 import React, { useState } from 'react';
-import CheckCancelButton from '@/app/_components/modal/CheckCancelButton';
-import { ModalPropsType } from '@/app/_types/commonTypes';
 import Input from '@/app/_components/Input';
 import Image from 'next/image';
+import { ModalPropsType } from '@/app/_types/modalProps';
+import ModalContainer from './ModalContainer';
 import styles from './NewDashboardModal.module.css';
 
-function NewDashboardModal({ openModal, setOpenModal }: ModalPropsType) {
-  const title = '새로운 대시보드';
+function NewDashboardModal({
+  openModalType,
+  setOpenModalType,
+}: ModalPropsType) {
   const colors = ['green', 'purple', 'orange', 'blue', 'pink'];
   const [dashboardColor, setDashboardColor] = useState<string>('green');
 
   return (
-    <div className={styles.container}>
-      <p id={styles.title}>{title}</p>
-      {/* <p id={styles.dashBaordNameinputTitle}>대시보드 이름</p> */}
+    <ModalContainer
+      title="새로운 대시보드"
+      checkString="생성"
+      cancelString="취소"
+      openModalType={openModalType}
+      setOpenModalType={setOpenModalType}
+    >
       <Input inputName="대시보드 이름" inputType="text" inputWidth={484} />
       <div className={styles.colorEclipseContainer}>
         {colors.map((color) => {
@@ -33,8 +39,7 @@ function NewDashboardModal({ openModal, setOpenModal }: ModalPropsType) {
           );
         })}
       </div>
-      <CheckCancelButton openModal={openModal} setOpenModal={setOpenModal} />
-    </div>
+    </ModalContainer>
   );
 }
 export default NewDashboardModal;

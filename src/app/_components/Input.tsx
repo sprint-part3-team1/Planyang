@@ -19,8 +19,6 @@ const Input = ({
     width: inputWidth + 'px',
   };
 
-  const [visibilityIcon, setVisibilityIcon] = useState(true);
-
   const onClickIcon = () => {
     setVisibilityIcon(!visibilityIcon);
   };
@@ -34,6 +32,8 @@ const Input = ({
       return 'text';
     }
   };
+
+  const [visibilityIcon, setVisibilityIcon] = useState(true);
 
   return (
     <div className={styles.entireWrapper}>

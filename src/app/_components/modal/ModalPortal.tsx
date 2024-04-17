@@ -1,19 +1,79 @@
-'use client';
-
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { ModalPortalPropsType } from '@/app/_types/modalProps';
+import modalTypes from '@/app/constants/modalTypes';
+import ColumnManageModal from '@/app/_components/modal/ColumnManageModal';
+import NewColumnModal from '@/app/_components/modal/NewColumnModal';
+import DeleteColumnCheckModal from '@/app/_components/modal/DeleteColumnCheckModal';
+import NewDashboardModal from './NewDashboardModal';
+import ModifyTaskModal from './ModifyTaskModal';
+import InviteByEmailModal from './InviteByEmailModal';
+
 import styles from './ModalPortal.module.css';
 
-type ModalPropsType = {
-  openModal: boolean;
-  children: React.ReactNode;
-};
+const ModalPortal = ({
+  openModalType,
+  setOpenModalType,
+}: ModalPortalPropsType) => {
+  if (openModalType === '') return 'null';
 
-const ModalPortal = ({ openModal, children }: ModalPropsType) => {
-  if (!openModal) return null;
+  let modalContent: React.ReactNode = null;
+
+  switch (openModalType) {
+    case modalTypes.newColumn:
+      modalContent = (
+        <NewColumnModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case modalTypes.columnManagement:
+      modalContent = (
+        <ColumnManageModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case modalTypes.deleteColumnCheck:
+      modalContent = (
+        <DeleteColumnCheckModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case modalTypes.newDashboard:
+      modalContent = (
+        <NewDashboardModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case modalTypes.modifyTask:
+      modalContent = (
+        <ModifyTaskModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case modalTypes.inviteByEmail:
+      modalContent = (
+        <InviteByEmailModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    default:
+      break;
+  }
 
   return createPortal(
-    <div className={styles.modalBackground}>{children}</div>,
+    <div className={styles.modalBackground}>{modalContent}</div>,
     document.getElementById('modal-root') as HTMLElement,
   );
 };
