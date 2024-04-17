@@ -5,6 +5,7 @@ const modalTypes = {
   newDashboard: 'newDashboard',
   modifyTask: 'modifyTask',
   inviteByEmail: 'inviteByEmail',
+  wrongPassword: 'wrongPassword',
 };
 
 export default modalTypes;

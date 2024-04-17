@@ -39,6 +39,12 @@ const ModalPage = () => {
       >
         이메일로 초대하기
       </button>
+      <button
+        onClick={() => setOpenModalType(modalTypes.wrongPassword)}
+        type="button"
+      >
+        현재 비밀번호 틀림
+      </button>
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
