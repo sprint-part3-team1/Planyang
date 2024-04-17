@@ -21,3 +21,10 @@ export type ModalPortalPropsType = {
   openModalType: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
 };
+
+export type ModifyTaskModalPropsType = {
+  title: string;
+  placeholder?: string;
+  essential?: boolean;
+  type?: string;
+};
