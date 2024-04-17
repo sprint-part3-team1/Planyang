@@ -15,74 +15,10 @@
 #title {
   color: var(--black_333236);
   font-family: Pretendard;
-  font-size: 2.4rem;
+  font-size: var(--font24);
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   margin-top: 0.4rem;
   margin-bottom: 3.2rem;
-}
-
-.buttonContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: 1.2rem;
-  margin-left: auto;
-}
-
-.deleteModeContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  jusify-content: space-between;
-  margin-top: 2.8rem;
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-    gap: 1.6rem;
-  }
-}
-
-#deleteText {
-  color: var(--gray_9FA6B2, #9fa6b2);
-  font-family: Pretendard;
-  font-size: var(--font14);
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-decoration-line: underline;
-  margin-top: auto;
-  cursor: pointer;
-}
-
-.deleteButton {
-  border: none;
-  background-color: var(--white_FFFFFF);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.button {
-  padding: 1.4rem 4.6rem;
-  border-radius: 0.8rem;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  cursor: pointer;
-}
-.cancleButton {
-  border: 1px solid var(--gray_D9D9D9);
-  background: var(--white_FFFFFF);
-  color: var(--gray_787486);
-}
-.checkButton {
-  border: none;
-  border-radius: 0.8rem;
-  background-color: var(--violet_5534DA);
-  color: var(--white_FFFFFF);
 }
