@@ -33,6 +33,12 @@ const ModalPage = () => {
       >
         할 일 수정
       </button>
+      <button
+        onClick={() => setOpenModalType(modalTypes.inviteByEmail)}
+        type="button"
+      >
+        이메일로 초대하기
+      </button>
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
