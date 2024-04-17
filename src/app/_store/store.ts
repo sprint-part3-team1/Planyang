@@ -4,6 +4,7 @@ import registerDataReducer from '../_slice/registerSlice';
 import loginDataReducer from '../_slice/loginSlice';
 import columnDataReducer from '../_slice/columnSlice';
 import dashBoardReducer from '../_slice/dashBoardSlice';
+import memberReducer from '../_slice/memberSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     loginData: loginDataReducer,
     columnData: columnDataReducer,
     dashBoardData: dashBoardReducer,
+    memberData: memberReducer,
   },
 });
 
