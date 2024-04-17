@@ -1,0 +1,104 @@
+.calendarWrapper {
+    width: 40rem;
+    border: 0.1rem solid var(--gray_D9D9D9);
+    border-radius: 1.5rem;
+    background-color: var(--white_FFFFFF);
+    box-shadow: 0 0.5rem 0.7rem 0.3rem var(--gray_EEEEEE);
+}
+
+.topMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 4.5rem;
+    padding: 3rem 5rem 1rem 5rem;
+}
+
+.leftArrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background-image: url('/assets/icons/arrow.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    rotate: 180deg;
+}
+
+.rightArrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    background-image: url('/assets/icons/arrow.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.title {
+    font-size: var(--font20);
+    font-weight: var(--bold);
+}
+
+.dayList {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    padding: 2rem;
+    column-gap: 25px;
+}
+
+.holiday{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--red_D6173A);
+    border-radius: 3rem;
+    background-color: transparent;
+    height: 3rem;
+    width: 3rem;
+
+    font-size: var(--font12);
+    font-weight: var(--regular);
+}
+
+.weekday {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--black_000000);
+    border-radius: 3rem;
+    background-color: transparent;
+    height: 3rem;
+    width: 3rem;
+
+    font-size: var(--font12);
+    font-weight: var(--regular);
+}
+
+.lastMonthDay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--gray_EEEEEE);
+    border-radius: 3rem;
+    background-color: transparent;
+    height: 3rem;
+    width: 3rem;
+
+    font-size: var(--font12);
+    font-weight: var(--regular);
+}
+
+.usableDate {
+    &:hover {
+        background-color: var(--gray_D9D9D9);
+    }
+}
