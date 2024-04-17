@@ -1,4 +1,4 @@
-const modalTypes = {
+const MODAL_TYPES = {
   newColumn: 'newColumn',
   columnManagement: 'columnManagement',
   deleteColumnCheck: 'deleteColumnCheck',
@@ -7,5 +7,4 @@ const modalTypes = {
   inviteByEmail: 'inviteByEmail',
   wrongPassword: 'wrongPassword',
 };
-
-export default modalTypes;
+export default MODAL_TYPES;

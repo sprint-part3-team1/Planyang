@@ -1,13 +1,13 @@
 .colorEclipseContainer {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  margin: 29px 0px;
+  gap: 1rem;
+  margin: 3rem 0rem;
 }
 
 .colorEclipse {
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 999px;
   display: flex;
   justify-content: center;
