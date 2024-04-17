@@ -8,6 +8,7 @@ const CheckCancleButton = ({
   checkText,
   cancelText,
   setOpenModalType,
+  checkButtonHandler,
 }: CheckCancelButtonPropType) => {
   const cancelButtonText = cancelText ?? '취소';
   const onCancelButtonHandler = () => {
@@ -28,18 +29,8 @@ const CheckCancleButton = ({
           <p id={styles.deleteText}>삭제하기</p>
         </button>
       )}
-      {cancelButtonText === '' ? (
-        <div className={styles.buttonContainer}>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.checkButton}`}
-            onClick={onCancelButtonHandler}
-          >
-            {checkText}
-          </button>
-        </div>
-      ) : (
-        <div className={styles.buttonContainer}>
+      <div className={styles.buttonContainer}>
+        {cancelButtonText === '' || (
           <button
             type="button"
             className={`${styles.button} ${styles.cancleButton}`}
@@ -47,14 +38,15 @@ const CheckCancleButton = ({
           >
             {cancelButtonText}
           </button>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.checkButton}`}
-          >
-            {checkText}
-          </button>
-        </div>
-      )}
+        )}
+        <button
+          type="button"
+          className={`${styles.button} ${styles.checkButton}`}
+          onClick={checkButtonHandler}
+        >
+          {checkText}
+        </button>
+      </div>
     </div>
   );
 };
