@@ -1,0 +1,24 @@
+.outerContainer {
+  width: 54rem;
+  padding: 2.8rem;
+  background-color: var(--white_FFFFFF);
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (max-width: 767px) {
+    width: 32.7rem;
+  }
+}
+
+#title {
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font24);
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 0.4rem;
+  margin-bottom: 3.2rem;
+}

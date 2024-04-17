@@ -1,0 +1,28 @@
+GET https://sp-taskify-api.vercel.app/4-1/dashboards?navigationMethod=pagination&page=1&size=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY4OSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzM0OTYzLCJpc3MiOiJzcC10YXNraWZ5In0.kn8s4bIdu0IaNYFOR3DB9oWlMnHb0F2MoG_s_IbeLqY
+
+###
+POST https://sp-taskify-api.vercel.app/4-1/dashboards
+Content-Type: application/json
+accept : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY4OSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzM0OTYzLCJpc3MiOiJzcC10YXNraWZ5In0.kn8s4bIdu0IaNYFOR3DB9oWlMnHb0F2MoG_s_IbeLqY
+
+{
+   "title" : "대시보드7",
+   "color" : "#568912"
+}
+
+###
+GET https://sp-taskify-api.vercel.app/4-1/dashboards/5957
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY0OSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzI4NzU3LCJpc3MiOiJzcC10YXNraWZ5In0.NHzLtDuMG_SHn9FvtiSVDRo3WhyGLLqip1SVr7I86ow
+
+###
+PUT https://sp-taskify-api.vercel.app/4-1/dashboards/5957
+Content-Type: application/json
+accept : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY0OSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzI4NzU3LCJpc3MiOiJzcC10YXNraWZ5In0.NHzLtDuMG_SHn9FvtiSVDRo3WhyGLLqip1SVr7I86ow
+
+{
+  "title": "대시보드0",
+  "color": "#797979"
+}

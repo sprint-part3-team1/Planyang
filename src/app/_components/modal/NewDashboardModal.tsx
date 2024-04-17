@@ -1,21 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
-import CheckCancelButton from '@/app/_components/modal/CheckCancelButton';
-import { ModalPropsType } from '@/app/_types/commonTypes';
 import Input from '@/app/_components/Input';
 import Image from 'next/image';
+import { ModalPropsType } from '@/app/_types/modalProps';
+import ModalContainer from './ModalContainer';
 import styles from './NewDashboardModal.module.css';
+import CheckCancleButton from './CheckCancleButton';
 
-function NewDashboardModal({ openModal, setOpenModal }: ModalPropsType) {
-  const title = '새로운 대시보드';
+function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
+  const produceButtonHandler = () => {
+    /** 새로운 대시보드 생성 버튼을 누르면 실행되는 함수 작성 */
+  };
   const colors = ['green', 'purple', 'orange', 'blue', 'pink'];
   const [dashboardColor, setDashboardColor] = useState<string>('green');
 
   return (
-    <div className={styles.container}>
-      <p id={styles.title}>{title}</p>
-      {/* <p id={styles.dashBaordNameinputTitle}>대시보드 이름</p> */}
+    <ModalContainer title="새로운 대시보드">
       <Input inputName="대시보드 이름" inputType="text" inputWidth={484} />
       <div className={styles.colorEclipseContainer}>
         {colors.map((color) => {
@@ -27,14 +28,22 @@ function NewDashboardModal({ openModal, setOpenModal }: ModalPropsType) {
               type="button"
             >
               {dashboardColor === color && (
-                <Image fill src="/icons/checkIcon.svg" alt="체크 아이콘" />
+                <Image
+                  fill
+                  src="/assets/icons/checkIcon.svg"
+                  alt="체크 아이콘"
+                />
               )}
             </button>
           );
         })}
       </div>
-      <CheckCancelButton openModal={openModal} setOpenModal={setOpenModal} />
-    </div>
+      <CheckCancleButton
+        checkText="생성"
+        setOpenModalType={setOpenModalType}
+        checkButtonHandler={produceButtonHandler}
+      />
+    </ModalContainer>
   );
 }
 export default NewDashboardModal;

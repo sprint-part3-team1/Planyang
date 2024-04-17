@@ -1,19 +1,15 @@
-import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
-import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
-import ConfirmButton from '@/app/_components/Button/ConfirmButton/ConfirmButton';
-import DeleteButton from '@/app/_components/Button/DeleteButton/DeleteButton';
-import DeleteDashBoardButton from '@/app/_components/Button/DeleteDashBoardButton/DeleteDashBoardButton';
-import LoginButton from '@/app/_components/Button/LoginButton/LoginButton';
+import TableMember from '@/app/(route)/mydashboard/_components/TableMember';
+import styles from './page.module.css';
+import TableInvite from '../mydashboard/_components/TableInvite';
 
 export default function Main() {
   return (
-    <>
-      {/* <LoginButton />
-      <ConfirmButton /> */}
-      {/* <DeleteButton />
-      <AddColumnButton /> */}
-      <AddTodoButton />
-      <DeleteDashBoardButton />
-    </>
+    <div className={styles.container}>
+      <br />
+      <TableMember />
+      <br />
+      <br />
+      <TableInvite />
+    </div>
   );
 }

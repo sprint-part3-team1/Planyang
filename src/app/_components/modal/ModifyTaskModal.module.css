@@ -1,0 +1,10 @@
+.twoRowDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+}
+
+.twoRowDiv > * {
+  flex: 1; /* 꽉 차게 */
+}
