@@ -44,7 +44,7 @@
   border-radius: 0.8rem;
   text-align: center;
   font-family: Pretendard;
-  font-size: 1.6rem;
+  font-size: var(--font16);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
