@@ -5,6 +5,7 @@ import loginDataReducer from '../_slice/loginSlice';
 import cardDataReducer from '../_slice/cardSlice';
 import columnDataReducer from '../_slice/columnSlice';
 import dashBoardReducer from '../_slice/dashBoardSlice';
+import memberReducer from '../_slice/memberSlice';
 import invitationReducer from '../_slice/invitationSlice';
 import receivedInvitationReducer from '../_slice/receivedInvitationsSlice';
 
@@ -15,6 +16,7 @@ const store = configureStore({
     cardData: cardDataReducer,
     columnData: columnDataReducer,
     dashBoardData: dashBoardReducer,
+    memberData: memberReducer,
     invitationData: invitationReducer,
     receivedInvitationData: receivedInvitationReducer,
   },
