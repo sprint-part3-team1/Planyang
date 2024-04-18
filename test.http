@@ -89,3 +89,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3MywidGVhb
 GET https://sp-taskify-api.vercel.app/4-1/cards?size=10&columnId=19964
 accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3MywidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMjgwMzg5LCJpc3MiOiJzcC10YXNraWZ5In0.AN0rk8e9GACvNd6rHEZ-prdQdzbzgYdJkJub4l7cMf4
+
+###
+GET https://sp-taskify-api.vercel.app/4-1/invitations?size=10
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzNDAxODQ1LCJpc3MiOiJzcC10YXNraWZ5In0.cyd2QXy-EYkble1ph77mWhL580Fzn2LHAY56soRhq-E
+
+###
+PUT https://sp-taskify-api.vercel.app/4-1/invitations/5516
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzNDAxODQ1LCJpc3MiOiJzcC10YXNraWZ5In0.cyd2QXy-EYkble1ph77mWhL580Fzn2LHAY56soRhq-E
+Content-Type: application/json
+
+{
+  "inviteAccepted": true
+}

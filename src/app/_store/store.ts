@@ -4,6 +4,7 @@ import registerDataReducer from '../_slice/registerSlice';
 import loginDataReducer from '../_slice/loginSlice';
 import dashBoardReducer from '../_slice/dashBoardSlice';
 import invitationReducer from '../_slice/invitationSlice';
+import receivedInvitationReducer from '../_slice/receivedInvitationsSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     loginData: loginDataReducer,
     dashBoardData: dashBoardReducer,
     invitationData: invitationReducer,
+    receivedInvitationData: receivedInvitationReducer,
   },
 });
 
