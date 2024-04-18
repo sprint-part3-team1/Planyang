@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import Input from '@/app/_components/Input';
-import Image from 'next/image';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import ModalContainer from './ModalContainer';
 import styles from './NewDashboardModal.module.css';
 import CheckCancleButton from './CheckCancleButton';
+import CheckIcon from '../../../../public/assets/icons/checkIcon';
 
 function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
   const produceButtonHandler = () => {
@@ -27,13 +27,7 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
               onClick={() => setDashboardColor(color)}
               type="button"
             >
-              {dashboardColor === color && (
-                <Image
-                  fill
-                  src="/assets/icons/checkIcon.svg"
-                  alt="체크 아이콘"
-                />
-              )}
+              {dashboardColor === color && <CheckIcon fill="white" />}
             </button>
           );
         })}

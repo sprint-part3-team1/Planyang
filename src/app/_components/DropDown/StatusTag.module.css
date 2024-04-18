@@ -1,0 +1,28 @@
+.container {
+  padding: 0.4rem 0.8rem;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.1rem;
+  background-color: var(--violet_8);
+  gap: 0.9rem;
+}
+
+.statusText {
+  color: var(--violet_5534DA);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font12);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.eclipse {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999rem;
+  background-color: var(--violet_5534DA);
+}

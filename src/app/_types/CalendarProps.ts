@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 export interface CalendarProps {
-    onValueChange: Function;
-    date: Date;
-    reference: React.MutableRefObject<any>
+  onValueChange: Function;
+  date: Date;
+  reference: React.MutableRefObject<any>;
 }

@@ -1,9 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ModifyTaskModalPropsType } from '@/app/_types/modalTypes';
 import styles from './InputModal.module.css';
 import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
 
-const InputModal = ({ title, essential, type }: ModifyTaskModalPropsType) => {
+/** 임의로 만든 input 입니다. */
+
+type InputModalProps = {
+  title: string;
+  essential: boolean;
+  type: string;
+};
+
+const InputModal = ({ title, essential, type }: InputModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
 
