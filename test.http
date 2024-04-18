@@ -26,3 +26,81 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY0OSwidGVhb
   "title": "대시보드0",
   "color": "#797979"
 }
+
+### 
+POST https://sp-taskify-api.vercel.app/4-1/dashboards/5973/invitations
+Content-Type: application/json
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MCwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzQzNTcxLCJpc3MiOiJzcC10YXNraWZ5In0.vER__X4pX8x7RTYaTyGANzIxVKNJNE13uu7y_81GQ0U
+
+{
+    "email" : "jae@naver.com"
+}
+
+###
+GET https://sp-taskify-api.vercel.app/4-1/dashboards/5973/invitations?page=1&size=10
+Content-Type: application/json
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MCwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzQ2ODI2LCJpc3MiOiJzcC10YXNraWZ5In0.0dD7IIe2WVcrdCLJjFPkko0_8ATU5ZMKQh6Oz9APYKQ
+
+###
+DELETE https://sp-taskify-api.vercel.app/4-1/dashboards/5973/invitations/5483
+accept: */*
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MCwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMzQ2ODI2LCJpc3MiOiJzcC10YXNraWZ5In0.0dD7IIe2WVcrdCLJjFPkko0_8ATU5ZMKQh6Oz9APYKQ
+###
+POST https://sp-taskify-api.vercel.app/4-1/cards
+Content-Type: application/json
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3MywidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMjgwMzg5LCJpc3MiOiJzcC10YXNraWZ5In0.AN0rk8e9GACvNd6rHEZ-prdQdzbzgYdJkJub4l7cMf4
+
+{
+  "assigneeUserId": 1673,
+  "dashboardId": 5936,
+  "columnId": 19964,
+  "title":  "test1",
+  "description": "Task Description",
+  "dueDate": "2024-05-30 19:19",
+  "tags": ["Tag1", "Tag2"],
+  "imageUrl": null
+}
+
+###
+POST https://sp-taskify-api.vercel.app/3-7/cards
+Content-Type: application/json
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcwMiwidGVhbUlkIjoiMy03IiwiaWF0IjoxNzEzMzYwODc4LCJpc3MiOiJzcC10YXNraWZ5In0.2uN9Yum4IPyV5C2aFU3Mou_2NeM_L0LhZWYFB_Yav_Y
+
+{
+  "assigneeUserId": 1702,
+  "dashboardId": 5996,
+  "columnId": 20169,
+  "title":  "test1",
+  "description": "Task Description",
+  "dueDate": "2024-05-30 19:19",
+  "tags": ["Tag1", "Tag2"],
+  "imageUrl": null
+}
+###
+GET https://sp-taskify-api.vercel.app/4-1/columns?dashboardId=5936
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3MywidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMjgwMzg5LCJpc3MiOiJzcC10YXNraWZ5In0.AN0rk8e9GACvNd6rHEZ-prdQdzbzgYdJkJub4l7cMf4
+
+###
+GET https://sp-taskify-api.vercel.app/4-1/cards?size=10&columnId=19964
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3MywidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzMjgwMzg5LCJpc3MiOiJzcC10YXNraWZ5In0.AN0rk8e9GACvNd6rHEZ-prdQdzbzgYdJkJub4l7cMf4
+
+###
+GET https://sp-taskify-api.vercel.app/4-1/invitations?size=10
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzNDAxODQ1LCJpc3MiOiJzcC10YXNraWZ5In0.cyd2QXy-EYkble1ph77mWhL580Fzn2LHAY56soRhq-E
+
+###
+PUT https://sp-taskify-api.vercel.app/4-1/invitations/5516
+accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5MSwidGVhbUlkIjoiNC0xIiwiaWF0IjoxNzEzNDAxODQ1LCJpc3MiOiJzcC10YXNraWZ5In0.cyd2QXy-EYkble1ph77mWhL580Fzn2LHAY56soRhq-E
+Content-Type: application/json
+
+{
+  "inviteAccepted": true
+}
