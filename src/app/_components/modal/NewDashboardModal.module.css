@@ -1,0 +1,34 @@
+.colorEclipseContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin: 3rem 0rem;
+}
+
+.colorEclipse {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.green {
+  background-color: var(--green_7AC555);
+}
+.purple {
+  background-color: var(--purple_760DDE);
+}
+.orange {
+  background-color: var(--orange_FFA500);
+}
+.blue {
+  background-color: var(--blue_76A6EA);
+}
+.pink {
+  background-color: var(--pink_E876EA);
+}

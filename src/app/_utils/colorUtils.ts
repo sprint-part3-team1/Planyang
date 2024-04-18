@@ -1,4 +1,4 @@
-export const createRandomColor = (text: string) => {
+export const createRandomColor = (text: string, light = 80) => {
     const crypto = require('crypto');
     const colorCode = crypto.createHash('md5').update(text).digest('hex').substring(0, 6);
 
@@ -6,7 +6,7 @@ export const createRandomColor = (text: string) => {
     let originG = parseInt(colorCode.substring(2, 4), 16);
     let originB = parseInt(colorCode.substring(4, 6), 16);
 
-    const {r, g, b} = adjustToPastel(originR, originG, originB);
+    const {r, g, b} = adjustToPastel(originR, originG, originB, light);
 
     return `#${r.toString(16) + g.toString(16) + b.toString(16)}`;
 }
@@ -46,11 +46,11 @@ const hslToRgb = (h: number, s: number, l: number) => {
     }
 }
 
-const adjustToPastel = (r: number, g: number, b: number) => {
+const adjustToPastel = (r: number, g: number, b: number, light: number) => {
     let {h, s, l} = rgbToHsl(r, g, b);
 
     s *= 0.5;
-    l = 80;
+    l = light;
 
     return hslToRgb(h, s, l);
 }

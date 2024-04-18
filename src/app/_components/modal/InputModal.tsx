@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ModifyTaskModalPropsType } from '@/app/_types/modalTypes';
-import StatusTag from '@/app/(route)/dashboard/_components/StatusTag';
 import styles from './InputModal.module.css';
 import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
 
@@ -37,7 +36,6 @@ const InputModal = ({ title, essential, type }: ModifyTaskModalPropsType) => {
             {title} {essential && <span id={styles.essential}>*</span>}
           </p>
           <div className={styles.drowDownDiv}>
-            <StatusTag />
             <button
               onClick={dropDownHandler}
               type="button"

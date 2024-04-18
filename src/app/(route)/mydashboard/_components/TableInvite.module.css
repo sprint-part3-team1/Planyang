@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 62rem;
+  height: 47.7rem;
+  padding: 3.2rem 0rem 0rem 0rem;
+  border-radius: 2rem;
+  background: var(--white_FFFFFF);
+  box-shadow: 0rem 0.4rem 1rem var(--gray_EEEEEE);
+}
+
+.title {
+  display: flex;
+  width: 62rem;
+  height: 4rem;
+  padding: 0rem 2.8rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 2rem;
+}
+
+#titleInvite {
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+}
+
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.email {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 2.8rem;
+  color: var(--gray_9FA6B2);
+  font-family: Pretendard;
+  font-size: var(--font16);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 2rem;
+}
+
+.emailContainer {
+  display: flex;
+  width: 62rem;
+  padding: 0rem 2.8rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 0.1rem solid #ccc;
+  padding-bottom: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+#emailName {
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font16);
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: 28.4rem;
+    height: 40.6rem;
+    flex-shrink: 0;
+  }
+  .title {
+    width: 28.4rem;
+    height: 3.6rem;
+    padding: 0rem 2rem;
+    margin-bottom: 1rem;
+  }
+  #titleInvite {
+    font-size: 1.8rem;
+  }
+
+  .pagination {
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+  .email {
+    padding: 0rem 2rem;
+    font-size: var(--font14);
+  }
+
+  .emailContainer {
+    width: 28.4rem;
+    height: 3.4rem;
+    padding: 0rem 2rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  #emailName {
+    font-size: var(--font14);
+  }
+}

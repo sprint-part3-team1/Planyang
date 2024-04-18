@@ -1,19 +1,23 @@
-'use client';
-
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { ModalPortalPropsType } from '@/app/_types/modalProps';
 import styles from './ModalPortal.module.css';
+import ModalContents from './ModalContents';
 
-type ModalPropsType = {
-  openModal: boolean;
-  children: React.ReactNode;
-};
+const ModalPortal = ({
+  openModalType,
+  setOpenModalType,
+}: ModalPortalPropsType) => {
+  if (openModalType === '') return 'null';
 
-const ModalPortal = ({ openModal, children }: ModalPropsType) => {
-  if (!openModal) return null;
+  const modalContent = ModalContents({
+    modalType: openModalType,
+    openModalType,
+    setOpenModalType,
+  });
 
   return createPortal(
-    <div className={styles.modalBackground}>{children}</div>,
+    <div className={styles.modalBackground}>{modalContent}</div>,
     document.getElementById('modal-root') as HTMLElement,
   );
 };
