@@ -1,5 +1,4 @@
 .container {
-  margin-bottom: 3.2rem;
   height: 8rem;
   position: relative;
   z-index: 1;
@@ -12,11 +11,11 @@
 #title {
   color: var(--black_333236);
   font-family: Pretendard;
-  font-size: var(--font18);
+  font-size: var(--font16);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 
   & > #essential {
     color: var(--violet_5534DA);

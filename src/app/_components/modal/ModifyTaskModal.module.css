@@ -1,8 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+
+  @media (max-width: 767px) {
+    gap: 2.4rem;
+  }
+}
+
 .twoRowDiv {
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 1.6rem;
+
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
 }
 
 .twoRowDiv > * {

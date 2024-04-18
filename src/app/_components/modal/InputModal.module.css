@@ -1,6 +1,4 @@
 .container {
-  margin-bottom: 3.2rem;
-
   & > * {
     font-size: 1.6rem;
   }
@@ -9,7 +7,7 @@
 #title {
   color: var(--black_333236);
   font-family: Pretendard;
-  font-size: var(--font18);
+  font-size: var(--font16);
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -53,4 +51,11 @@
   border: none;
   background-color: var(--white_FFFFFF);
   cursor: pointer;
+}
+
+.imageDiv {
+  width: 76px;
+  height: 76px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.6);
 }

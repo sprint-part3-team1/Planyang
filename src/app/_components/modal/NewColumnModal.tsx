@@ -13,7 +13,7 @@ const NewColumnModal = ({ setOpenModalType }: ModalPropsType) => {
       <Input
         inputName="이름"
         inputType="text"
-        inputWidth={484}
+        inputWidth={48}
         errorState={false}
       />
       <CheckCancleButton
