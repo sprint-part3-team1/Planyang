@@ -130,7 +130,6 @@ const columnSlice = createSlice({
       },
     );
     builder.addCase(asyncFetchDeleteColumn.fulfilled, (state, action) => {
-      // state.data = action.payload;
       const columnId = action.payload;
       const updatedColumns = state.data?.data?.filter(
         (item) => item.id !== columnId,
