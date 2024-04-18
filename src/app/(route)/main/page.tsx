@@ -1,14 +1,24 @@
-import TableMember from '@/app/(route)/mydashboard/_components/TableMember';
+import Card from '../dashboard/_components/Card';
 import styles from './page.module.css';
-import TableInvite from '../mydashboard/_components/TableInvite';
-import DashInvite from '../mydashboard/_components/DashInvite';
 
 export default function Main() {
   return (
     <div className={styles.container}>
       <br />
-      <DashInvite />
+      <Card
+        nickname="Banana"
+        title="새로운 일정 관리 Taskify"
+        tagNameArr={['프로젝트', '백엔드']}
+        date="2022.12.31"
+      />
       <br />
+      <Card
+        nickname="Banana"
+        title="새로운 일정 관리 Taskify"
+        tagNameArr={['프로젝트', '백엔드']}
+        date="2022.12.31"
+        image="/assets/images/logoImg.svg"
+      />
     </div>
   );
 }
