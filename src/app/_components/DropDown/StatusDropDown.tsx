@@ -33,45 +33,46 @@ const StatusDropDown = ({ title }: DropDownPropsType) => {
   }, [isDropDown]);
 
   return (
-    <button
-      type="button"
-      className={styles.drowDownButton}
-      onClick={() => setIsDropDown(!isDropDown)}
-    >
-      <div className={styles.container} ref={dropdownRef}>
-        <p id={styles.title}>{title}</p>
-        <div
-          className={`${styles.drowDownInput} ${isDropDown && styles.pressed}`}
+    <div className={styles.container} ref={dropdownRef}>
+      <p id={styles.title}>{title}</p>
+      <div
+        className={`${styles.drowDownInput} ${isDropDown && styles.pressed}`}
+      >
+        <StatusTag status={STATUS[selectedDivIndex]} />
+        <button
+          type="button"
+          className={styles.drowDownButton}
+          onClick={() => setIsDropDown(!isDropDown)}
         >
-          <StatusTag status={STATUS[selectedDivIndex]} />
+          {' '}
           <ArrowDown />
-        </div>
-        <div
-          className={`${styles.dropDownDiv} ${isDropDown ? styles.open : styles.close}`}
-        >
-          {STATUS.map((status, index) => {
-            return (
-              <button
-                onClick={() => handleDivClick(index)}
-                type="button"
-                key={status}
-                className={styles.choiceButton}
-              >
-                <div className={styles.choiceDiv}>
-                  {' '}
-                  {selectedDivIndex === index ? (
-                    <CheckIcon fill="#787486" />
-                  ) : (
-                    <CheckIcon fill="none" />
-                  )}
-                  <StatusTag status={status} />
-                </div>
-              </button>
-            );
-          })}
-        </div>
+        </button>
       </div>
-    </button>
+      <div
+        className={`${styles.dropDownDiv} ${isDropDown ? styles.open : styles.close}`}
+      >
+        {STATUS.map((status, index) => {
+          return (
+            <button
+              onClick={() => handleDivClick(index)}
+              type="button"
+              key={status}
+              className={styles.choiceButton}
+            >
+              <div className={styles.choiceDiv}>
+                {' '}
+                {selectedDivIndex === index ? (
+                  <CheckIcon fill="#787486" />
+                ) : (
+                  <CheckIcon fill="none" />
+                )}
+                <StatusTag status={status} />
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

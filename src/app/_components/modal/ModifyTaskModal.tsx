@@ -5,6 +5,7 @@ import styles from './ModifyTaskModal.module.css';
 import ModalContainer from './ModalContainer';
 import CheckCancleButton from './CheckCancleButton';
 import StatusDropDown from '../DropDown/StatusDropDown';
+import ManagerDropDown from '../DropDown/ManagerDropDown';
 
 const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
   const modifyButtonHandler = () => {
@@ -14,7 +15,7 @@ const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
     <ModalContainer title="할 일 수정">
       <div className={styles.twoRowDiv}>
         <StatusDropDown title="상태" />
-        <StatusDropDown title="담당자" />
+        <ManagerDropDown title="담당자" />
       </div>
       <InputModal title="제목" essential />
       <InputModal title="설명" essential type="multiLine" />

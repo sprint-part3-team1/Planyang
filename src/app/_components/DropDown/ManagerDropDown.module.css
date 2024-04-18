@@ -34,6 +34,13 @@
   justify-content: space-between;
   padding: 1.6rem;
   position: relative;
+
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .drowDownButton {
@@ -76,9 +83,25 @@
   gap: 0.6rem;
   cursor: pointer;
   z-index: 10;
+  align-items: center;
 }
 
 .choiceButton {
   border: none;
   background-color: var(--white_FFFFFF);
+}
+
+.managerNameInput {
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.ManagerNameDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 }
