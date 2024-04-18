@@ -2,32 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
-
-interface UpdateInformationType {
-  nickname: string;
-  profileImageUrl: string | null;
-}
-interface ChangePasswordType {
-  password: string;
-  newPassword: string;
-}
-
-interface RegisterPayload {
-  email: string;
-  nickname: string;
-  password: string;
-}
-
-interface RegisterStateType {
-  data: {
-    id: number;
-    email: string;
-    nickname: string;
-    profileImageUrl: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-}
+import {
+  UpdateInformationPayloadType,
+  ChangePasswordPayloadType,
+  RegisterPayloadType,
+} from '../_types/_redux/_apiPayload/payloadTypes';
+import { RegisterStateType } from '../_types/_redux/_state/reduxState';
 
 const initialState: RegisterStateType = {
   data: null,
@@ -36,7 +16,7 @@ const initialState: RegisterStateType = {
 const asynchFetchSignUp = createAsyncThunk(
   'registerSlice/asynchFetchSignup',
 
-  async (registerData: RegisterPayload) => {
+  async (registerData: RegisterPayloadType) => {
     const { email, nickname, password } = registerData;
 
     const response = await axios.post(
@@ -54,7 +34,7 @@ const asynchFetchSignUp = createAsyncThunk(
 const asynchFetchChangePassword = createAsyncThunk(
   'registerSlice/asynchFetchChangePassword',
 
-  async (changePasswordValue: ChangePasswordType) => {
+  async (changePasswordValue: ChangePasswordPayloadType) => {
     const { password, newPassword } = changePasswordValue;
     const accessToken = localStorage.getItem('accessToken');
 
@@ -97,7 +77,7 @@ const asynchFetchgetUserInfo = createAsyncThunk(
 
 const asynchFetchUpdateInformation = createAsyncThunk(
   'registerSlice/asynchFetchUpdateInformation',
-  async (updateValue: UpdateInformationType) => {
+  async (updateValue: UpdateInformationPayloadType) => {
     const accessToken = localStorage.getItem('accessToken');
     const { nickname, profileImageUrl } = updateValue;
     const response = await axios.put(
@@ -124,7 +104,10 @@ const registerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       asynchFetchSignUp.fulfilled,
-      (state, action: PayloadAction<RegisterStateType['data']>) => {
+      (
+        state: RegisterStateType,
+        action: PayloadAction<RegisterStateType['data']>,
+      ) => {
         state.data = action.payload;
       },
     );
@@ -134,13 +117,22 @@ const registerSlice = createSlice({
       (state, action: PayloadAction<ChangePasswordType>) => {},
     );
 
-    builder.addCase(asynchFetchgetUserInfo.fulfilled, (state, action) => {
-      state.data = action.payload;
-    });
+    builder.addCase(
+      asynchFetchgetUserInfo.fulfilled,
+      (
+        state: RegisterStateType,
+        action: PayloadAction<RegisterStateType['data']>,
+      ) => {
+        state.data = action.payload;
+      },
+    );
 
     builder.addCase(
       asynchFetchUpdateInformation.fulfilled,
-      (state, action: PayloadAction<UpdateInformationType>) => {
+      (
+        state: RegisterStateType,
+        action: PayloadAction<RegisterStateType['data']>,
+      ) => {
         state.data = action.payload;
       },
     );
@@ -156,4 +148,4 @@ export const registerActions = {
   asynchFetchgetUserInfo,
   asynchFetchUpdateInformation,
 };
-export const registerData = (state: RootState) => state.regsiterData.data;
+export const userResponse = (state: RootState) => state.userResponse.data;

@@ -39,11 +39,11 @@ const initialState: InivitationsType = {
 const asynchGetMyInvitation = createAsyncThunk(
   'invitationSlice/asynchGetMyInvitation',
 
-  async () => {
+  async (dashBoardId: number) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.get(
-      'https://sp-taskify-api.vercel.app/4-1/dashboards/5973/invitations?page=1&size=10',
+      `https://sp-taskify-api.vercel.app/4-1/dashboards/${dashBoardId}/invitations?page=1&size=10`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -58,12 +58,12 @@ const asynchGetMyInvitation = createAsyncThunk(
 const asynchFetchinviteUserToDashboard = createAsyncThunk(
   'invitationSlice/asynchFetchinviteUserToDashboard',
 
-  async (invitedUser: { email: string }) => {
+  async (invitedUser: { email: string; dashBoardId: number }) => {
     const accessToken = localStorage.getItem('accessToken');
-    const { email } = invitedUser;
+    const { email, dashBoardId } = invitedUser;
 
     const response = await axios.post(
-      'https://sp-taskify-api.vercel.app/4-1/dashboards/5973/invitations',
+      `https://sp-taskify-api.vercel.app/4-1/dashboards/${dashBoardId}/invitations`,
       {
         email,
       },
@@ -114,11 +114,13 @@ const invitationSlice = createSlice({
       asynchFetchinviteUserToDashboard.fulfilled,
       (state, action: PayloadAction<InivationInformationType>) => {
         state.data?.invitations.unshift(action.payload);
+        state.data.totalCount++;
       },
     );
 
     builder.addCase(asynchFetchDeleteInvited.fulfilled, (state, action) => {
       const invitationIdToDelete = action.payload;
+      state.data.totalCount--;
       const updatedInvitations = state.data?.invitations.filter(
         (invitation) => invitation.id !== invitationIdToDelete,
       );

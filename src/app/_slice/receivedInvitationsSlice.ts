@@ -74,7 +74,7 @@ const asyncAcceptInvite = createAsyncThunk(
       },
     );
 
-    console.log(response.data);
+    return invitationId;
   },
 );
 
@@ -89,6 +89,15 @@ const receivedInvitationsSlice = createSlice({
         state.data = action.payload;
       },
     );
+
+    builder.addCase(asyncAcceptInvite.fulfilled, (state, action) => {
+      const deleteInvitationId = action.payload;
+      if (state.data) {
+        state.data.invitations = state.data.invitations.filter(
+          (item) => item.id !== deleteInvitationId,
+        );
+      }
+    });
   },
 });
 

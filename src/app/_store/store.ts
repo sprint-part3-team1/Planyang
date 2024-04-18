@@ -9,7 +9,7 @@ import receivedInvitationReducer from '../_slice/receivedInvitationsSlice';
 
 const store = configureStore({
   reducer: {
-    regsiterData: registerDataReducer,
+    userResponse: registerDataReducer,
     loginData: loginDataReducer,
     columnData: columnDataReducer,
     dashBoardData: dashBoardReducer,

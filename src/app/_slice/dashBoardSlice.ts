@@ -131,26 +131,24 @@ const dashBoardSlice = createSlice({
       state.data.totalCount++;
     });
 
-    builder.addCase(
-      asyncFetchUpdateDashBoard.fulfilled,
-      (state, action: PayloadAction<DashBoardInformationType>) => {
-        const updateDashBoard = action.payload;
-        const index = state.data?.dashboards.findIndex(
-          (item) => item.id === updateDashBoard.id,
-        );
-        if (index !== -1) {
-          state.data.dashboards[index] = updateDashBoard;
-        }
-      },
-    );
+    builder.addCase(asyncFetchUpdateDashBoard.fulfilled, (state, action) => {
+      const updateDashBoard = action.payload;
+      const index = state.data?.dashboards.findIndex(
+        (item) => item.id === updateDashBoard.id,
+      );
+      if (index !== -1) {
+        state.data.dashboards[index] = updateDashBoard;
+      }
+    });
 
     builder.addCase(
       asynchFetchDeleteDashBoard.fulfilled,
       (state, action: PayloadAction<number>) => {
-        const deletedDashBoardId = action.payload; 
+        state.data.totalCount--;
+        const deletedDashBoardId = action.payload;
         if (state.data) {
           state.data.dashboards = state.data.dashboards.filter(
-            (item) => item.id !== deletedDashBoardId, 
+            (item) => item.id !== deletedDashBoardId,
           );
         }
       },
