@@ -89,11 +89,11 @@ const asyncFetchCreateCard = createAsyncThunk(
 const asyncFetchGetCards = createAsyncThunk(
   'cardSlice/asyncFetchGetCards',
 
-  async (cardData: CardPayload) => {
+  async (cardData: { columnId: number }) => {
     const { columnId } = cardData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/cards?size=200&columnId=${columnId}`,
+      `https://sp-taskify-api.vercel.app/4-1/cards?size=20&columnId=${columnId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -145,11 +145,11 @@ const asyncFetchPutCard = createAsyncThunk(
 const asyncFetchGetCard = createAsyncThunk(
   'cardSlice/asyncFetchGetCard',
 
-  async (cardData: CardResponseType) => {
-    const { id } = cardData;
+  async (cardData: { cardId: number }) => {
+    const { cardId } = cardData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/cards/${id}`,
+      `https://sp-taskify-api.vercel.app/4-1/cards/${cardId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -164,19 +164,19 @@ const asyncFetchGetCard = createAsyncThunk(
 const asyncFetchDeleteCard = createAsyncThunk(
   'cardSlice/asyncFetchDeleteCard',
 
-  async (cardData: CardResponseType) => {
-    const { id } = cardData;
+  async (cardData: { cardId: number }) => {
+    const { cardId } = cardData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.delete(
-      `https://sp-taskify-api.vercel.app/4-1/cards/${id}`,
+      `https://sp-taskify-api.vercel.app/4-1/cards/${cardId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       },
     );
-    console.log(response.data);
-    return response.data;
+    console.log(cardId);
+    return cardId;
   },
 );
 
@@ -189,7 +189,7 @@ const cardSlice = createSlice({
       asyncFetchCreateCard.fulfilled,
       (state, action: PayloadAction<CardActionResponseType['data']>) => {
         if (state.data && state.data.cards) {
-          state.data.cards.unshift(action.payload);
+          state.data?.cards?.unshift(action.payload);
           if (state.data.totalCount !== null) {
             state.data.totalCount++;
           }
@@ -215,6 +215,11 @@ const cardSlice = createSlice({
       },
     );
     builder.addCase(asyncFetchDeleteCard.fulfilled, (state, action) => {
+      const cardId = action.payload;
+      const updatedCards = state.data?.cards?.filter(
+        (item) => item.id !== cardId,
+      );
+      state.data.cards = updatedCards;
       if (state.data && state.data.totalCount !== null) {
         state.data.totalCount--;
       }
