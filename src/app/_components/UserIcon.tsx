@@ -9,7 +9,7 @@ const UserIcon = ({ nickname, profileImageUrl }: UserIconProps) => {
 
     if (profileImageUrl != null) {
       return {
-        backgroundImage: profileImageUrl,
+        backgroundImage: `url(${profileImageUrl})`,
       };
     } else
       return {
