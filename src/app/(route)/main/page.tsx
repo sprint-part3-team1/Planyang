@@ -20,6 +20,7 @@ export default function Main() {
         date="2022.12.31"
         image="/assets/images/logoImg.svg"
       /> */}
+      {/* 데시보드 id에 따른 데이터를 받아서 map함수를 돌리면서 각각의 데이터별로 아래의 컬럼 컴포넌트를 호출하는 페이지 */}
       <Column />
     </div>
   );
