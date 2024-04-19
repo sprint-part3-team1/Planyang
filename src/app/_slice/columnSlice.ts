@@ -3,12 +3,7 @@ import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
 
-interface ColumnPayload {
-  title: string;
-  dashboardId: number;
-}
-
-interface ColumnResponseType {
+interface ColumnInformationType {
   id: number;
   title: string;
   teamId: string;
@@ -17,26 +12,21 @@ interface ColumnResponseType {
   updatedAt: string;
 }
 
-// 컬럼 생성
-interface CreateColumnResponseType {
-  data: ColumnResponseType | null;
+interface ColumnStateType {
+  data: {
+    result: string;
+    data: ColumnInformationType[] | null;
+  } | null;
 }
 
-// 컬럼 조회
-interface GetColumnResponseType {
-  result: string;
-  data: ColumnResponseType[] | null;
-}
-
-const initialState: CreateColumnResponseType & GetColumnResponseType = {
+const initialState: ColumnStateType = {
   data: null,
-  result: '',
 };
 
 const asyncFetchCreateColumn = createAsyncThunk(
   'columnSlice/asyncFetchCreateColumn',
 
-  async (columnData: ColumnPayload) => {
+  async (columnData: { title: string; dashboardId: number }) => {
     const { title, dashboardId } = columnData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.post(
@@ -60,7 +50,7 @@ const asyncFetchCreateColumn = createAsyncThunk(
 const asyncFetchGetColumn = createAsyncThunk(
   'columnSlice/asyncFetchGetColumn',
 
-  async (columnData: ColumnPayload) => {
+  async (columnData: { dashboardId: number }) => {
     const { dashboardId } = columnData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(
@@ -79,11 +69,11 @@ const asyncFetchGetColumn = createAsyncThunk(
 const asyncFetchPutColumn = createAsyncThunk(
   'columnSlice/asyncFetchPutColumn',
 
-  async (columnData: ColumnResponseType) => {
-    const { id, title } = columnData;
+  async (columnData: { columnId: number; title: string }) => {
+    const { columnId, title } = columnData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.put(
-      `https://sp-taskify-api.vercel.app/4-1/columns/${id}
+      `https://sp-taskify-api.vercel.app/4-1/columns/${columnId}
     `,
       {
         title,
@@ -102,11 +92,11 @@ const asyncFetchPutColumn = createAsyncThunk(
 const asyncFetchDeleteColumn = createAsyncThunk(
   'columnSlice/asyncFetchDeleteColumn',
 
-  async (columnData: ColumnResponseType) => {
-    const { id } = columnData;
+  async (columnData: { columnId: number }) => {
+    const { columnId } = columnData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.delete(
-      `https://sp-taskify-api.vercel.app/4-1/columns/${id}
+      `https://sp-taskify-api.vercel.app/4-1/columns/${columnId}
     `,
       {
         headers: {
@@ -114,8 +104,8 @@ const asyncFetchDeleteColumn = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
-    return response.data;
+    console.log(columnId);
+    return columnId;
   },
 );
 
@@ -124,31 +114,28 @@ const columnSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      asyncFetchCreateColumn.fulfilled,
-      (state, action: PayloadAction<CreateColumnResponseType['data']>) => {
-        state.data = action.payload;
-      },
-    );
+    builder.addCase(asyncFetchCreateColumn.fulfilled, (state, action) => {
+      state.data?.data?.push(action.payload);
+    });
     builder.addCase(
       asyncFetchGetColumn.fulfilled,
-      (state, action: PayloadAction<GetColumnResponseType>) => {
-        state.result = action.payload.result;
-        state.data = action.payload.data;
+      (state, action: PayloadAction<ColumnStateType>) => {
+        state.data = action.payload;
       },
     );
     builder.addCase(
       asyncFetchPutColumn.fulfilled,
-      (state, action: PayloadAction<CreateColumnResponseType['data']>) => {
+      (state, action: PayloadAction<ColumnStateType['data']>) => {
         state.data = action.payload;
       },
     );
-    builder.addCase(
-      asyncFetchDeleteColumn.fulfilled,
-      (state, action: PayloadAction<CreateColumnResponseType['data']>) => {
-        state.data = action.payload;
-      },
-    );
+    builder.addCase(asyncFetchDeleteColumn.fulfilled, (state, action) => {
+      const columnId = action.payload;
+      const updatedColumns = state.data?.data?.filter(
+        (item) => item.id !== columnId,
+      );
+      state.data.data = updatedColumns;
+    });
   },
 });
 
