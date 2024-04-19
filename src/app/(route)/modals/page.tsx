@@ -31,6 +31,10 @@ const ModalPage = () => {
       name: '현재 비밀번호 틀림',
       type: MODAL_TYPES.wrongPassword,
     },
+    {
+      name: '할 일 생성',
+      type: MODAL_TYPES.createTask,
+    },
   ];
   return (
     <div>
