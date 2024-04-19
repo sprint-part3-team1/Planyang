@@ -1,0 +1,107 @@
+.container {
+  margin-bottom: 3.2rem;
+  height: 8rem;
+  position: relative;
+  z-index: 1;
+
+  & > * {
+    font-size: 1.6rem;
+  }
+}
+
+#title {
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 1rem;
+
+  & > #essential {
+    color: var(--violet_5534DA);
+  }
+}
+
+.drowDownInput {
+  width: 100%;
+  height: 4.8rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--gray_D9D9D9);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem;
+  position: relative;
+
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.drowDownButton {
+  border: none;
+  background-color: var(--white_FFFFFF);
+  cursor: pointer;
+}
+
+.pressed {
+  border: 1px solid var(--violet_5534DA);
+}
+
+.dropDownDiv {
+  width: 100%;
+  height: auto;
+  border-radius: 0.6rem;
+  border: 1px solid var(--gray_D9D9D9);
+  background-color: var(--white_FFFFFF);
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  padding: 1.3rem;
+  margin-top: 0.3rem;
+  z-index: 10;
+  position: absolute;
+}
+
+.close {
+  visibility: hidden;
+}
+
+.open {
+  visibilty: visible;
+}
+
+.choiceDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  cursor: pointer;
+  z-index: 10;
+  align-items: center;
+}
+
+.choiceButton {
+  border: none;
+  background-color: var(--white_FFFFFF);
+}
+
+.managerNameInput {
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.ManagerNameDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
