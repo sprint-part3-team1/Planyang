@@ -75,6 +75,11 @@ const memberSlice = createSlice({
       },
     );
     builder.addCase(asyncDeleteMember.fulfilled, (state, action) => {
+      const memberId = action.payload;
+      const updatedMembers = state.data?.members?.filter(
+        (item) => item.id !== memberId,
+      );
+      state.data.members = updatedMembers;
       if (state.data && state.data.totalCount !== null) {
         state.data.totalCount--;
       }
