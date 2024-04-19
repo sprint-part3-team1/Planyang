@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, ChangeEvent } from 'react';
 import Image from 'next/image';
 import styles from './InputModal.module.css';
 import ImageEditIcon from '../../../../public/assets/icons/imageEditIcon.svg';
@@ -13,13 +13,14 @@ type InputModalProps = {
 };
 
 const InputModal = ({ title, essential, type }: InputModalProps) => {
-  const LOGO_IMAGE = '/assets/images/logoImg.svg';
-  const [selectedImagePath, setSelectedImagePath] = useState();
+  const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
+    null,
+  );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImagePath(imageUrl);
