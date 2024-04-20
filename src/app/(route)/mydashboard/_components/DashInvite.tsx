@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import ConfirmButton from '@/app/_components/Button/ConfirmButton/ConfirmButton';
+import AcceptButton from '@/app/_components/Button/AcceptButton/AcceptButton';
+import RejectButton from '@/app/_components/Button/RejectButton/RejectButton';
 import styles from './DashInvite.module.css';
 
 const DashInvite = () => {
@@ -58,7 +59,10 @@ const DashInvite = () => {
                 <span id={styles.invite}>초대자</span>
                 <span id={styles.dashInvite}>{dash.invite}</span>
               </div>
-              <ConfirmButton />
+              <div className={styles.buttonContainer}>
+                <AcceptButton />
+                <RejectButton />
+              </div>
             </div>
           ))}
         </>
@@ -74,7 +78,10 @@ const DashInvite = () => {
             <div key={index} className={styles.dashContainer}>
               <span id={styles.dashName}>{dash.name}</span>
               <span id={styles.dashInvite}>{dash.invite}</span>
-              <ConfirmButton />
+              <div className={styles.buttonContainer}>
+                <AcceptButton />
+                <RejectButton />
+              </div>
             </div>
           ))}
         </>
