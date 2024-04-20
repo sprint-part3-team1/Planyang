@@ -1,5 +1,6 @@
 // import Card from '../dashboard/_components/Card';
 import Column from '../dashboard/_components/Column';
+import EditDashName from '../mydashboard/_components/EditDashName';
 import styles from './page.module.css';
 
 export default function Main() {
@@ -21,7 +22,8 @@ export default function Main() {
         image="/assets/images/logoImg.svg"
       /> */}
       {/* 데시보드 id에 따른 데이터를 받아서 map함수를 돌리면서 각각의 데이터별로 아래의 컬럼 컴포넌트를 호출하는 페이지 */}
-      <Column />
+      {/* <Column /> */}
+      <EditDashName />
     </div>
   );
 }
