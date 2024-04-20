@@ -1,0 +1,86 @@
+.container {
+  width: 35.4rem;
+  height: 101rem;
+  flex-shrink: 0;
+  padding: 2.2rem 2rem 2.2rem 2rem;
+  background: var(--gray_FAFAFA);
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  margin-bottom: 2rem;
+}
+
+.columnName {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+}
+
+.cardCount {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.3rem 0.6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  border-radius: 0.4rem;
+  background: var(--gray_EEEEEE);
+
+  color: var(--gray_787486);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font12);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.cardSection {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    width: 58.4rem;
+    height: 34.6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: 30.8rem;
+    height: 47rem;
+    padding: 1.7rem 1.2rem 1.7rem 1.2rem;
+  }
+
+  .columnName {
+    font-size: var(--font16);
+  }
+
+  .cardSection {
+    gap: 1rem;
+  }
+
+  #settingIcon {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
