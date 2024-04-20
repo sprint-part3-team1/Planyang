@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import Input from '@/app/_components/Input';
 import { ModalPropsType } from '@/app/_types/modalProps';
-import ModalContainer from './ModalContainer';
+import ModalContainer from '../modalContainer/ModalContainer';
 import styles from './NewDashboardModal.module.css';
-import CheckCancleButton from './CheckCancleButton';
-import CheckIcon from '../../../../public/assets/icons/checkIcon';
+import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
+import CheckIcon from '../../../../../public/assets/icons/checkIcon';
 
 function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
   const produceButtonHandler = () => {

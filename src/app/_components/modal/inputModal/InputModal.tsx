@@ -1,8 +1,8 @@
 import React, { useState, useRef, ChangeEvent } from 'react';
 import Image from 'next/image';
 import styles from './InputModal.module.css';
-import ImageEditIcon from '../../../../public/assets/icons/imageEditIcon.svg';
-import PlusIcon from '../../../../public/assets/icons/plusIcon.svg';
+import ImageEditIcon from '../../../../../public/assets/icons/imageEditIcon.svg';
+import PlusIcon from '../../../../../public/assets/icons/plusIcon.svg';
 
 /** 임의로 만든 input 입니다. */
 

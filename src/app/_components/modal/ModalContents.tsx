@@ -1,14 +1,14 @@
 import React from 'react';
 import { ModalContentFuncPropsType } from '@/app/_types/modalProps';
 import MODAL_TYPES from '@/app/constants/modalTypes';
-import NewColumnModal from './NewColumnModal';
-import ColumnManageModal from './ColumnManageModal';
-import DeleteColumnCheckModal from './DeleteColumnCheckModal';
-import NewDashboardModal from './NewDashboardModal';
-import ModifyTaskModal from './ModifyTaskModal';
-import InviteByEmailModal from './InviteByEmailModal';
-import WrongPasswordModal from './WrongPasswordModal';
-import CreateTaskModal from './CreateTaskModal';
+import NewColumnModal from './newColumnModal/NewColumnModal';
+import ColumnManageModal from './columnManagerModal/ColumnManageModal';
+import DeleteColumnCheckModal from './deleteColumnCheckModal/DeleteColumnCheckModal';
+import NewDashboardModal from './newDashboardModal/NewDashboardModal';
+import ModifyTaskModal from './modifyTaskModal/ModifyTaskModal';
+import InviteByEmailModal from './inviteByEmailModal/InviteByEmailModal';
+import WrongPasswordModal from './wrongPasswordModal/WrongPasswordModal';
+import CreateTaskModal from './createTaskModal/CreateTaskModal';
 import TaskCardModal from './taskCardModal/TaskCardModal';
 
 const ModalContents = ({

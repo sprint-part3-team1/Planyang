@@ -3,7 +3,7 @@ import { TaskCardModalPropsType } from '@/app/_types/modalProps';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import Image from 'next/image';
 import ManagerInfoBox from './ManagerInfoBox';
-import ModalContainer from '../ModalContainer';
+import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
 import styles from './TaskCardModal.module.css';
 import Divider from '../../../../../public/assets/icons/divider.svg';
