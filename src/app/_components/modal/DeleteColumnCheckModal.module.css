@@ -1,4 +1,9 @@
 .deleteText {
+  width: 50rem;
+  height: 30rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--black_333236, #333236);
   text-align: center;
   font-family: Pretendard;

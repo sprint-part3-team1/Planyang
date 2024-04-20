@@ -17,7 +17,7 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
 
   return (
     <ModalContainer title="새로운 대시보드">
-      <Input inputName="대시보드 이름" inputType="text" inputWidth={484} />
+      <Input inputName="대시보드 이름" inputType="text" inputWidth={48} />
       <div className={styles.colorEclipseContainer}>
         {colors.map((color) => {
           return (

@@ -1,5 +1,5 @@
 .outerContainer {
-  width: 54rem;
+  width: auto;
   padding: 2.8rem;
   background-color: var(--white_FFFFFF);
   border-radius: 0.8rem;
@@ -8,7 +8,8 @@
   justify-content: space-between;
 
   @media (max-width: 767px) {
-    width: 32.7rem;
+    width: auto;
+    padding: 2rem;
   }
 }
 

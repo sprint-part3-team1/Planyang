@@ -1,59 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, ChangeEvent } from 'react';
+import Image from 'next/image';
 import styles from './InputModal.module.css';
-import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
+import ImageEditIcon from '../../../../public/assets/icons/imageEditIcon.svg';
+import PlusIcon from '../../../../public/assets/icons/plusIcon.svg';
 
 /** 임의로 만든 input 입니다. */
 
 type InputModalProps = {
   title: string;
-  essential: boolean;
+  essential?: boolean;
   type: string;
 };
 
 const InputModal = ({ title, essential, type }: InputModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef(null);
+  const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
+    null,
+  );
 
-  useEffect(() => {
-    console.log(isOpen);
-    const onClick = (e: Event) => {
-      if (ref.current !== null && !ref.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-    if (isOpen) {
-      window.addEventListener('click', onClick);
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImagePath(imageUrl);
     }
-
-    return () => {
-      window.removeEventListener('click', onClick);
-    };
-  }, [isOpen]);
-
-  const dropDownHandler = () => {
-    setIsOpen(!isOpen);
   };
 
   switch (type) {
-    case 'dropDown':
-      return (
-        <div className={styles.container} ref={ref}>
-          <p id={styles.title}>
-            {title} {essential && <span id={styles.essential}>*</span>}
-          </p>
-          <div className={styles.drowDownDiv}>
-            <button
-              onClick={dropDownHandler}
-              type="button"
-              className={styles.drowDownButton}
-            >
-              {' '}
-              <ArrowDown />
-            </button>
-          </div>
-        </div>
-      );
     case 'multiLine':
       return (
         <div className={styles.container}>
@@ -61,18 +35,42 @@ const InputModal = ({ title, essential, type }: InputModalProps) => {
             {title} {essential && <span id={styles.essential}>*</span>}
           </p>
           <textarea
-            rows={3}
+            rows={2}
             className={`${styles.input} ${styles.multiLineInput}`}
           />
         </div>
       );
-    case 'date':
+    case 'image':
       return (
         <div className={styles.container}>
           <p id={styles.title}>
             {title} {essential && <span id={styles.essential}>*</span>}
           </p>
-          <input className={styles.input} type="datetime-local" />
+          <div
+            className={`${selectedImagePath ? styles.imageContainer : styles.noImageDiv}`}
+          >
+            <label htmlFor="fileInput" className={styles.customFileInput}>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                className={styles.fileInput}
+              />
+              {selectedImagePath ? (
+                <div className={styles.imageDiv}>
+                  <Image
+                    fill
+                    src={selectedImagePath}
+                    alt="대시보드 이미지"
+                    className={styles.image}
+                  />
+                  <ImageEditIcon className={styles.editIcon} />
+                </div>
+              ) : (
+                <PlusIcon />
+              )}
+            </label>
+          </div>
         </div>
       );
     default:

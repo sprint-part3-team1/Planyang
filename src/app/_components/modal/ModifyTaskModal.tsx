@@ -1,6 +1,7 @@
 import React from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import InputModal from '@/app/_components/modal/InputModal';
+import Input from '../Input';
 import styles from './ModifyTaskModal.module.css';
 import ModalContainer from './ModalContainer';
 import CheckCancleButton from './CheckCancleButton';
@@ -13,14 +14,17 @@ const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
   };
   return (
     <ModalContainer title="할 일 수정">
-      <div className={styles.twoRowDiv}>
-        <StatusDropDown title="상태" />
-        <ManagerDropDown title="담당자" />
+      <div className={styles.container}>
+        <div className={styles.twoRowDiv}>
+          <StatusDropDown title="상태" />
+          <ManagerDropDown title="담당자" />
+        </div>
+        <Input inputName="제목" inputType="text" inputWidth={45} />
+        <InputModal title="설명" essential type="multiLine" />
+        <Input inputName="마감일" inputType="calendar" inputWidth={45} />
+        <Input inputName="태그" inputType="tag" inputWidth={45} />
+        <InputModal title="이미지" type="image" />
       </div>
-      <InputModal title="제목" essential />
-      <InputModal title="설명" essential type="multiLine" />
-      <InputModal title="마감일" type="date" />
-      <InputModal title="태그" />
       <CheckCancleButton
         checkText="수정"
         setOpenModalType={setOpenModalType}
