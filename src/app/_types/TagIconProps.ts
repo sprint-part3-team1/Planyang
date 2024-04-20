@@ -3,5 +3,5 @@ export interface TagIconProps {
   readonly tagStyleType: 'smallTag' | 'bigTag';
   readonly deleteOption: boolean;
 
-  onValueChange: Function;
+  onValueChange?: Function;
 }

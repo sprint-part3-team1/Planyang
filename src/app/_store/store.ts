@@ -11,7 +11,7 @@ import receivedInvitationReducer from '../_slice/receivedInvitationsSlice';
 
 const store = configureStore({
   reducer: {
-    regsiterData: registerDataReducer,
+    userResponse: registerDataReducer,
     loginData: loginDataReducer,
     cardData: cardDataReducer,
     columnData: columnDataReducer,

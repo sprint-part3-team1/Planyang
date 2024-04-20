@@ -2,34 +2,17 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
+import { LoginPayloadType } from '../_types/_redux/_apiPayload/payloadTypes';
+import { LoginStateType } from '../_types/_redux/_state/reduxState';
 
-interface LoginPayload {
-  email: string;
-  password: string;
-}
-
-interface LoginResponseType {
-  data: {
-    user: {
-      id: number;
-      email: string;
-      nickname: string;
-      profileImageUrl: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    accessToken: string;
-  } | null;
-}
-
-const initialState: LoginResponseType = {
+const initialState: LoginStateType = {
   data: null,
 };
 
 const asynchFetchSignIn = createAsyncThunk(
   'userDataSlice/asynchFetchSignIn',
 
-  async (loginData: LoginPayload) => {
+  async (loginData: LoginPayloadType) => {
     const { email, password } = loginData;
 
     const response = await axios.post(
@@ -52,7 +35,10 @@ const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       asynchFetchSignIn.fulfilled,
-      (state, action: PayloadAction<LoginResponseType['data']>) => {
+      (
+        state: LoginStateType,
+        action: PayloadAction<LoginStateType['data']>,
+      ) => {
         state.data = action.payload;
       },
     );
