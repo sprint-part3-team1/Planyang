@@ -1,0 +1,48 @@
+.headerWrapper {
+  width: 100%;
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  background-color: var(--black_000000);
+
+  &.backWhite {
+    background-color: var(--white_FFFFFF);
+  }
+}
+
+.headerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6rem;
+}
+
+.logoBox {
+  display: flex;
+  align-items: center;
+}
+
+.logoTitle {
+  display: block;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.signBox {
+  display: flex;
+  gap: 3rem;
+  font-size: var(--font16);
+  font-weight: var(--regular);
+  color: var(--white_FFFFFF);
+
+  &.backWhite {
+    color: var(--black_333236);
+  }
+
+  @media (max-width: 767px) {
+    font-size: var(--font14);
+  }
+}
