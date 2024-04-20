@@ -8,6 +8,7 @@ import NewDashboardModal from './NewDashboardModal';
 import ModifyTaskModal from './ModifyTaskModal';
 import InviteByEmailModal from './InviteByEmailModal';
 import WrongPasswordModal from './WrongPasswordModal';
+import CreateTaskModal from './CreateTaskModal';
 
 const ModalContents = ({
   openModalType,
@@ -67,6 +68,14 @@ const ModalContents = ({
     case MODAL_TYPES.wrongPassword:
       modalContent = (
         <WrongPasswordModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.createTask:
+      modalContent = (
+        <CreateTaskModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
         />

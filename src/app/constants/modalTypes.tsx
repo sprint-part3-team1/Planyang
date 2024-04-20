@@ -6,5 +6,6 @@ const MODAL_TYPES = {
   modifyTask: 'modifyTask',
   inviteByEmail: 'inviteByEmail',
   wrongPassword: 'wrongPassword',
+  createTask: 'createTask',
 };
 export default MODAL_TYPES;
