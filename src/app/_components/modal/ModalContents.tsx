@@ -9,6 +9,7 @@ import ModifyTaskModal from './ModifyTaskModal';
 import InviteByEmailModal from './InviteByEmailModal';
 import WrongPasswordModal from './WrongPasswordModal';
 import CreateTaskModal from './CreateTaskModal';
+import TaskCardModal from './taskCardModal/TaskCardModal';
 
 const ModalContents = ({
   openModalType,
@@ -76,6 +77,14 @@ const ModalContents = ({
     case MODAL_TYPES.createTask:
       modalContent = (
         <CreateTaskModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.taskCard:
+      modalContent = (
+        <TaskCardModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
         />

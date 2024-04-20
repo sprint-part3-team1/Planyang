@@ -35,6 +35,10 @@ const ModalPage = () => {
       name: '할 일 생성',
       type: MODAL_TYPES.createTask,
     },
+    {
+      name: '할 일 카드',
+      type: MODAL_TYPES.taskCard,
+    },
   ];
   return (
     <div>

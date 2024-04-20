@@ -8,7 +8,7 @@ const ModalPortal = ({
   openModalType,
   setOpenModalType,
 }: ModalPortalPropsType) => {
-  if (openModalType === '') return 'null';
+  if (openModalType === '') return null;
 
   const modalContent = ModalContents({
     modalType: openModalType,

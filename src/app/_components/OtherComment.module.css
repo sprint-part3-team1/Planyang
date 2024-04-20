@@ -1,0 +1,84 @@
+.otherCommentDiv {
+  width: 100%;
+  height: auto;
+  padding: 1.6rem 0rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.userInfoDiv {
+  display: flex;
+  height: 1.7rem;
+  flex-direction: row;
+  font-family: Pretendard;
+  font-style: normal;
+  line-height: normal;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+
+  & > #useName {
+    color: var(--black_333236);
+    font-size: var(--font14);
+    font-weight: 600;
+
+    @media (max-width: 767px) {
+      font-size: var(--font12);
+    }
+  }
+
+  & > #date {
+    color: var(--gray_9FA6B2);
+    font-size: var(--font12);
+    font-weight: 400;
+
+    @media (max-width: 767px) {
+      font-size: var(--font10);
+    }
+  }
+}
+.contentDiv {
+  width: auto;
+  height: auto;
+
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 1.2rem;
+
+  @media (max-width: 767px) {
+    font-size: var(--font12);
+    margin-bottom: 0.8rem;
+  }
+}
+
+.commentOptionsDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  @media (max-width: 767px) {
+    gap: 0.8rem;
+  }
+
+  & > .option {
+    border: none;
+    background-color: white;
+    color: var(--gray_9FA6B2);
+    font-family: Pretendard;
+    font-size: var(--font12);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    cursor: pointer;
+
+    @media (max-width: 767px) {
+      font-size: 10px;
+    }
+  }
+}
