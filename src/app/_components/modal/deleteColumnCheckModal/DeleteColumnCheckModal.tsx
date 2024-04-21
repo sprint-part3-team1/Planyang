@@ -1,8 +1,8 @@
 import React from 'react';
-import ModalContainer from '@/app/_components/modal/ModalContainer';
+import ModalContainer from '@/app/_components/modal/modalContainer/ModalContainer';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import styles from './DeleteColumnCheckModal.module.css';
-import CheckCancleButton from './CheckCancleButton';
+import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
 const DeleteColumnCheckModal = ({ setOpenModalType }: ModalPropsType) => {
   const deleteButtonHandler = () => {

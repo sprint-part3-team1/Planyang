@@ -1,8 +1,8 @@
 import React from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
-import ModalContainer from './ModalContainer';
+import ModalContainer from '../modalContainer/ModalContainer';
 import styles from './WrongPasswordModal.module.css';
-import CheckCancleButton from './CheckCancleButton';
+import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
 const WrongPasswordModal = ({ setOpenModalType }: ModalPropsType) => {
   const checkButtonHandler = () => {

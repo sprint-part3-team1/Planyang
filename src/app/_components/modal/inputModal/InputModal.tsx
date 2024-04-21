@@ -1,18 +1,18 @@
 import React, { useState, useRef, ChangeEvent } from 'react';
 import Image from 'next/image';
 import styles from './InputModal.module.css';
-import ImageEditIcon from '../../../../public/assets/icons/imageEditIcon.svg';
-import PlusIcon from '../../../../public/assets/icons/plusIcon.svg';
+import ImageEditIcon from '../../../../../public/assets/icons/imageEditIcon.svg';
+import PlusIcon from '../../../../../public/assets/icons/plusIcon.svg';
 
 /** 임의로 만든 input 입니다. */
 
 type InputModalProps = {
   title: string;
-  essential?: boolean;
   type: string;
+  essential?: boolean;
 };
 
-const InputModal = ({ title, essential, type }: InputModalProps) => {
+const InputModal = ({ title, type, essential }: InputModalProps) => {
   const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
     null,
   );
@@ -32,7 +32,7 @@ const InputModal = ({ title, essential, type }: InputModalProps) => {
       return (
         <div className={styles.container}>
           <p id={styles.title}>
-            {title} {essential && <span id={styles.essential}>*</span>}
+            {title} {essential && <span className={styles.essential}>*</span>}
           </p>
           <textarea
             rows={2}
@@ -44,7 +44,7 @@ const InputModal = ({ title, essential, type }: InputModalProps) => {
       return (
         <div className={styles.container}>
           <p id={styles.title}>
-            {title} {essential && <span id={styles.essential}>*</span>}
+            {title} {essential && <span className={styles.essential}>*</span>}
           </p>
           <div
             className={`${selectedImagePath ? styles.imageContainer : styles.noImageDiv}`}
@@ -52,6 +52,7 @@ const InputModal = ({ title, essential, type }: InputModalProps) => {
             <label htmlFor="fileInput" className={styles.customFileInput}>
               <input
                 type="file"
+                id="fileInput"
                 ref={fileInputRef}
                 onChange={handleImageChange}
                 className={styles.fileInput}
@@ -77,7 +78,7 @@ const InputModal = ({ title, essential, type }: InputModalProps) => {
       return (
         <div className={styles.container}>
           <p id={styles.title}>
-            {title} {essential && <span id={styles.essential}>*</span>}
+            {title} {essential && <span className={styles.essential}>*</span>}
           </p>
           <input className={styles.input} />
         </div>

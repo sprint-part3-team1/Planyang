@@ -1,12 +1,12 @@
 import React from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
-import InputModal from '@/app/_components/modal/InputModal';
-import Input from '../Input';
+import InputModal from '@/app/_components/modal/inputModal/InputModal';
+import Input from '../../Input';
 import styles from './ModifyTaskModal.module.css';
-import ModalContainer from './ModalContainer';
-import CheckCancleButton from './CheckCancleButton';
-import StatusDropDown from '../DropDown/StatusDropDown';
-import ManagerDropDown from '../DropDown/ManagerDropDown';
+import ModalContainer from '../modalContainer/ModalContainer';
+import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
+import StatusDropDown from '../../DropDown/StatusDropDown';
+import ManagerDropDown from '../../DropDown/ManagerDropDown';
 
 const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
   const modifyButtonHandler = () => {
