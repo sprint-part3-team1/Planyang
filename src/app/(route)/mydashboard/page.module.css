@@ -1,0 +1,19 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0px 0px 340px;
+  gap: 40px;
+}
+
+@media (max-width: 1023px) {
+  .content {
+    padding: 40px 0px 0px 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .content {
+    padding: 24px 0px 24px 91px;
+    gap: 24px;
+  }
+}
