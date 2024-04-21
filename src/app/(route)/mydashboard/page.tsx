@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
+import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
 import SideMenu from './_components/SideMenu';
@@ -14,18 +15,23 @@ export default function MyDashBoard() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(registerActions.asynchFetchgetUserInfo());
+    dispatch(dashBoardActions.asynchFetchGetDashBoard());
   }, []);
 
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
 
+  // 대시보드 데이터 입니다
+  const dashBoardDatas = useAppSelector(dashBoardData);
+  console.log(dashBoardDatas?.dashboards);
+
   return (
     <div>
       <DashboardListNavBar
-        nickname={userData.nickname}
+        nickname={userData ? userData.nickname : ''}
         profileImageUrl={userData?.profileImageUrl}
       />
-      <SideMenu />
+      <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
       <div className={styles.content}>
         <AddDashBoardButton />
         <DashInvite />
