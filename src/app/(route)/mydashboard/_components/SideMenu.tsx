@@ -1,7 +1,19 @@
+'use client';
+
 import Image from 'next/image';
+import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { useEffect } from 'react';
 import styles from './SideMenu.module.css';
 
 const SideMenu = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(dashBoardActions.asynchFetchGetDashBoard());
+  }, []);
+  const dashBoardDatas = useAppSelector(dashBoardData);
+  console.log(dashBoardDatas);
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
@@ -40,60 +52,32 @@ const SideMenu = () => {
 
       <div className={styles.listWrapper}>
         {/* 반복문으로 대시보드 띄워주기 */}
-        <a className={styles.dashList} href="/">
-          <div>
-            <Image
-              width={8}
-              height={8}
-              src={PROFILE_ELLIPSE_ICON_SRC}
-              alt="profileEllipse"
-            />
-          </div>
-          <span id={styles.dashBoardName}>대시보드1</span>
-          <Image
-            id={styles.crown}
-            width={17.59}
-            height={14}
-            src={CROWN_ICON_SRC}
-            alt="crown"
-          />
-        </a>
-        <a className={styles.dashList} href="/">
-          <div>
-            <Image
-              width={8}
-              height={8}
-              src={PROFILE_ELLIPSE_ICON_SRC}
-              alt="profileEllipse"
-            />
-          </div>
-          <span id={styles.dashBoardName}>대시보드2</span>
-          <Image
-            id={styles.crown}
-            width={17.59}
-            height={14}
-            src={CROWN_ICON_SRC}
-            alt="crown"
-          />
-        </a>
-        <a className={styles.dashList} href="/">
-          <div>
-            <Image
-              width={8}
-              height={8}
-              src={PROFILE_ELLIPSE_ICON_SRC}
-              alt="profileEllipse"
-            />
-          </div>
-          <span id={styles.dashBoardName}>대시보드3</span>
-          <Image
-            id={styles.crown}
-            width={17.59}
-            height={14}
-            src={CROWN_ICON_SRC}
-            alt="crown"
-          />
-        </a>
+        {dashBoardDatas?.dashboards.map((item) => {
+          return (
+            <a
+              className={styles.dashList}
+              href={`/dashboard/${item.id}`}
+              key={item.id}
+            >
+              <div>
+                <Image
+                  width={8}
+                  height={8}
+                  src={PROFILE_ELLIPSE_ICON_SRC}
+                  alt="profileEllipse"
+                />
+              </div>
+              <span id={styles.dashBoardName}>{item.title}</span>
+              <Image
+                id={styles.crown}
+                width={17.59}
+                height={14}
+                src={CROWN_ICON_SRC}
+                alt="crown"
+              />
+            </a>
+          );
+        })}
       </div>
     </div>
   );
