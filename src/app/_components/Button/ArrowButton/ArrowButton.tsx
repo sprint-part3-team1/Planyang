@@ -1,16 +1,36 @@
 import Image from 'next/image';
 import styles from './ArrowButton.module.css';
 
-const ArrowButton = ({ isActive = true }) => {
+interface ArrowButtonProps {
+  isActive: boolean;
+  onLeftButtonClick: () => void;
+  onRightButtonClick: () => void;
+}
+
+const ArrowButton = ({
+  isActive,
+  onLeftButtonClick,
+  onRightButtonClick,
+}: ArrowButtonProps) => {
   const LEFT_ARROW = '/assets/icons/leftArrow.svg';
   const RIGHT_ARROW = '/assets/icons/rightArrow.svg';
   const LEFT_ARROW_INACTIVE = '/assets/icons/leftArrowInActive.svg';
   const RIGHT_ARROW_INACTIVE = '/assets/icons/rightArrowInActive.svg';
+
+  const handleLeftButtonClick = () => {
+    onLeftButtonClick();
+  };
+
+  const handleRightButtonClick = () => {
+    onRightButtonClick();
+  };
+
   return (
     <div>
       <button
         type="button"
         className={isActive ? styles.arrowButton : styles.arrowButtonInActive}
+        onClick={handleLeftButtonClick}
       >
         <Image
           width={16}
@@ -22,6 +42,7 @@ const ArrowButton = ({ isActive = true }) => {
       <button
         type="button"
         className={isActive ? styles.arrowButton : styles.arrowButtonInActive}
+        onClick={handleRightButtonClick}
       >
         <Image
           width={16}
