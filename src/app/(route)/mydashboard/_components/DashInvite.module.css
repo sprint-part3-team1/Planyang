@@ -9,6 +9,17 @@
   box-shadow: 0rem 0.4rem 1rem var(--gray_EEEEEE);
   overflow-y: scroll;
 }
+.noContainer {
+  display: flex;
+  flex-direction: column;
+  width: 102.2rem;
+  height: 40rem;
+  padding: 3.2rem 0rem 0rem 0rem;
+  border-radius: 2rem;
+  background: var(--white_FFFFFF);
+  box-shadow: 0rem 0.4rem 1rem var(--gray_EEEEEE);
+  overflow-y: scroll;
+}
 
 .title {
   padding: 0rem 2.8rem;
@@ -31,6 +42,29 @@
   background: var(--white_FFFFFF);
   margin-left: 2.8rem;
   margin-bottom: 2rem;
+}
+
+.noSearchBar {
+  display: none;
+}
+
+.messageFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7rem;
+  gap: 2rem;
+}
+
+#message {
+  color: var(--gray_9FA6B2);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .searchBarContent {
@@ -103,6 +137,11 @@
     height: 59.2rem;
     flex-shrink: 0;
   }
+
+  .noContainer {
+    width: 50.4rem;
+    flex-shrink: 0;
+  }
   .searchBar {
     width: auto;
     height: 4rem;
@@ -122,6 +161,12 @@
     height: 83.6rem;
   }
 
+  .noContainer {
+    width: 26rem;
+    height: 40rem;
+    flex-shrink: 0;
+  }
+
   .title {
     padding: 0rem 1.6rem;
     font-size: 2rem;
@@ -132,6 +177,21 @@
     margin-left: 1.6rem;
     margin-right: 1.6rem;
   }
+
+  .messageFrame {
+    margin-top: 8rem;
+    gap: 2rem;
+  }
+
+  #unsubscribeImage {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  #message {
+    font-size: var(--font14);
+  }
+
   #input {
     width: 15rem;
     height: 3.4rem;
