@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { receivedInvitationActions } from '@/app/_slice/receivedInvitationsSlice';
 import Image from 'next/image';
 import AcceptButton from '@/app/_components/Button/AcceptButton/AcceptButton';
 import RejectButton from '@/app/_components/Button/RejectButton/RejectButton';
@@ -11,6 +13,7 @@ interface Props {
 }
 
 interface InviteData {
+  id: number;
   inviter: {
     nickname: string;
   };
@@ -24,6 +27,27 @@ const DashInvite = ({ inviteData }: Props) => {
   const UNSUBSCRIBE_IMAGE = '/assets/images/unsubscribe.svg';
 
   const [isMobile, setIsMobile] = useState(false);
+  const dispatch = useAppDispatch();
+
+  // 초대를 수락합니다 해당 초대목록이 state에서 삭제 됩니다
+  const acceptInvite = (invitationId: number) => {
+    dispatch(
+      receivedInvitationActions.asyncAcceptInvite({
+        invitationId,
+        isAccept: true,
+      }),
+    );
+  };
+
+  // 초대를 거절합니다 해당 초대목록이 state에서 삭제 됩니다
+  const rejectInvite = (invitationId: number) => {
+    dispatch(
+      receivedInvitationActions.asyncAcceptInvite({
+        invitationId,
+        isAccept: false,
+      }),
+    );
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -94,8 +118,8 @@ const DashInvite = ({ inviteData }: Props) => {
                       </span>
                     </div>
                     <div className={styles.buttonContainer}>
-                      <AcceptButton />
-                      <RejectButton />
+                      <AcceptButton onClick={() => acceptInvite(invite.id)} />
+                      <RejectButton onClick={() => rejectInvite(invite.id)} />
                     </div>
                   </div>
                 ))}
@@ -116,8 +140,8 @@ const DashInvite = ({ inviteData }: Props) => {
                       {invite.inviter.nickname}
                     </span>
                     <div className={styles.buttonContainer}>
-                      <AcceptButton />
-                      <RejectButton />
+                      <AcceptButton onClick={() => acceptInvite(invite.id)} />
+                      <RejectButton onClick={() => rejectInvite(invite.id)} />
                     </div>
                   </div>
                 ))}
