@@ -123,12 +123,15 @@ const columnSlice = createSlice({
         state.data = action.payload;
       },
     );
-    builder.addCase(
-      asyncFetchPutColumn.fulfilled,
-      (state, action: PayloadAction<ColumnStateType['data']>) => {
-        state.data = action.payload;
-      },
-    );
+    builder.addCase(asyncFetchPutColumn.fulfilled, (state, action) => {
+      const updateColumn = action.payload;
+      const index = state.data?.data?.findIndex(
+        (item) => item.id === updateColumn?.id,
+      );
+      if (index !== -1) {
+        state.data.data[index] = updateColumn;
+      }
+    });
     builder.addCase(asyncFetchDeleteColumn.fulfilled, (state, action) => {
       const columnId = action.payload;
       const updatedColumns = state.data?.data?.filter(

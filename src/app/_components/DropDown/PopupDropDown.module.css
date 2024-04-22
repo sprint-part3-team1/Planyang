@@ -1,0 +1,47 @@
+.container {
+  position: absolute;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  top: 6.3rem;
+  right: 9.7rem;
+  z-index: 3;
+  padding: 0.6rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--gray_D9D9D9);
+  background: var(--white_FFFFFF);
+  box-shadow: 0rem 0.4rem 2rem 0rem rgba(0, 0, 0, 0.08);
+
+  @media (max-width: 767px) {
+    top: 3.4rem;
+    right: 5.6rem;
+  }
+}
+
+.optionButton {
+  padding: 0.4rem 1.6rem;
+  color: var(--black_333236);
+  text-align: center;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  border-radius: 0.4rem;
+  border: none;
+  background-color: var(--white_FFFFFF);
+
+  @media (max-width: 767px) {
+    font-size: var(--font12);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: var(--violet_8);
+    color: var(--violet_5534DA);
+  }
+}

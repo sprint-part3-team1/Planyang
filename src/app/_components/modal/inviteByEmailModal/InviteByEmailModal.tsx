@@ -1,8 +1,8 @@
 import React from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
-import ModalContainer from './ModalContainer';
-import Input from '../Input';
-import CheckCancleButton from './CheckCancleButton';
+import ModalContainer from '../modalContainer/ModalContainer';
+import Input from '../../Input';
+import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
 const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
   const InviteButtonHandler = () => {
