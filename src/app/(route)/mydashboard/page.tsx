@@ -7,6 +7,7 @@ import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
+import DashBoardButton from '@/app/_components/Button/DashBoardButton/DashBoardButton';
 import SideMenu from './_components/SideMenu';
 import styles from './page.module.css';
 import DashInvite from './_components/DashInvite';
@@ -33,7 +34,19 @@ export default function MyDashBoard() {
       />
       <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
       <div className={styles.content}>
-        <AddDashBoardButton />
+        <div className={styles.dashBoardButtons}>
+          <AddDashBoardButton />
+          {dashBoardDatas?.dashboards.map((dashBoard, index) => {
+            return (
+              <DashBoardButton
+                key={index}
+                color={dashBoard.color}
+                createdByMe={dashBoard.createdByMe}
+                title={dashBoard.title}
+              />
+            );
+          })}
+        </div>
         <DashInvite />
       </div>
     </div>
