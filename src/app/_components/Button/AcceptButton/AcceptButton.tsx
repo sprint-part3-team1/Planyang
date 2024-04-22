@@ -1,8 +1,12 @@
 import styles from './AcceptButton.module.css';
 
-const AcceptButton = () => {
+interface AcceptButtonProps {
+  onClick: () => void;
+}
+
+const AcceptButton = ({ onClick }: AcceptButtonProps) => {
   return (
-    <button type="button" className={styles.acceptBtn}>
+    <button type="button" className={styles.acceptBtn} onClick={onClick}>
       수락
     </button>
   );
