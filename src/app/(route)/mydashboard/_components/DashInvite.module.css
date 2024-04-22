@@ -91,6 +91,12 @@
   line-height: normal;
 }
 
+.buttonContainer {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
 @media (max-width: 1023px) {
   .container {
     width: 50.4rem;
