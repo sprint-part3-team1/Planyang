@@ -21,4 +21,5 @@ export interface LoginStateType {
     };
     accessToken: string;
   } | null;
+  error: null | string;
 }

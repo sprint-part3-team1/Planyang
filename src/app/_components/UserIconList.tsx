@@ -54,7 +54,7 @@ const UserIconList = ({members, totalCount} : MemberListDto) => {
     }, [listStyle]);
 
     return (
-        <>
+        <div>
             {
                 listStyle ?
                     <div className={styles.entireWrapper} style={{width: calcWrapperWidth(Math.min(totalCount, 5))}}>
@@ -68,7 +68,7 @@ const UserIconList = ({members, totalCount} : MemberListDto) => {
                         }
                     </div>
             }
-        </>
+        </div>
     )
 }
 
