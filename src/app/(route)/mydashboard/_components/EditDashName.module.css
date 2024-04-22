@@ -88,3 +88,8 @@
     font-size: var(--font16);
   }
 }
+
+.circleBox {
+  display: flex;
+  gap: 10px;
+}

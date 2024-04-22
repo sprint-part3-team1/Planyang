@@ -7,12 +7,14 @@ import { DashboardListNavBarProps } from '@/app/_types/DashboardListNavBarProps'
 import ImageTextButton from '@/app/_components/Button/ImageTextButton';
 import Link from 'next/link';
 
+import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import styles from '../DashboardTypeNavBar.module.css';
 
 const DashboardListNavBar = ({
   nickname,
   profileImageUrl,
   boardId,
+  dashBoardTitle,
 }: DashboardListNavBarProps) => {
   const onClickButton = () => {
     console.log(' ');
@@ -23,10 +25,10 @@ const DashboardListNavBar = ({
   //     dashBoardDetailActions.asyncFetchGetDashBoardDetail
   //   )
   // }, [dispatch]);
-  console.log(boardId);
+
   return (
     <div className={styles.navbarWrapper}>
-      <div className={styles.navBarTitleWrapper}>내 대시보드</div>
+      <div className={styles.navBarTitleWrapper}>{dashBoardTitle}</div>
       <div className={styles.sideMenuWrapper}>
         <div className={styles.sideMenuButtonWrapper}>
           <Link href={`/dashboard/${boardId}/edit`}>

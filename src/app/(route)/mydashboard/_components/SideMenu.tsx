@@ -8,6 +8,7 @@ import {
 } from '@/app/_slice/dashBoardDetail';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import styles from './SideMenu.module.css';
+import DashBoardColorCircle from './DashBoardColorCircle';
 
 interface SideMenuPropsType {
   dashBoardData: DashBoardInformationType[];
@@ -48,6 +49,7 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
           src={VECTOR_ICON_SRC}
           alt="vector"
         />
+
         {/* onClick 모달창 연결 */}
       </div>
 
@@ -69,12 +71,7 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
               }}
             >
               <div>
-                <Image
-                  width={8}
-                  height={8}
-                  src={PROFILE_ELLIPSE_ICON_SRC}
-                  alt="profileEllipse"
-                />
+                <DashBoardColorCircle color={item.color} />
               </div>
               <span id={styles.dashBoardName}>{item.title}</span>
               <Image
