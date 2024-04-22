@@ -202,12 +202,16 @@ const cardSlice = createSlice({
         state.data = action.payload;
       },
     );
-    builder.addCase(
-      asyncFetchPutCard.fulfilled,
-      (state, action: PayloadAction<CardActionResponseType['data']>) => {
-        state.data = action.payload;
-      },
-    );
+    builder.addCase(asyncFetchPutCard.fulfilled, (state, action) => {
+      // state.data = action.payload;
+      const updateCard = action.payload;
+      const index = state.data?.cards.findIndex(
+        (item) => item.id === updateCard.id,
+      );
+      if (index !== -1) {
+        state.data.cards[index] = updateCard;
+      }
+    });
     builder.addCase(
       asyncFetchGetCard.fulfilled,
       (state, action: PayloadAction<CardActionResponseType['data']>) => {

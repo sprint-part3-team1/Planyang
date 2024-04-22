@@ -1,0 +1,26 @@
+.editBtn {
+  /* 버튼 */
+  display: flex;
+  width: 8.4rem;
+  height: 3.2rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.4rem;
+  border: none;
+  background: var(--violet_5534DA);
+
+  /* 글자 */
+  color: var(--white_FFFFFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+}
+
+@media (max-width: 767px) {
+  .editBtn {
+    height: 2.8rem;
+  }
+}
