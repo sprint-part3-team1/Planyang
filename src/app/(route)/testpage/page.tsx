@@ -320,7 +320,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('plan123123@test.com', '플래냥3', 'AS123456');
+            submitRegistration('honghong@test.com', '플래냥3', 'AS123456');
           }}
         >
           회원가입
@@ -329,12 +329,12 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitLogin('plan123123@test.com', 'AS123456');
+            submitLogin('honghong@test.com', 'AS123456');
           }}
         >
           로그인
         </button>
-        <div>{loginDatas.error}</div>
+
         <button
           type="button"
           onClick={() => {
@@ -379,7 +379,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            createDashBoard('테스트 대시보드5', '#E876EA');
+            createDashBoard('테스트 대시보드3', '#E876EA');
           }}
         >
           대시보드 추가하기
@@ -387,9 +387,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-
             deleteDashBoard(6025);
-
           }}
         >
           대시보드 삭제하기
@@ -423,7 +421,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            getMyInvitationList(6025);
+            getMyInvitationList(6362);
           }}
         >
           내가 보낸 초대목록 가져오기
@@ -431,7 +429,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            inviteUserToDashBoard('planyang2@test.com', 6025);
+            inviteUserToDashBoard('planyang2@test.com', 6362);
           }}
         >
           유저 대시보드로 초대하기

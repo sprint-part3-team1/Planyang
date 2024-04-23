@@ -1,5 +1,5 @@
 const DashBoardEditPage = () => {
-  return <div>123</div>;
+  return <div />;
 };
 
 export default DashBoardEditPage;

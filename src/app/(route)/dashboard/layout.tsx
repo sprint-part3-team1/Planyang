@@ -19,9 +19,8 @@ export default function Layout({
 
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
 
-  console.log(params.id);
   const dashBoardDatas = useAppSelector(dashBoardData);
-  console.log(dashBoardDatas?.dashboards);
+
   const userData = useAppSelector(userResponse);
   // 내가 초대를 받은 목록의 데이터입니다
 

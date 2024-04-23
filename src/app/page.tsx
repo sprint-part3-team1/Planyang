@@ -295,7 +295,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            inviteUserToDashBoard('planyang2@test.com', 6025);
+            inviteUserToDashBoard('planyang2@test.com', 6315);
           }}
         >
           유저 대시보드로 초대하기

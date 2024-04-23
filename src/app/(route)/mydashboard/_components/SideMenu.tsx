@@ -7,6 +7,7 @@ import {
   dashBoardDetailActions,
 } from '@/app/_slice/dashBoardDetail';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import Link from 'next/link';
 import styles from './SideMenu.module.css';
 import DashBoardColorCircle from './DashBoardColorCircle';
 
@@ -58,7 +59,7 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
 
         {dashBoardData?.map((item) => {
           return (
-            <a
+            <Link
               className={styles.dashList}
               href={`/dashboard/${item.id}`}
               key={item.id}
@@ -81,7 +82,7 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
                 src={CROWN_ICON_SRC}
                 alt="crown"
               />
-            </a>
+            </Link>
           );
         })}
       </div>
