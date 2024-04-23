@@ -3,7 +3,7 @@
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
-import { loginActions } from '@/app/_slice/loginSlice';
+import { loginData, loginActions } from '@/app/_slice/loginSlice';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import {
   invitationActions,
@@ -23,8 +23,12 @@ import { cardActions, cardData } from '@/app/_slice/cardSlice';
 const TestPage = () => {
   const dispatch = useAppDispatch();
 
+  const loginDatas = useAppSelector(loginData);
+  console.log(loginDatas);
+
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
+  console.log(userData);
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
@@ -316,19 +320,21 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('plan3@test.com', '플래냥3', 'AS650103');
+            submitRegistration('plan123123@test.com', '플래냥3', 'AS123456');
           }}
         >
           회원가입
         </button>
+
         <button
           type="button"
           onClick={() => {
-            submitLogin('planyang2@test.com', 'AS650103');
+            submitLogin('plan123123@test.com', 'AS123456');
           }}
         >
           로그인
         </button>
+        <div>{loginDatas.error}</div>
         <button
           type="button"
           onClick={() => {
@@ -373,7 +379,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            createDashBoard('테스트 대시보드7', '#9babaa');
+            createDashBoard('테스트 대시보드5', '#E876EA');
           }}
         >
           대시보드 추가하기
@@ -381,7 +387,9 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            deleteDashBoard(1673);
+
+            deleteDashBoard(6025);
+
           }}
         >
           대시보드 삭제하기
