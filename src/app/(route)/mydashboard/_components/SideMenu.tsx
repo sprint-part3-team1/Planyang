@@ -2,10 +2,7 @@
 
 import Image from 'next/image';
 import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
-import {
-  dashBoardDetailData,
-  dashBoardDetailActions,
-} from '@/app/_slice/dashBoardDetail';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import Link from 'next/link';
 import styles from './SideMenu.module.css';
@@ -20,7 +17,6 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
-  const PROFILE_ELLIPSE_ICON_SRC = '/assets/icons/profileEllipse.svg';
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
   return (
     <div className={styles.container}>

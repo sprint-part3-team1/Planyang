@@ -24,11 +24,10 @@ const TestPage = () => {
   const dispatch = useAppDispatch();
 
   const loginDatas = useAppSelector(loginData);
-  console.log(loginDatas);
 
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
-  console.log(userData);
+  console.log(loginDatas);
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
@@ -329,7 +328,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitLogin('honghong@test.com', 'AS123456');
+            submitLogin('honghonsddsg@test.com', 'AS123456');
           }}
         >
           로그인

@@ -21,7 +21,7 @@ const asynchFetchSignIn = createAsyncThunk(
       );
       const { accessToken } = response.data;
       localStorage.setItem('accessToken', accessToken);
-      console.log(response);
+
       return response;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -57,6 +57,7 @@ const loginSlice = createSlice({
         const payload = action.payload as { status?: number };
         return {
           ...state,
+          data: null,
           status: payload?.status || 'FAILED',
         };
       },
