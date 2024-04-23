@@ -43,6 +43,10 @@ const ModalPage = () => {
       name: '비밀번호 틀렸습니다 로그인 페이지',
       type: MODAL_TYPES.wrongPasswordLogin,
     },
+    {
+      name: '가입이 완료되었습니다 로그인 페이지',
+      type: MODAL_TYPES.signup,
+    },
   ];
   return (
     <div>
