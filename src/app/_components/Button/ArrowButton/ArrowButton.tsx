@@ -2,13 +2,15 @@ import Image from 'next/image';
 import styles from './ArrowButton.module.css';
 
 interface ArrowButtonProps {
-  isActive: boolean;
+  isLeftActive: boolean;
+  isRightActive: boolean;
   onLeftButtonClick: () => void;
   onRightButtonClick: () => void;
 }
 
 const ArrowButton = ({
-  isActive,
+  isLeftActive,
+  isRightActive,
   onLeftButtonClick,
   onRightButtonClick,
 }: ArrowButtonProps) => {
@@ -29,25 +31,29 @@ const ArrowButton = ({
     <div>
       <button
         type="button"
-        className={isActive ? styles.arrowButton : styles.arrowButtonInActive}
+        className={
+          isLeftActive ? styles.arrowButton : styles.arrowButtonInActive
+        }
         onClick={handleLeftButtonClick}
       >
         <Image
           width={16}
           height={16}
-          src={isActive ? LEFT_ARROW : LEFT_ARROW_INACTIVE}
+          src={isLeftActive ? LEFT_ARROW : LEFT_ARROW_INACTIVE}
           alt="leftArrow"
         />
       </button>
       <button
         type="button"
-        className={isActive ? styles.arrowButton : styles.arrowButtonInActive}
+        className={
+          isRightActive ? styles.arrowButton : styles.arrowButtonInActive
+        }
         onClick={handleRightButtonClick}
       >
         <Image
           width={16}
           height={16}
-          src={isActive ? RIGHT_ARROW : RIGHT_ARROW_INACTIVE}
+          src={isRightActive ? RIGHT_ARROW : RIGHT_ARROW_INACTIVE}
           alt="rightArrow"
         />
       </button>

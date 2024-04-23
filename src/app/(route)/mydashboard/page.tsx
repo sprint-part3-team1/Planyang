@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
@@ -19,60 +19,65 @@ import DashInvite from './_components/DashInvite';
 
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
-
-  // 현재 로그인한 유저의 정보가 담긴 데이터 입니다
   const userData = useAppSelector(userResponse);
-
-  // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
-  // console.log(dashBoardDatas?.dashboards);
-
-  // 내가 초대를 받은 목록의 데이터입니다
   const receivedInvitationDatas = useAppSelector(receivedInvitationData);
-  // console.log(receivedInvitationDatas?.invitations);
+
+  const [page, setPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [isLeftActive, setIsLeftActive] = useState<boolean>(false);
+  const [isRightActive, setIsRightActive] = useState<boolean>(false);
 
   const handleLeftButtonClick = () => {
     // 좌측 버튼을 클릭했을 때의 동작 구현
-    console.log('좌측버튼');
+    if (isLeftActive) {
+      console.log('페이지 -1');
+      setPage(page - 1);
+    }
   };
 
   const handleRightButtonClick = () => {
     // 우측 버튼을 클릭했을 때의 동작 구현
-    console.log('우측버튼');
+    if (isRightActive) {
+      console.log('페이지 +1');
+      setPage(page + 1);
+    }
   };
 
+  // console.log(dashBoardDatas?.totalCount);
+  // console.log(dashBoardDatas?.dashboards);
+  // console.log(receivedInvitationDatas?.invitations);
+
   useEffect(() => {
-    const fetchGetUserInfo = async () => {
-      try {
-        await dispatch(registerActions.asynchFetchgetUserInfo());
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
-    };
+    dispatch(registerActions.asynchFetchgetUserInfo());
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(page));
+    dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
+  }, [dispatch, page]);
 
-    const fetchGetDashBoard = async () => {
-      try {
-        await dispatch(dashBoardActions.asynchFetchGetDashBoard());
-      } catch (error) {
-        console.error('Error fetching dashboard:', error);
-      }
-    };
+  useEffect(() => {
+    if (dashBoardDatas) {
+      setTotalCount(dashBoardDatas?.totalCount);
+      console.log(totalCount);
+      setTotalPages(Math.ceil(totalCount / 5));
+    }
+  }, [dashBoardDatas, totalCount]);
 
-    const getReceivedInvitations = async () => {
-      try {
-        await dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
-      } catch (error) {
-        console.error('Error fetching received invitations:', error);
-      }
-    };
-
-    fetchGetUserInfo();
-    fetchGetDashBoard();
-    getReceivedInvitations();
-    // dispatch(registerActions.asynchFetchgetUserInfo());
-    // dispatch(dashBoardActions.asynchFetchGetDashBoard());
-    // dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
-  }, [dispatch]);
+  useEffect(() => {
+    if (page === 1 && totalPages === 1) {
+      setIsLeftActive(false);
+      setIsRightActive(false);
+    } else if (page === 1 && totalPages > page) {
+      setIsLeftActive(false);
+      setIsRightActive(true);
+    } else if (page > 1 && page < totalPages) {
+      setIsLeftActive(true);
+      setIsRightActive(true);
+    } else if (page === totalPages) {
+      setIsLeftActive(true);
+      setIsRightActive(false);
+    }
+  }, [page, totalPages]);
 
   return (
     <div>
@@ -96,9 +101,12 @@ export default function MyDashBoard() {
           })}
         </div>
         <div className={styles.paginationFrame}>
-          <span>1페이지 중 1</span>
+          <span>
+            {totalPages} 페이지 중 {page} 페이지
+          </span>
           <ArrowButton
-            isActive
+            isLeftActive={isLeftActive}
+            isRightActive={isRightActive}
             onLeftButtonClick={handleLeftButtonClick}
             onRightButtonClick={handleRightButtonClick}
           />

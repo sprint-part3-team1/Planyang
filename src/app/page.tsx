@@ -19,7 +19,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    getMyDashBoard();
+    // getMyDashBoard();
   }, []);
 
   useEffect(() => {

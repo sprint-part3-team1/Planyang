@@ -13,7 +13,7 @@ const SideMenu = () => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard());
   }, []);
   const dashBoardDatas = useAppSelector(dashBoardData);
-  console.log(dashBoardDatas);
+  // console.log(dashBoardDatas);
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
