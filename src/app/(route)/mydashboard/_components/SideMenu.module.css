@@ -71,6 +71,13 @@
     text-align: center;
     width: 6.7rem;
   }
+
+  .listWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .dashList {
     display: block;
   }
