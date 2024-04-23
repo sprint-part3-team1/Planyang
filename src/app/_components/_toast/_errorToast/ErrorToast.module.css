@@ -1,0 +1,37 @@
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes canView {
+    0% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+.errorToastWrapper {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+
+    bottom: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background-color: #FFD2D2;
+    border: 1px solid #FFA1A1;
+    color: #333;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+    font-size: var(--font14);
+    opacity: 0;
+    z-index: 99;
+
+    animation: fadeIn 0.5s, canView 2s 0.5s, fadeOut 1.5s 2s;
+}
