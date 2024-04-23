@@ -12,6 +12,7 @@ import CreateTaskModal from './createTaskModal/CreateTaskModal';
 import TaskCardModal from './taskCardModal/TaskCardModal';
 import WrongPasswordLoginModal from './wrongPasswordLoginModal/WrongPasswordLoginModal';
 import SignupModal from './signupModal/SignupModal';
+import EmailInUseModal from './emailInUseModal/EmailInUseModal';
 
 const ModalContents = ({
   openModalType,
@@ -103,6 +104,14 @@ const ModalContents = ({
     case MODAL_TYPES.signup:
       modalContent = (
         <SignupModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.emailInUse:
+      modalContent = (
+        <EmailInUseModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
         />
