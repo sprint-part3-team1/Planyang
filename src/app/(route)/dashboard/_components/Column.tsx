@@ -1,56 +1,133 @@
 import Image from 'next/image';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import MODAL_TYPES from '@/app/constants/modalTypes';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import axios from 'axios';
+import { CardResponseType } from '@/app/_slice/cardSlice';
 import styles from './Column.module.css';
 import Card from './Card';
 
-const Column = () => {
-  // 흘러가는 로직 정리 : 일단 '/mydashboard'페이지에서 해당 데시보드를 클릭하면
-  // '/dashboard/{dashboardid}'로 이동
+const axiosInstance = axios.create({
+  baseURL: `https://sp-taskify-api.vercel.app/4-1/`,
+  timeout: 5000,
+});
 
-  // 1. 이때 dashboardid를 가지고 !!컬럼 조회!! 를 한다.
-  // -> 조회한 컬럼 데이터들 중에서 id와 title을 가져와서
-  // -> title은 해당 컬럼의 제목에 적고
-  // -> id로는 !!카드 조회!!를 한다. (columnId)
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
-  // 2. 그 결과 나온 데이터들 중에서
-  // -> title, tags, dueDate, profileImageUrl, nickname, imageUrl를 사용하여
-  // -> 카드 호출
+interface DashboardIdTypes {
+  Columns: {
+    createdAt: string;
+    dashboardId: number;
+    id: number;
+    teamId: string;
+    title: string;
+    updatedAt: string;
+  };
+}
 
-  // 받을 데이터 : 현재 컬럼 이름과 현재 컬럼에 해당되는 카드 데이터들
+interface Props {
+  columnData: DashboardIdTypes['Columns'];
+  cardInfo: Record<string, CardResponseType[]> | undefined;
+  setCardInfo: Dispatch<
+    SetStateAction<Record<string, CardResponseType[]> | undefined>
+  >;
+  totalCount: Record<number, number> | undefined;
+  setTotalCount: Dispatch<SetStateAction<Record<number, number> | undefined>>;
+}
+
+const Column = ({
+  columnData,
+  cardInfo,
+  setCardInfo,
+  totalCount,
+  setTotalCount,
+}: Props) => {
   const ELLIPSE_ICON = '/assets/icons/profileEllipse.svg';
   const SETTING_ICON = '/assets/icons/setting.svg';
+
+  const GET_CARDS = 10;
+
+  const [pages, setPages] = useState<number>(GET_CARDS);
+  const [openModalType, setOpenModalType] = useState('');
+
+  const viewCards = async (columId: number) => {
+    await axiosInstance
+      .get(`cards?size=${pages}&columnId=${columId}`)
+      .then((res) => {
+        setCardInfo((prev) => ({
+          ...prev,
+          [columId]: res.data.cards,
+        }));
+        setTotalCount((prev) => ({
+          ...prev,
+          [columId]: res.data.totalCount,
+        }));
+      })
+      .catch((err) => alert(`카드 목록 조회 실패(${err})`));
+  };
+
+  useEffect(() => {
+    viewCards(columnData.id);
+  }, [pages]);
+
+  const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
         <div className={styles.columnName}>
           <Image width={8} height={8} src={ELLIPSE_ICON} alt="ellipseIcon" />
-          <span>On Progress</span>
-          <div className={styles.cardCount}>2</div>
+          <span>{columnData.title}</span>
+          <div className={styles.cardCount}>
+            {totalCount && totalCount[columnData.id]}
+          </div>
         </div>
-        <Image
-          id={styles.settingIcon}
-          width={24}
-          height={24}
-          src={SETTING_ICON}
-          alt="settingIcon"
-        />
+        <button
+          type="button"
+          className={styles.columnSettingButton}
+          onClick={() => setOpenModalType(MODAL_TYPES.columnManagement)}
+        >
+          <Image
+            id={styles.settingIcon}
+            width={24}
+            height={24}
+            src={SETTING_ICON}
+            alt="settingIcon"
+          />
+        </button>
       </div>
       <div className={styles.cardSection}>
-        <AddTodoButton />
-        <Card
-          nickname="Banana"
-          title="새로운 일정 관리 Taskify"
-          tagNameArr={['프로젝트', '백엔드']}
-          date="2022.12.31"
-        />
-        <Card
-          nickname="Banana"
-          title="새로운 일정 관리 Taskify"
-          tagNameArr={['프로젝트', '백엔드']}
-          date="2022.12.31"
-          image="/assets/images/logoImg.svg"
-        />
+        <div onClick={() => setOpenModalType(MODAL_TYPES.createTask)}>
+          <AddTodoButton />
+        </div>
+        {cardDataList.map((card) => (
+          <Card
+            key={card.id}
+            nickname={card.assignee.nickname}
+            profileImageUrl={card.assignee.profileImageUrl}
+            title={card.title}
+            tagNameArr={card.tags}
+            date={card.dueDate}
+            image={null}
+          />
+        ))}
       </div>
+      <ModalPortal
+        openModalType={openModalType}
+        setOpenModalType={setOpenModalType}
+      />
     </div>
   );
 };
