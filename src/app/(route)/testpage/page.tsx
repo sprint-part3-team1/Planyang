@@ -24,11 +24,10 @@ const TestPage = () => {
   const dispatch = useAppDispatch();
 
   const loginDatas = useAppSelector(loginData);
-  console.log(loginDatas);
 
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
-  console.log(userData);
+  console.log(loginDatas);
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
@@ -320,7 +319,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('plan123123@test.com', '플래냥3', 'AS123456');
+            submitRegistration('honghong@test.com', '플래냥3', 'AS123456');
           }}
         >
           회원가입
@@ -329,12 +328,12 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitLogin('plan123123@test.com', 'AS123456');
+            submitLogin('honghonsddsg@test.com', 'AS123456');
           }}
         >
           로그인
         </button>
-        <div>{loginDatas.error}</div>
+
         <button
           type="button"
           onClick={() => {
@@ -379,7 +378,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            createDashBoard('테스트 대시보드5', '#E876EA');
+            createDashBoard('테스트 대시보드3', '#E876EA');
           }}
         >
           대시보드 추가하기
@@ -387,9 +386,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-
             deleteDashBoard(6025);
-
           }}
         >
           대시보드 삭제하기
@@ -423,7 +420,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            getMyInvitationList(6025);
+            getMyInvitationList(6362);
           }}
         >
           내가 보낸 초대목록 가져오기
@@ -431,7 +428,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            inviteUserToDashBoard('planyang2@test.com', 6025);
+            inviteUserToDashBoard('planyang2@test.com', 6362);
           }}
         >
           유저 대시보드로 초대하기

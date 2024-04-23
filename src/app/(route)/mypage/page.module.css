@@ -1,0 +1,26 @@
+.container {
+  padding-left: 32rem;
+
+  @media (max-width: 1023px) {
+    padding-left: 18rem;
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 8rem;
+  }
+}
+
+.goBackDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 2rem;
+
+  color: var(--black_33323);
+  font-family: Pretendard;
+  font-size: var(--font16);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

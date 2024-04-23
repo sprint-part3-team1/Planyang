@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
@@ -30,20 +30,22 @@ interface InivitationsType {
     invitations: [] | InivationInformationType[];
     totalCount: number;
   } | null;
+  page: number;
 }
 
 const initialState: InivitationsType = {
   data: null,
+  page: 1,
 };
 
 const asynchGetMyInvitation = createAsyncThunk(
   'invitationSlice/asynchGetMyInvitation',
 
-  async (dashBoardId: number) => {
+  async (dashBoardId: number | undefined) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/dashboards/${dashBoardId}/invitations?page=1&size=10`,
+      `https://sp-taskify-api.vercel.app/4-1/dashboards/${dashBoardId}/invitations?page=1&size=15`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -114,7 +116,6 @@ const invitationSlice = createSlice({
       asynchFetchinviteUserToDashboard.fulfilled,
       (state, action: PayloadAction<InivationInformationType>) => {
         state.data?.invitations.unshift(action.payload);
-        state.data.totalCount++;
       },
     );
 

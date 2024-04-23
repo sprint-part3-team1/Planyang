@@ -3,10 +3,37 @@
 import React, { useState, useEffect } from 'react';
 import CancelButton from '@/app/_components/Button/CancelButton/CancelButton';
 import InviteButton from '@/app/_components/Button/InviteButton/InviteButton';
+import {
+  invitationData,
+  invitationActions,
+} from '@/app/_slice/invitationSlice';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
+
 import ArrowButton from '../../../_components/Button/ArrowButton/ArrowButton';
 import styles from './TableInvite.module.css';
 
 const TableInvite = () => {
+  const dispatch = useAppDispatch();
+  const dashBoardDatas = useAppSelector(dashBoardDetailData);
+  const invitationDatas = useAppSelector(invitationData);
+  console.log(dashBoardDatas?.id);
+
+  const getMyInvitationList = (dashBoardId: number | undefined) => {
+    dispatch(invitationActions.asynchGetMyInvitation(dashBoardId));
+  };
+
+  const cancleInvitation = (dashBoardId: number, invitationId: number) => {
+    dispatch(
+      invitationActions.asynchFetchDeleteInvited({
+        dashBoardId,
+        invitationId,
+      }),
+    );
+  };
+  // console.log('초오옹대목록');
+  // console.log(invitationDatas);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -22,13 +49,16 @@ const TableInvite = () => {
     };
   }, []);
 
-  const emailData = [
-    'codeitA@codeit.com',
-    'codeitB@codeit.com',
-    'codeitC@codeit.com',
-    'codeitD@codeit.com',
-    'codeitE@codeit.com',
-  ];
+  useEffect(() => {
+    if (dashBoardDatas?.id) {
+      getMyInvitationList(dashBoardDatas.id);
+    }
+  }, [dashBoardDatas]);
+
+  const handleClickCancel = (dashBoardId: number, invitationId: number) => {
+    cancleInvitation(dashBoardId, invitationId);
+  };
+ 
 
   return (
     <div className={styles.container}>
@@ -45,12 +75,18 @@ const TableInvite = () => {
         {isMobile ? <InviteButton /> : null}
       </div>
 
-      {emailData.map((email, index) => (
-        <div key={index} className={styles.emailContainer}>
-          <span id={styles.emailName}>{email}</span>
-          <CancelButton />
-        </div>
-      ))}
+      {invitationDatas?.invitations.map((item) => {
+        return (
+          <div key={item.id} className={styles.emailContainer}>
+            <span id={styles.emailName}>{item.inviter.email}</span>
+            <CancelButton
+              boardId={dashBoardDatas?.id}
+              invitationId={item.id}
+              onClick={handleClickCancel}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

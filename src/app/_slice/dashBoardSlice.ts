@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
 
-interface DashBoardInformationType {
+export interface DashBoardInformationType {
   id: number;
   title: string;
   color: string;

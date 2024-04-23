@@ -18,6 +18,10 @@ const Home = () => {
   const dashBoardDatas = useAppSelector(dashBoardData);
   const router = useRouter();
 
+  const getMyDashBoard = () => {
+    dispatch(dashBoardActions.asynchFetchGetDashBoard());
+  };
+
   useEffect(() => {
     // getMyDashBoard();
   }, []);
@@ -35,9 +39,11 @@ const Home = () => {
       <div className={styles.mainCardDiv}>
         <Image fill src={mainLandingCard} alt="랜딩페이지 메인카드" />
       </div>
+
       <div className={styles.headlineDiv}>
         <span id={styles.first}>새로운 일정 관리</span>
         <span id={styles.second}>Taskify</span>
+
       </div>
       <p id={styles.explanation}>서비스의 메인 설명 들어갑니다.</p>
       <button type="button" className={styles.loginButton}>
