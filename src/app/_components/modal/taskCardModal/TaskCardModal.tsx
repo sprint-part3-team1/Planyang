@@ -43,13 +43,6 @@ const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
       오늘안에 오늘안에 오늘안에`,
       date: '2022.13.14 13:00',
     },
-    {
-      id: 1,
-      writer: '정만칠',
-      content: `오늘안에 오늘안에 오늘안에 오늘안에
-      오늘안에 오늘안에 오늘안에`,
-      date: '2022.13.14 13:00',
-    },
   ];
 
   const [myCommentInputValue, setMyCommentInputValue] = useState('');
