@@ -80,7 +80,7 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
                   alt="crown"
                 />
               )}
-            </a>
+            </Link>
           );
         })}
       </div>
