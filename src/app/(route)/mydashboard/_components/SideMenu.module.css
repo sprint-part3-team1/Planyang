@@ -53,6 +53,17 @@
     width: 1.5rem;
     height: 1.2rem;
   }
+
+  #dashBoardName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+    max-width: 100%; /* 최대 너비를 부모 요소의 너비로 설정 */
+  }
+
+  #dashBoardName:hover {
+    white-space: normal; /* 마우스를 갖다 대면 텍스트가 보이도록 설정 */
+  }
 }
 
 @media (max-width: 767px) {

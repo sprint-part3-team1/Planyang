@@ -3,7 +3,7 @@
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
-import { loginActions } from '@/app/_slice/loginSlice';
+import { loginData, loginActions } from '@/app/_slice/loginSlice';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import {
   invitationActions,
@@ -13,14 +13,22 @@ import {
   receivedInvitationActions,
   receivedInvitationData,
 } from '@/app/_slice/receivedInvitationsSlice';
+import { memberActions, memberData } from '@/app/_slice/memberSlice';
+import { columnActions, columnData } from '@/app/_slice/columnSlice';
+import { cardActions, cardData } from '@/app/_slice/cardSlice';
+
 // 테스트 계정1 planyang1@test.com AS650103
 // 테스트 계정2 planyang2@test.com AS650103
 
 const TestPage = () => {
   const dispatch = useAppDispatch();
 
+  const loginDatas = useAppSelector(loginData);
+  console.log(loginDatas);
+
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
+  console.log(userData);
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
@@ -30,6 +38,15 @@ const TestPage = () => {
 
   // 내가 초대를 받은 목록의 데이터입니다
   const receivedInvitationDatas = useAppSelector(receivedInvitationData);
+
+  // 대시보드 멤버 데이터 입니다.
+  const memberDatas = useAppSelector(memberData);
+
+  // 칼럼 데이터 입니다.
+  const columnDatas = useAppSelector(columnData);
+
+  // 칼럼 내의 카드 데이터 입니다.
+  const cardDatas = useAppSelector(cardData);
 
   // 회원가입 함수 파라미터로 이메일, 닉네임, 패스워드를 받습니다 회원가입이 성공하면 유저데이터에 회원가입을한 유저의 정보가 저장됩니다
   const submitRegistration = (
@@ -170,6 +187,127 @@ const TestPage = () => {
     );
   };
 
+  // 대시보드 멤버 목록을 조회합니다
+  const getMemberList = (dashboardId: number) => {
+    dispatch(
+      memberActions.asyncGetMembers({
+        dashboardId,
+      }),
+    );
+  };
+
+  // 대시보드 멤버를 삭제합니다
+  const deleteMember = (memberId: number) => {
+    dispatch(
+      memberActions.asyncDeleteMember({
+        memberId,
+      }),
+    );
+  };
+
+  // 칼럼 제목과 대시보드 Id를 prop으로 받아서 해당 대시보드 id에 칼럼을 생성합니다
+  const createColumn = (title: string, dashboardId: number) => {
+    dispatch(
+      columnActions.asyncFetchCreateColumn({
+        title,
+        dashboardId,
+      }),
+    );
+  };
+
+  // 해당 대시보드에 있는 칼럼들을 조회합니다
+  const getColumn = (dashboardId: number) => {
+    dispatch(
+      columnActions.asyncFetchGetColumn({
+        dashboardId,
+      }),
+    );
+  };
+
+  // 칼럼의 제목을 수정합니다
+  const updateColumn = (columnId: number, title: string) => {
+    dispatch(
+      columnActions.asyncFetchPutColumn({
+        columnId,
+        title,
+      }),
+    );
+  };
+
+  // 칼럼을 삭제합니다
+  const deleteColumn = (columnId: number) => {
+    dispatch(
+      columnActions.asyncFetchDeleteColumn({
+        columnId,
+      }),
+    );
+  };
+
+  // dueDate, tags, imageUrl에 값을 null로 해도 괜찮습니다
+  const createCard = (
+    assigneeUserId: number,
+    dashboardId: number,
+    columnId: number,
+    title: string,
+    description: string,
+    dueDate: string,
+    tags: [string],
+    imageUrl: string,
+  ) => {
+    dispatch(
+      cardActions.asyncFetchCreateCard({
+        assigneeUserId,
+        dashboardId,
+        columnId,
+        title,
+        description,
+        dueDate,
+        tags,
+        imageUrl,
+      }),
+    );
+  };
+
+  // 해당 컬럼의 카드 목록을 조회합니다
+  const getCardList = (columnId: number) => {
+    dispatch(cardActions.asyncFetchGetCards({ columnId }));
+  };
+
+  // 카드를 수정합니다
+  const updateCard = (
+    columnId: number,
+    id: number, // assigneeUserId
+    cardId: number,
+    title: string,
+    description: string,
+    dueDate: string,
+    tags: [string],
+    imageUrl: string,
+  ) => {
+    dispatch(
+      cardActions.asyncFetchPutCard({
+        columnId,
+        assignee: { id },
+        id: cardId,
+        title,
+        description,
+        dueDate,
+        tags,
+        imageUrl,
+      }),
+    );
+  };
+
+  // 카드를 조회합니다
+  const getCard = (cardId: number) => {
+    dispatch(cardActions.asyncFetchGetCard({ cardId }));
+  };
+
+  // 카드를 삭제합니다
+  const deleteCard = (cardId: number) => {
+    dispatch(cardActions.asyncFetchDeleteCard({ cardId }));
+  };
+
   return (
     <div>
       <h1>이 페이지는 API 호출을 실험하기 위한 페이지 입니다</h1>
@@ -182,19 +320,21 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('plan3@test.com', '플래냥3', 'AS650103');
+            submitRegistration('plan123123@test.com', '플래냥3', 'AS123456');
           }}
         >
           회원가입
         </button>
+
         <button
           type="button"
           onClick={() => {
-            submitLogin('planyang2@test.com', 'AS650103');
+            submitLogin('plan123123@test.com', 'AS123456');
           }}
         >
           로그인
         </button>
+        <div>{loginDatas.error}</div>
         <button
           type="button"
           onClick={() => {
@@ -239,7 +379,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            createDashBoard('테스트 대시보드7', '#9babaa');
+            createDashBoard('테스트 대시보드5', '#E876EA');
           }}
         >
           대시보드 추가하기
@@ -247,7 +387,9 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            deleteDashBoard(6022);
+
+            deleteDashBoard(6025);
+
           }}
         >
           대시보드 삭제하기
@@ -255,7 +397,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            updateDashBoard(6025, '수정된 대시보드1', '#842f54');
+            updateDashBoard(6266, '수정된 대시보드1', '#842f54');
           }}
         >
           대시보드 수정하기
@@ -353,6 +495,112 @@ const TestPage = () => {
             </div>
           );
         })}
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>
+        <h1>DashBoard Member</h1>
+        <button type="button" onClick={() => getMemberList(6073)}>
+          대시보드 멤버 목록 조회
+        </button>
+        <button type="button" onClick={() => deleteMember(8261)}>
+          대시보드 멤버 삭제
+        </button>
+        <h1>대시보드 멤버 목록 조회 (총 {memberDatas?.totalCount}명)</h1>
+        {memberDatas?.members.map((item) => {
+          return (
+            <div key={item.id}>
+              <div>멤버 id: {item.id}</div>
+              <div>멤버의 고유 id: {item.userId}</div>
+              <div>멤버 닉네임: {item.nickname}</div>
+              <div>멤버 이메일: {item.email}</div>
+              <br />
+            </div>
+          );
+        })}
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>
+        <h1>Column</h1>
+        <button type="button" onClick={() => createColumn('test2', 5936)}>
+          칼럼 생성
+        </button>
+        <button type="button" onClick={() => getColumn(5936)}>
+          칼럼 조회
+        </button>
+        <button type="button" onClick={() => updateColumn(21083, '수정수정')}>
+          칼럼 수정
+        </button>
+        <button type="button" onClick={() => deleteColumn(21083)}>
+          칼럼 삭제
+        </button>
+        <div>
+          <h1>내 칼럼 조회 (총 {columnDatas?.data?.length}개)</h1>
+          {columnDatas?.data?.map((item) => {
+            return (
+              <div key={item.id}>
+                <div>칼럼 id: {item.id}</div>
+                <div>칼럼 title: {item.title}</div>
+                <br />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>
+        <h1>Card</h1>
+        <button
+          type="button"
+          onClick={() =>
+            createCard(1673, 5936, 19964, '생성', '설명', '2024-04-17 18:27', [
+              '생성',
+            ])
+          }
+        >
+          카드 생성
+        </button>
+        <button type="button" onClick={() => getCardList(19964)}>
+          카드 목록 조회
+        </button>
+        <button
+          type="button"
+          onClick={() => updateCard(19964, 1673, 4988, '수정수정', '설명 수정')}
+        >
+          카드 수정
+        </button>
+        <button type="button" onClick={() => getCard(4988)}>
+          카드 조회(콘솔 확인)
+        </button>
+        <button type="button" onClick={() => deleteCard(4988)}>
+          카드 삭제
+        </button>
+        <div>
+          <h1>내 카드 조회 (총 {cardDatas?.totalCount}개)</h1>
+          {cardDatas?.cards?.map((item) => {
+            return (
+              <div key={item.id}>
+                <div>카드 id: {item.id}</div>
+                <div>카드 title: {item.title}</div>
+                <div>카드 설명: {item.description}</div>
+                <div>카드 tags: {item.tags}</div>
+                <div>카드 생성자: {item.assignee.nickname}</div>
+                <br />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
