@@ -9,7 +9,7 @@ const WrongPasswordLoginModal = ({ setOpenModalType }: ModalPropsType) => {
     setOpenModalType('');
   };
   return (
-    <ModalContainer title="" modalHeight={25}>
+    <ModalContainer title="">
       <p className={styles.contentText}>비밀번호가 일치하지 않습니다.</p>
       <CheckCancleButton
         checkText="확인"
