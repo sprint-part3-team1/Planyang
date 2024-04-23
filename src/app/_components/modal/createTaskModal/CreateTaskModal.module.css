@@ -1,9 +1,51 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 3.2rem;
+  gap: 3rem;
+  max-height: 70vh;
+  height: 60vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  position: relative;
 
   @media (max-width: 767px) {
     gap: 2.4rem;
+  }
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.downArrowDiv {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 43%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 5rem;
+  height: 3rem;
+  background-color: var(--gray_9FA6B2);
+  border-radius: 0.5rem;
+  transition: opacity 0.3s ease-in;
+}
+
+.clicked {
+  visibility: hidden;
+}
+
+.moving {
+  opacity: 1;
+  animation: move 0.7s ease-in 0s infinite alternate;
+}
+
+@keyframes move {
+  0% {
+    transform: translateY(0rem);
+  }
+  100% {
+    transform: translateY(0.5rem);
   }
 }
