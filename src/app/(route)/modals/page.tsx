@@ -39,6 +39,10 @@ const ModalPage = () => {
       name: '할 일 카드',
       type: MODAL_TYPES.taskCard,
     },
+    {
+      name: '비밀번호 틀렸습니다 로그인 페이지',
+      type: MODAL_TYPES.wrongPasswordLogin,
+    },
   ];
   return (
     <div>

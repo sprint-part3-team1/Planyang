@@ -18,6 +18,10 @@ const Home = () => {
   const dashBoardDatas = useAppSelector(dashBoardData);
   const router = useRouter();
 
+  const getMyDashBoard = () => {
+    dispatch(dashBoardActions.asynchFetchGetDashBoard());
+  };
+
   useEffect(() => {
     getMyDashBoard();
   }, []);
