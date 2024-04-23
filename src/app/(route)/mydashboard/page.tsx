@@ -20,16 +20,16 @@ import DashInvite from './_components/DashInvite';
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
 
-  // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
+  // 현재 로그인한 유저의 정보가 담긴 데이터 입니다
   const userData = useAppSelector(userResponse);
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
-  console.log(dashBoardDatas?.dashboards);
+  // console.log(dashBoardDatas?.dashboards);
 
   // 내가 초대를 받은 목록의 데이터입니다
   const receivedInvitationDatas = useAppSelector(receivedInvitationData);
-  console.log(receivedInvitationDatas?.invitations);
+  // console.log(receivedInvitationDatas?.invitations);
 
   const handleLeftButtonClick = () => {
     // 좌측 버튼을 클릭했을 때의 동작 구현
@@ -42,9 +42,36 @@ export default function MyDashBoard() {
   };
 
   useEffect(() => {
-    dispatch(registerActions.asynchFetchgetUserInfo());
-    dispatch(dashBoardActions.asynchFetchGetDashBoard());
-    dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
+    const fetchGetUserInfo = async () => {
+      try {
+        await dispatch(registerActions.asynchFetchgetUserInfo());
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
+    };
+
+    const fetchGetDashBoard = async () => {
+      try {
+        await dispatch(dashBoardActions.asynchFetchGetDashBoard());
+      } catch (error) {
+        console.error('Error fetching dashboard:', error);
+      }
+    };
+
+    const getReceivedInvitations = async () => {
+      try {
+        await dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
+      } catch (error) {
+        console.error('Error fetching received invitations:', error);
+      }
+    };
+
+    fetchGetUserInfo();
+    fetchGetDashBoard();
+    getReceivedInvitations();
+    // dispatch(registerActions.asynchFetchgetUserInfo());
+    // dispatch(dashBoardActions.asynchFetchGetDashBoard());
+    // dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
   }, [dispatch]);
 
   return (
