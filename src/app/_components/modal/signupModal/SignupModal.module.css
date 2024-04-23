@@ -1,0 +1,19 @@
+.contentText {
+  width: 54rem;
+  height: 10rem;
+  color: var(--black_333236);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 767px) {
+    width: 32.7rem;
+    height: 7rem;
+  }
+}

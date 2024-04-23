@@ -11,6 +11,7 @@ import WrongPasswordModal from './wrongPasswordModal/WrongPasswordModal';
 import CreateTaskModal from './createTaskModal/CreateTaskModal';
 import TaskCardModal from './taskCardModal/TaskCardModal';
 import WrongPasswordLoginModal from './wrongPasswordLoginModal/WrongPasswordLoginModal';
+import SignupModal from './signupModal/SignupModal';
 
 const ModalContents = ({
   openModalType,
@@ -94,6 +95,14 @@ const ModalContents = ({
     case MODAL_TYPES.wrongPasswordLogin:
       modalContent = (
         <WrongPasswordLoginModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.signup:
+      modalContent = (
+        <SignupModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
         />
