@@ -37,14 +37,14 @@ const DashboardListNavBar = () => {
           <Link href={`/dashboard/${dashBoardDetailDatas?.id}/edit`}>
             <ImageTextButton
               text="관리"
-              imageUrl="/assets/icons/gear.svg"
+              imageUrl="/assets/icons/setting.svg"
               onClickEvent={onClickButton}
             />
           </Link>
 
           <ImageTextButton
             text="초대하기"
-            imageUrl="/assets/icons/invite.svg"
+            imageUrl="/assets/icons/vector.svg"
             onClickEvent={onClickButton}
           />
         </div>
