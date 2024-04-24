@@ -22,7 +22,7 @@ const DashBoard = ({ params }: { params: { id: string } }) => {
   const columnDataList = useAppSelector(columnData);
 
   const [openModalType, setOpenModalType] = useState('');
-  const [cardInfo, setCardInfo] = useState();
+  const [cardInfo, setCardInfo] = useState(null);
   const [totalCount, setTotalCount] = useState<Record<number, number>>();
 
   useEffect(() => {

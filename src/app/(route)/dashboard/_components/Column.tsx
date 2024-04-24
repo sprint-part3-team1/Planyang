@@ -26,19 +26,17 @@ axiosInstance.interceptors.request.use(
   },
 );
 
-interface DashboardIdTypes {
-  Columns: {
-    createdAt: string;
-    dashboardId: number;
-    id: number;
-    teamId: string;
-    title: string;
-    updatedAt: string;
-  };
-}
-
 interface Props {
-  columnData: DashboardIdTypes['Columns'];
+  columnData: [
+    {
+      createdAt: string;
+      dashboardId: number;
+      id: number;
+      teamId: string;
+      title: string;
+      updatedAt: string;
+    },
+  ];
   cardInfo: Record<string, CardResponseType[]> | undefined;
   setCardInfo: Dispatch<
     SetStateAction<Record<string, CardResponseType[]> | undefined>
@@ -75,7 +73,7 @@ const Column = ({
           [columId]: res.data.totalCount,
         }));
       })
-      .catch((err) => alert(`카드 목록 조회 실패(${err})`));
+      .catch((error) => alert(`카드 목록 조회 실패(${error})`));
   };
 
   useEffect(() => {
