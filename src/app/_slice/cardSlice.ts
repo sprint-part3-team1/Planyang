@@ -14,7 +14,7 @@ interface CardPayload {
   imageUrl: string | null;
 }
 
-interface CardResponseType {
+export interface CardResponseType {
   id: number;
   title: string;
   description: string;
@@ -32,10 +32,6 @@ interface CardResponseType {
   updatedAt: string;
 }
 
-interface CardActionResponseType {
-  data: CardResponseType | null;
-}
-
 interface GetCardsResponseType {
   data: {
     cards: CardResponseType[];
@@ -43,8 +39,7 @@ interface GetCardsResponseType {
     cursorId: number;
   } | null;
 }
-
-const initialState: CardActionResponseType & GetCardsResponseType = {
+const initialState: GetCardsResponseType = {
   data: null,
 };
 
@@ -187,7 +182,7 @@ const cardSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       asyncFetchCreateCard.fulfilled,
-      (state, action: PayloadAction<CardActionResponseType['data']>) => {
+      (state, action: PayloadAction<GetCardsResponseType['data']>) => {
         if (state.data && state.data.cards) {
           state.data?.cards?.unshift(action.payload);
           if (state.data.totalCount !== null) {
@@ -198,12 +193,11 @@ const cardSlice = createSlice({
     );
     builder.addCase(
       asyncFetchGetCards.fulfilled,
-      (state, action: PayloadAction<GetCardsResponseType['data']>) => {
-        state.data = action.payload;
+      (state, action: PayloadAction<GetCardsResponseType>) => {
+        state.data = action.payload.data;
       },
     );
     builder.addCase(asyncFetchPutCard.fulfilled, (state, action) => {
-      // state.data = action.payload;
       const updateCard = action.payload;
       const index = state.data?.cards.findIndex(
         (item) => item.id === updateCard.id,
@@ -214,7 +208,7 @@ const cardSlice = createSlice({
     });
     builder.addCase(
       asyncFetchGetCard.fulfilled,
-      (state, action: PayloadAction<CardActionResponseType['data']>) => {
+      (state, action: PayloadAction<GetCardsResponseType['data']>) => {
         state.data = action.payload;
       },
     );

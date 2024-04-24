@@ -52,6 +52,9 @@ const ModalPage = () => {
       type: MODAL_TYPES.emailInUse,
     },
   ];
+
+  const initialValue = '인풋 초기값';
+
   return (
     <div>
       {MODAL_INFO.map(({ name, type }) => {
@@ -68,6 +71,7 @@ const ModalPage = () => {
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
+        inputInitialValue={initialValue}
       />
     </div>
   );

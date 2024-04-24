@@ -23,7 +23,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getMyDashBoard();
+    // getMyDashBoard();
   }, []);
 
   useEffect(() => {
