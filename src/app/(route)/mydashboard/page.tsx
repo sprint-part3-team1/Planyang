@@ -103,10 +103,7 @@ export default function MyDashBoard() {
 
   return (
     <div style={{ width: '100%' }}>
-      <DashboardListNavBar
-        nickname={userData ? userData.nickname : ''}
-        profileImageUrl={userData?.profileImageUrl}
-      />
+      <DashboardListNavBar />
       {/* <SideMenu dashBoardData={dashBoardDatas?.dashboards} /> */}
       <div className={styles.content}>
         <div className={styles.dashBoardButtons}>

@@ -15,10 +15,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // 내가 초대를 받은 목록의 데이터입니다
 
   useEffect(() => {
-    dispatch(dashBoardActions.asynchFetchGetDashBoard());
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
   }, [dispatch]);
   return (
-    <div style={{ display: 'flex', width: '100%' }}>
+    <div style={{ display: 'flex' }}>
       <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
       {children}
     </div>
