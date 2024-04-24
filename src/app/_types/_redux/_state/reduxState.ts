@@ -7,6 +7,7 @@ export interface RegisterStateType {
     createdAt: string;
     updatedAt: string;
   } | null;
+  error: null | string;
 }
 
 export interface LoginStateType {
@@ -22,4 +23,5 @@ export interface LoginStateType {
     accessToken: string;
   } | null;
   status: number | null | string;
+  error: null | string;
 }

@@ -31,8 +31,7 @@ const EditDashName = () => {
   const dashBoardDatas = useAppSelector(dashBoardDetailData);
   const [checkColor, setCheckColor] = useState('');
   const [editDashBoardName, setEditDashBoardName] = useState('');
-  console.log(checkColor);
-  console.log(editDashBoardName);
+
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setEditDashBoardName(e.target.value);
   };

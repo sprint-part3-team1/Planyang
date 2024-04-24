@@ -1,4 +1,7 @@
-const DashBoardEditPage = () => {
+'use client';
+
+const DashBoardEditPage = ({ params }: { id: string }) => {
+ 
   return <div />;
 };
 
