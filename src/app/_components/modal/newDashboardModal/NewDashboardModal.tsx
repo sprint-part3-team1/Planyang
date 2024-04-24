@@ -56,12 +56,10 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
         color = '#E876EA';
         break;
       default:
-        color = ''; // 기본값
+        color = '';
     }
     createDashBoard(inputValue, color);
     setOpenModalType('');
-
-    /** 새로운 대시보드 생성 버튼을 누르면 실행되는 함수 작성 */
   };
 
   return (

@@ -1,9 +1,6 @@
-'use client';
-
 import Image from 'next/image';
 import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
-import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
-import useAppDispatch from '@/app/_hooks/useAppDispatch';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import MODAL_TYPES from '@/app/constants/modalTypes';
@@ -17,7 +14,7 @@ interface SideMenuPropsType {
 
 const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
   const [openModalType, setOpenModalType] = useState('');
-  const dispatch = useAppDispatch();
+
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
@@ -70,13 +67,6 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
               className={styles.dashList}
               href={`/dashboard/${item.id}`}
               key={item.id}
-              onClick={() => {
-                dispatch(
-                  dashBoardDetailActions.asyncFetchGetDashBoardDetail({
-                    dashBoardId: item.id,
-                  }),
-                );
-              }}
             >
               <div>
                 <DashBoardColorCircle color={item.color} />

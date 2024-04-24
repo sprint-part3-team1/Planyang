@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
+import { invitationActions } from '@/app/_slice/invitationSlice';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+
 import ModalContainer from '../modalContainer/ModalContainer';
 import Input from '../../Input';
 import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
 const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
-  const InviteButtonHandler = () => {
-    /** 이메일로 초대하는 함수 작성 */
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useAppDispatch();
+  const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
+  const inviteUserToDashBoard = (email: string, dashBoardId: number) => {
+    dispatch(
+      invitationActions.asynchFetchinviteUserToDashboard({
+        email,
+        dashBoardId,
+      }),
+    );
   };
 
+  const InviteButtonHandler = () => {
+    inviteUserToDashBoard(inputValue, dashBoardDetailDatas?.id);
+    setOpenModalType('');
+  };
+  const handleInputChange = () => {
+    if (inputRef.current) {
+      setInputValue(inputRef.current.value);
+    }
+  };
   const viewportType = useGetViewportSize();
 
   const INPUT_WIDTH = {
@@ -23,6 +46,8 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
       <Input
         inputName="이메일"
         inputType="text"
+        inputRef={inputRef}
+        onChange={handleInputChange}
         inputWidth={INPUT_WIDTH[viewportType]}
       />
       <CheckCancleButton
