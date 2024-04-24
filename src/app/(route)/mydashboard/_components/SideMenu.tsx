@@ -17,7 +17,7 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
   const [selectedDashboardId, setSelectedDashboardId] = useState<number | null>(
     null,
   );
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
@@ -25,11 +25,6 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
 
   const handleDashboardItemClick = (id: number) => {
     setSelectedDashboardId(id);
-    dispatch(
-      dashBoardDetailActions.asyncFetchGetDashBoardDetail({
-        dashBoardId: id,
-      }),
-    );
   };
 
   return (
