@@ -8,5 +8,8 @@ const MODAL_TYPES = {
   wrongPassword: 'wrongPassword',
   createTask: 'createTask',
   taskCard: 'taskCard',
+  wrongPasswordLogin: 'wrongPasswordLogin',
+  signup: 'signup',
+  emailInUse: 'emailInUse',
 };
 export default MODAL_TYPES;

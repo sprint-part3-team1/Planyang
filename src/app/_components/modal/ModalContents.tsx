@@ -10,10 +10,14 @@ import InviteByEmailModal from './inviteByEmailModal/InviteByEmailModal';
 import WrongPasswordModal from './wrongPasswordModal/WrongPasswordModal';
 import CreateTaskModal from './createTaskModal/CreateTaskModal';
 import TaskCardModal from './taskCardModal/TaskCardModal';
+import WrongPasswordLoginModal from './wrongPasswordLoginModal/WrongPasswordLoginModal';
+import SignupModal from './signupModal/SignupModal';
+import EmailInUseModal from './emailInUseModal/EmailInUseModal';
 
 const ModalContents = ({
   openModalType,
   setOpenModalType,
+  inputInitialValue,
 }: ModalContentFuncPropsType): React.ReactNode => {
   let modalContent: React.ReactNode = null;
   switch (openModalType) {
@@ -31,6 +35,7 @@ const ModalContents = ({
         <ColumnManageModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
+          inputInitialValue={inputInitialValue}
         />
       );
       break;
@@ -85,6 +90,30 @@ const ModalContents = ({
     case MODAL_TYPES.taskCard:
       modalContent = (
         <TaskCardModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.wrongPasswordLogin:
+      modalContent = (
+        <WrongPasswordLoginModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.signup:
+      modalContent = (
+        <SignupModal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.emailInUse:
+      modalContent = (
+        <EmailInUseModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
         />

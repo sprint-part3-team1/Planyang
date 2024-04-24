@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from 'react';
 import { InputProps } from '@/app/_types/InputProps';
-import styles from './Input.module.css';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
 import { DateDto } from '@/app/_types/_dto/DateDto';
@@ -10,22 +9,31 @@ import { changeDateFormat } from '@/app/_utils/dateUtils';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import TagIcon from '@/app/_components/TagIcon';
 import { isValidName } from '@/app/_utils/validateUtils';
+import styles from './Input.module.css';
 
 const Input = ({
+  inputId,
   inputName,
   inputType,
   inputWidth,
+  inputRef,
   errorMessage = null,
   errorState,
   placeholder = undefined,
+  onChange,
 }: InputProps) => {
   const INVISIBLE_ICON_SRC = '/assets/icons/invisible.svg';
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  const customWidth = {
-    width: inputWidth + 'rem',
-  };
+  const customWidth =
+    inputWidth !== '100%'
+      ? {
+          width: `${inputWidth}rem`,
+        }
+      : {
+          width: '100%',
+        };
 
   const onClickVisibleIcon = () => {
     setVisibilityIcon(!visibilityIcon);
@@ -37,7 +45,7 @@ const Input = ({
 
   const onKeydownTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const value = e.currentTarget.value;
+      const { value } = e.currentTarget;
       if (tags.size === 4) {
         alert('태그는 최대 4개까지만 추가할 수 있습니다.');
         return;
@@ -73,9 +81,8 @@ const Input = ({
 
     if (visibilityIcon) {
       return 'password';
-    } else {
-      return 'text';
     }
+    return 'text';
   };
 
   const [visibilityIcon, setVisibilityIcon] = useState(true);
@@ -94,17 +101,19 @@ const Input = ({
 
   return (
     <div className={styles.entireWrapper}>
-      <label className={styles.inputLabel} htmlFor="Input">
+      <label className={styles.inputLabel} htmlFor={inputId}>
         {inputName}
       </label>
       <div className={styles.inputWrapper} style={customWidth}>
         {inputType === 'text' || inputType === 'password' ? (
           <>
             <input
-              id="Input"
+              id={inputId}
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type={setInputType()}
               placeholder={placeholder}
+              ref={inputRef}
+              onChange={onChange}
             />
             {inputType === 'password' ? (
               <Image
@@ -120,12 +129,13 @@ const Input = ({
         ) : inputType === 'calendar' ? (
           <>
             <input
-              id="Input"
+              id={inputId}
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type="text"
               placeholder={placeholder}
               defaultValue={dateValue}
-              disabled={true}
+              disabled
+              ref={inputRef}
             />
             <Image
               className={`${styles.innerIcon} ${styles.calendarIcon}`}
@@ -148,11 +158,12 @@ const Input = ({
         ) : inputType === 'tag' ? (
           <>
             <input
-              id="Input"
+              id={inputId}
               className={`${styles.input} ${styles.tag}`}
               type="text"
               placeholder={placeholder}
               onKeyDown={onKeydownTag}
+              ref={inputRef}
             />
             <div className={styles.innerTags}>
               {Array.from(tags).map((value, index) => {
@@ -161,7 +172,7 @@ const Input = ({
                     key={Math.random()}
                     tagName={value}
                     tagStyleType="smallTag"
-                    deleteOption={true}
+                    deleteOption
                     onValueChange={getDeleteOrder}
                   />
                 );
@@ -171,7 +182,10 @@ const Input = ({
         ) : null}
       </div>
       {inputType !== 'tag' && (
-        <div className={styles.errorMessage} hidden={!errorState}>
+        <div
+          className={styles.errorMessage}
+          style={{ opacity: errorState ? 1 : 0 }}
+        >
           {errorMessage}
         </div>
       )}

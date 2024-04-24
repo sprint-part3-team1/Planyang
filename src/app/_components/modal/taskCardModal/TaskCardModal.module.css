@@ -2,6 +2,13 @@
   display: flex;
   flex-direction: row;
   gap: 2.4rem;
+  height: 70vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.rowDiv::-webkit-scrollbar {
+  display: none;
 }
 
 .rowDivOne {
@@ -9,10 +16,12 @@
 
   @media (max-width: 1023px) {
     width: 42rem;
+    height: 60vh;
   }
 
   @media (max-width: 767px) {
     width: 28.7rem;
+    height: 60vh;
   }
 }
 

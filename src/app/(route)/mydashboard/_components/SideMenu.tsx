@@ -1,23 +1,26 @@
 'use client';
 
 import Image from 'next/image';
-import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
-import useAppSelector from '@/app/_hooks/useAppSelector';
+import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import { useEffect } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
+import MODAL_TYPES from '@/app/constants/modalTypes';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import styles from './SideMenu.module.css';
+import DashBoardColorCircle from './DashBoardColorCircle';
 
-const SideMenu = () => {
+interface SideMenuPropsType {
+  dashBoardData: DashBoardInformationType[];
+}
+
+const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
+  const [openModalType, setOpenModalType] = useState('');
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(dashBoardActions.asynchFetchGetDashBoard());
-  }, []);
-  const dashBoardDatas = useAppSelector(dashBoardData);
-  console.log(dashBoardDatas);
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
-  const PROFILE_ELLIPSE_ICON_SRC = '/assets/icons/profileEllipse.svg';
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
   return (
     <div className={styles.container}>
@@ -40,32 +43,43 @@ const SideMenu = () => {
       </div>
       <div className={styles.titleWrapper}>
         <span id={styles.title}>Dash Boards</span>
+        <ModalPortal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
         <Image
           width={20}
           height={20}
           id={styles.vector}
           src={VECTOR_ICON_SRC}
           alt="vector"
+          onClick={() => {
+            setOpenModalType(MODAL_TYPES.newDashboard);
+          }}
         />
+
         {/* onClick 모달창 연결 */}
       </div>
 
       <div className={styles.listWrapper}>
         {/* 반복문으로 대시보드 띄워주기 */}
-        {dashBoardDatas?.dashboards.map((item) => {
+
+        {dashBoardData?.map((item) => {
           return (
-            <a
+            <Link
               className={styles.dashList}
               href={`/dashboard/${item.id}`}
               key={item.id}
+              onClick={() => {
+                dispatch(
+                  dashBoardDetailActions.asyncFetchGetDashBoardDetail({
+                    dashBoardId: item.id,
+                  }),
+                );
+              }}
             >
               <div>
-                <Image
-                  width={8}
-                  height={8}
-                  src={PROFILE_ELLIPSE_ICON_SRC}
-                  alt="profileEllipse"
-                />
+                <DashBoardColorCircle color={item.color} />
               </div>
               <span id={styles.dashBoardName}>{item.title}</span>
               <Image
@@ -75,7 +89,7 @@ const SideMenu = () => {
                 src={CROWN_ICON_SRC}
                 alt="crown"
               />
-            </a>
+            </Link>
           );
         })}
       </div>
