@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
-import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
+import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
 import {
   receivedInvitationActions,
   receivedInvitationData,
@@ -13,14 +13,21 @@ import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_das
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
 import DashBoardButton from '@/app/_components/Button/DashBoardButton/DashBoardButton';
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
-import SideMenu from './_components/SideMenu';
+import fetchDashboards from './_api/dashboardPagination';
 import styles from './page.module.css';
 import DashInvite from './_components/DashInvite';
+
+interface DashBoardStateType {
+  data: {
+    dashboards: DashBoardInformationType[];
+    totalCount: number;
+    cursorId: number | null;
+  } | null;
+}
 
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userResponse);
-  const dashBoardDatas = useAppSelector(dashBoardData);
   const receivedInvitationDatas = useAppSelector(receivedInvitationData);
 
   const [page, setPage] = useState<number>(1);
@@ -28,6 +35,8 @@ export default function MyDashBoard() {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isLeftActive, setIsLeftActive] = useState<boolean>(false);
   const [isRightActive, setIsRightActive] = useState<boolean>(false);
+  const [dashBoardDatas, setDashBoardDatas] =
+    useState<null | DashBoardStateType>(null);
 
   const handleLeftButtonClick = () => {
     // 좌측 버튼을 클릭했을 때의 동작 구현
@@ -45,25 +54,37 @@ export default function MyDashBoard() {
     }
   };
 
-  console.log(userData);
-  // console.log(dashBoardDatas?.totalCount);
-  // console.log(dashBoardDatas?.dashboards);
-  // console.log(receivedInvitationDatas?.invitations);
-
+  // 초대받은 대시보드와 계정정보
   useEffect(() => {
     dispatch(registerActions.asynchFetchgetUserInfo());
-    dispatch(dashBoardActions.asynchFetchGetDashBoard(page));
     dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
-  }, [dispatch, page]);
+  }, [dispatch]);
 
+  // 대시보드 버튼의 페이지 네이션
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDashboards(page);
+        setDashBoardDatas(data);
+      } catch (error) {
+        console.error('Error fetching dashboards:', error);
+      }
+    };
+
+    fetchData();
+  }, [page, dispatch]);
+
+  // 전체 대시보드 수와 전체 페이지 지정
   useEffect(() => {
     if (dashBoardDatas) {
       setTotalCount(dashBoardDatas?.totalCount);
+      console.log(dashBoardDatas);
       console.log(totalCount);
       setTotalPages(Math.ceil(totalCount / 5));
     }
   }, [dashBoardDatas, totalCount]);
 
+  // 화살표 버튼 활성화 기능
   useEffect(() => {
     if (page === 1 && totalPages === 1) {
       setIsLeftActive(false);
@@ -90,7 +111,7 @@ export default function MyDashBoard() {
       <div className={styles.content}>
         <div className={styles.dashBoardButtons}>
           <AddDashBoardButton />
-          {dashBoardDatas?.dashboards.map((dashBoard, index) => {
+          {dashBoardDatas?.dashboards?.map((dashBoard, index) => {
             return (
               <DashBoardButton
                 key={index}

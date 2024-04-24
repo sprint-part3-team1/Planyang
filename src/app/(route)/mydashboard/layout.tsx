@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     dispatch(dashBoardActions.asynchFetchGetDashBoard());
   }, [dispatch]);
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', width: '100%' }}>
       <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
       {children}
     </div>
