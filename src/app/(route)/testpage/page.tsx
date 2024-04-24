@@ -337,11 +337,12 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            changePassword('AS650103', 'AS123456');
+            changePassword('', 'AS123456');
           }}
         >
           비밀번호 변경
         </button>
+        {userData.error}
         <button
           type="button"
           onClick={() => {

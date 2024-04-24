@@ -1,7 +1,17 @@
-import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
-import React, { ReactNode } from 'react';
+'use client';
 
-const DashBoardDetailLayout = ({ children }: { children: ReactNode }) => {
+import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
+import React, { ReactNode, useEffect } from 'react';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
+
+const DashBoardDetailLayout = ({
+  children,
+  params,
+}: {
+  children: ReactNode;
+  params: { id: string };
+}) => {
+
   return (
     <div style={{ width: '100%' }}>
       <DashboardListNavBar

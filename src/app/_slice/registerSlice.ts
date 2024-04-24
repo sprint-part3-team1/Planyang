@@ -9,13 +9,17 @@ import {
 } from '../_types/_redux/_apiPayload/payloadTypes';
 import { RegisterStateType } from '../_types/_redux/_state/reduxState';
 
+interface ErrorResponse {
+  message: string;
+}
+
 const initialState: RegisterStateType = {
   data: null,
+  error: null, // 에러 상태 추가
 };
 
 const asynchFetchSignUp = createAsyncThunk(
   'registerSlice/asynchFetchSignup',
-
   async (registerData: RegisterPayloadType) => {
     const { email, nickname, password } = registerData;
 
@@ -27,38 +31,48 @@ const asynchFetchSignUp = createAsyncThunk(
         password,
       },
     );
-    return response.data;
+    return response;
   },
 );
 
 const asynchFetchChangePassword = createAsyncThunk(
   'registerSlice/asynchFetchChangePassword',
-
-  async (changePasswordValue: ChangePasswordPayloadType) => {
+  async (
+    changePasswordValue: ChangePasswordPayloadType,
+    { rejectWithValue },
+  ) => {
     const { password, newPassword } = changePasswordValue;
     const accessToken = localStorage.getItem('accessToken');
 
-    const response = await axios.put(
-      'https://sp-taskify-api.vercel.app/4-1/auth/password',
-
-      {
-        password,
-        newPassword,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+    try {
+      const response = await axios.put(
+        'https://sp-taskify-api.vercel.app/4-1/auth/password',
+        {
+          password,
+          newPassword,
         },
-      },
-    );
-
-    return response.data;
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponse;
+        // 실패할 경우 message를 설정하여 반환
+        return rejectWithValue({ error: errorResponse.message });
+      }
+      // 기타 오류 처리
+      console.error('An error occurred:', error);
+      throw error;
+    }
   },
 );
 
 const asynchFetchgetUserInfo = createAsyncThunk(
   'registerSlice/asynchFetchgetUserInfo',
-
   async () => {
     const accessToken = localStorage.getItem('accessToken');
 
@@ -114,7 +128,17 @@ const registerSlice = createSlice({
 
     builder.addCase(
       asynchFetchChangePassword.fulfilled,
-      (state, action: PayloadAction<ChangePasswordType>) => {},
+      (
+        state: RegisterStateType,
+        action: PayloadAction<RegisterStateType['data']>,
+      ) => {},
+    );
+
+    builder.addCase(
+      asynchFetchChangePassword.rejected, // 비밀번호 변경 실패 처리 추가
+      (state: RegisterStateType, action: PayloadAction<{ error: string }>) => {
+        state.error = action.payload.error;
+      },
     );
 
     builder.addCase(
@@ -140,7 +164,6 @@ const registerSlice = createSlice({
 });
 
 export default registerSlice.reducer;
-
 export const registerActions = {
   ...registerSlice.actions,
   asynchFetchChangePassword,
@@ -148,4 +171,4 @@ export const registerActions = {
   asynchFetchgetUserInfo,
   asynchFetchUpdateInformation,
 };
-export const userResponse = (state: RootState) => state.userResponse.data;
+export const userResponse = (state: RootState) => state.userResponse;

@@ -1,9 +1,6 @@
-'use client';
-
 import Image from 'next/image';
 import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
-import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
-import useAppDispatch from '@/app/_hooks/useAppDispatch';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import MODAL_TYPES from '@/app/constants/modalTypes';

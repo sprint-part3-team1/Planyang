@@ -6,16 +6,31 @@ import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import { userResponse, registerActions } from '@/app/_slice/registerSlice';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
+import { usePathname } from 'next/navigation';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import SideMenu from '../mydashboard/_components/SideMenu';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
 
-  // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
-
   const dashBoardDatas = useAppSelector(dashBoardData);
 
-  // 내가 초대를 받은 목록의 데이터입니다
+  const pathName = usePathname();
+
+  useEffect(() => {
+    // URL에서 숫자 부분 추출
+    const regex = /\/dashboard\/(\d+)/;
+    const match = pathName.match(regex);
+    if (match) {
+      const number = match[1];
+
+      dispatch(
+        dashBoardDetailActions.asyncFetchGetDashBoardDetail({
+          dashBoardId: number,
+        }),
+      );
+    }
+  }, [pathName]);
 
   useEffect(() => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard());
