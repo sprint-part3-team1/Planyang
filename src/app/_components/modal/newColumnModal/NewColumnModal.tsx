@@ -10,6 +10,12 @@ import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
 const NewColumnModal = ({ setOpenModalType }: ModalPropsType) => {
+  const INPUT_WIDTH = {
+    [VIEWPORT_TYPES.deskTop]: 48.4,
+    [VIEWPORT_TYPES.tablet]: 48.4,
+    [VIEWPORT_TYPES.mobile]: 28.7,
+  };
+
   const dispatch = useAppDispatch();
   const params = useParams();
   const titleRef = useRef<HTMLInputElement>(null);
@@ -32,12 +38,6 @@ const NewColumnModal = ({ setOpenModalType }: ModalPropsType) => {
 
     createColumn(titleRef.current?.value, Number(params.id));
     setOpenModalType('');
-  };
-
-  const INPUT_WIDTH = {
-    [VIEWPORT_TYPES.deskTop]: 48.4,
-    [VIEWPORT_TYPES.tablet]: 48.4,
-    [VIEWPORT_TYPES.mobile]: 28.7,
   };
 
   const viewPortType = useGetViewportSize();

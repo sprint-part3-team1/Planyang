@@ -125,6 +125,8 @@ const Column = ({
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
+        inputInitialValue={columnData.title}
+        requestId={columnData.id}
       />
     </div>
   );

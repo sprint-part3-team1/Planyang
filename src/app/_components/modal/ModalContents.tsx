@@ -18,6 +18,7 @@ const ModalContents = ({
   openModalType,
   setOpenModalType,
   inputInitialValue,
+  requestId,
 }: ModalContentFuncPropsType): React.ReactNode => {
   let modalContent: React.ReactNode = null;
   switch (openModalType) {
@@ -36,6 +37,7 @@ const ModalContents = ({
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
           inputInitialValue={inputInitialValue}
+          requestId={requestId}
         />
       );
       break;

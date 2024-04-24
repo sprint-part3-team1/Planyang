@@ -10,12 +10,14 @@ export type ModalPropsType = {
   openModalType?: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
   inputInitialValue?: string;
+  requestId?: number;
 };
 
 export type ModalPortalPropsType = {
   openModalType: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
   inputInitialValue?: string;
+  requestId?: number;
 };
 
 export type CheckCancelButtonPropType = {
@@ -32,6 +34,7 @@ export type ModalContentFuncPropsType = {
   openModalType?: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
   inputInitialValue?: string;
+  requestId?: number;
 };
 
 export type TaskCardModalPropsType = {
