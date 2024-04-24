@@ -7,6 +7,7 @@ import ModalContents from '../ModalContents';
 const ModalPortal = ({
   openModalType,
   setOpenModalType,
+  inputInitialValue,
 }: ModalPortalPropsType) => {
   if (openModalType === '') return null;
 
@@ -14,6 +15,7 @@ const ModalPortal = ({
     modalType: openModalType,
     openModalType,
     setOpenModalType,
+    inputInitialValue,
   });
 
   return createPortal(
