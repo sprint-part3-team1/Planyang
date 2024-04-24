@@ -3,7 +3,6 @@
   height: 101rem;
   flex-shrink: 0;
   padding: 2.2rem 2rem 2.2rem 2rem;
-  background: var(--gray_FAFAFA);
 }
 
 .title {
@@ -48,6 +47,12 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.columnSettingButton {
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
 }
 
 .cardSection {
