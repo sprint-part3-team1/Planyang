@@ -1,7 +1,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  padding: 4rem 0rem 0rem 34rem;
+  padding: 4rem 0rem 0rem 4rem;
   gap: 4rem;
 }
 
@@ -22,7 +22,7 @@
 
 @media (max-width: 1023px) {
   .content {
-    padding: 4rem 0rem 0rem 20rem;
+    padding: 4rem 0rem 0rem 4rem;
   }
   .dashBoardButtons {
     max-width: 50.4rem;
@@ -36,7 +36,7 @@
 
 @media (max-width: 767px) {
   .content {
-    padding: 2.4rem 0rem 2.4rem 9.1rem;
+    padding: 2.4rem 0rem 2.4rem 2.4rem;
     gap: 2.4rem;
   }
 
