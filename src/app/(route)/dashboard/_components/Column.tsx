@@ -119,6 +119,7 @@ const Column = ({
             tagNameArr={card.tags}
             date={card.dueDate}
             image={null}
+            cardInfo={card}
           />
         ))}
       </div>

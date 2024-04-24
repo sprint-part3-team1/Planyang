@@ -94,6 +94,7 @@ const ModalContents = ({
         <TaskCardModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
+          requestId={requestId}
         />
       );
       break;
