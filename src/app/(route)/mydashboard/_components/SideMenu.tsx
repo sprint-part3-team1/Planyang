@@ -82,13 +82,15 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
                 <DashBoardColorCircle color={item.color} />
               </div>
               <span id={styles.dashBoardName}>{item.title}</span>
-              <Image
-                id={styles.crown}
-                width={17.59}
-                height={14}
-                src={CROWN_ICON_SRC}
-                alt="crown"
-              />
+              {item.createdByMe && (
+                <Image
+                  id={styles.crown}
+                  width={17.59}
+                  height={14}
+                  src={CROWN_ICON_SRC}
+                  alt="crown"
+                />
+              )}
             </Link>
           );
         })}
