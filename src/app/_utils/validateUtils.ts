@@ -15,3 +15,13 @@ export function isValidName(text: string, minLength: number, maxLength: number) 
 
     return !(validateRegexResult && validateTextLengthResult && validateTextRealLengthResult);
 }
+
+export function isValidEmail (email: string) {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    return !emailRegex.test(email);
+}
+
+export function isValidPassword (password: string) {
+    return password.length < 8;
+}

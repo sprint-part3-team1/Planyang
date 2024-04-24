@@ -3,7 +3,7 @@ import styles from './LoginButton.module.css';
 const LoginButton = ({ isActive = false }) => {
   return (
     <button
-      type="button"
+      type="submit"
       className={
         isActive ? styles.loginButtonIsActive : styles.loginButtonNotActive
       }

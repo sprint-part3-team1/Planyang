@@ -12,20 +12,25 @@ import TagIcon from '@/app/_components/TagIcon';
 import { isValidName } from '@/app/_utils/validateUtils';
 
 const Input = ({
+  inputId,
   inputName,
   inputType,
   inputWidth,
+  inputRef,
   errorMessage = null,
   errorState,
   placeholder = undefined,
+  onChange
 }: InputProps) => {
   const INVISIBLE_ICON_SRC = '/assets/icons/invisible.svg';
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  const customWidth = {
-    width: inputWidth + 'rem',
-  };
+  const customWidth = inputWidth !== '100%' ? {
+    width: inputWidth + 'rem'
+  } : {
+    width: '100%'
+  }
 
   const onClickVisibleIcon = () => {
     setVisibilityIcon(!visibilityIcon);
@@ -94,17 +99,19 @@ const Input = ({
 
   return (
     <div className={styles.entireWrapper}>
-      <label className={styles.inputLabel} htmlFor="Input">
+      <label className={styles.inputLabel} htmlFor={inputId}>
         {inputName}
       </label>
       <div className={styles.inputWrapper} style={customWidth}>
         {inputType === 'text' || inputType === 'password' ? (
           <>
             <input
-              id="Input"
+              id={inputId}
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type={setInputType()}
               placeholder={placeholder}
+              ref={inputRef}
+              onChange={onChange}
             />
             {inputType === 'password' ? (
               <Image
@@ -120,12 +127,13 @@ const Input = ({
         ) : inputType === 'calendar' ? (
           <>
             <input
-              id="Input"
+              id={inputId}
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type="text"
               placeholder={placeholder}
               defaultValue={dateValue}
               disabled={true}
+              ref={inputRef}
             />
             <Image
               className={`${styles.innerIcon} ${styles.calendarIcon}`}
@@ -148,11 +156,12 @@ const Input = ({
         ) : inputType === 'tag' ? (
           <>
             <input
-              id="Input"
+              id={inputId}
               className={`${styles.input} ${styles.tag}`}
               type="text"
               placeholder={placeholder}
               onKeyDown={onKeydownTag}
+              ref={inputRef}
             />
             <div className={styles.innerTags}>
               {Array.from(tags).map((value, index) => {
@@ -171,7 +180,7 @@ const Input = ({
         ) : null}
       </div>
       {inputType !== 'tag' && (
-        <div className={styles.errorMessage} hidden={!errorState}>
+        <div className={styles.errorMessage} style={{opacity: errorState ? 1 : 0}}>
           {errorMessage}
         </div>
       )}

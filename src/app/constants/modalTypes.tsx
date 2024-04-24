@@ -10,5 +10,6 @@ const MODAL_TYPES = {
   taskCard: 'taskCard',
   wrongPasswordLogin: 'wrongPasswordLogin',
   signup: 'signup',
+  emailInUse: 'emailInUse',
 };
 export default MODAL_TYPES;

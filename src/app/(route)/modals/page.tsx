@@ -47,7 +47,14 @@ const ModalPage = () => {
       name: '가입이 완료되었습니다 로그인 페이지',
       type: MODAL_TYPES.signup,
     },
+    {
+      name: '이미 사용 중인 이메일입니다.',
+      type: MODAL_TYPES.emailInUse,
+    },
   ];
+
+  const initialValue = '인풋 초기값';
+
   return (
     <div>
       {MODAL_INFO.map(({ name, type }) => {
@@ -64,6 +71,7 @@ const ModalPage = () => {
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
+        inputInitialValue={initialValue}
       />
     </div>
   );

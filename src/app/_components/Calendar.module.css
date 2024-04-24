@@ -4,6 +4,7 @@
     border-radius: 1.5rem;
     background-color: var(--white_FFFFFF);
     box-shadow: 0 0.5rem 0.7rem 0.3rem var(--gray_EEEEEE);
+    z-index: 99;
 }
 
 .topMenu {
