@@ -14,7 +14,6 @@ import styles from '@/app/(route)/dashboard/[id]/page.module.css';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
-import SideMenu from '../../mydashboard/_components/SideMenu';
 import Column from '../_components/Column';
 
 const DashBoard = ({ params }: { params: { id: string } }) => {
@@ -73,7 +72,6 @@ const DashBoard = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <SideMenu />
       <div className={styles.container}>
         <div className={styles.columnsContainer}>
           {columnDataList?.data?.map((item) => {
