@@ -16,6 +16,7 @@
   font-style: normal;
   font-weight: var(--bold);
   line-height: normal;
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {
