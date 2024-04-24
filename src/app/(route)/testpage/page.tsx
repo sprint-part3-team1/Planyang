@@ -319,7 +319,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('honghong@test.com', '플래냥3', 'AS123456');
+            submitRegistration('kkkk@test.com', 'kkkk', 'AS123456');
           }}
         >
           회원가입
@@ -328,7 +328,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitLogin('honghonsddsg@test.com', 'AS123456');
+            submitLogin('kkkk@test.com', 'AS123456');
           }}
         >
           로그인

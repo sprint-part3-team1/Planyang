@@ -5,6 +5,9 @@ import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import Link from 'next/link';
+import { useState } from 'react';
+import MODAL_TYPES from '@/app/constants/modalTypes';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import styles from './SideMenu.module.css';
 import DashBoardColorCircle from './DashBoardColorCircle';
 
@@ -13,6 +16,7 @@ interface SideMenuPropsType {
 }
 
 const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
+  const [openModalType, setOpenModalType] = useState('');
   const dispatch = useAppDispatch();
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
@@ -39,12 +43,19 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
       </div>
       <div className={styles.titleWrapper}>
         <span id={styles.title}>Dash Boards</span>
+        <ModalPortal
+          openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
         <Image
           width={20}
           height={20}
           id={styles.vector}
           src={VECTOR_ICON_SRC}
           alt="vector"
+          onClick={() => {
+            setOpenModalType(MODAL_TYPES.newDashboard);
+          }}
         />
 
         {/* onClick 모달창 연결 */}

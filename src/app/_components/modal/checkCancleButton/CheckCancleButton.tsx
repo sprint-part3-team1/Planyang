@@ -18,6 +18,7 @@ const CheckCancleButton = ({
   const deleteButtonHandler = () => {
     setOpenModalType(modalTypes.deleteColumnCheck);
   };
+ 
   return (
     <div className={styles.deleteModeContainer}>
       {deleteMode && (
