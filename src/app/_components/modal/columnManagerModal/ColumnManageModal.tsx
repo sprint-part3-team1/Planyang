@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Input from '@/app/_components/Input';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
@@ -9,6 +9,7 @@ import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 const ColumnManageModal = ({
   openModalType,
   setOpenModalType,
+  inputInitialValue,
 }: ModalPropsType) => {
   const INPUT_WIDTH = {
     [VIEWPORT_TYPES.deskTop]: 48.4,
@@ -17,6 +18,13 @@ const ColumnManageModal = ({
   };
 
   const viewPortType = useGetViewportSize();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (inputRef.current && inputInitialValue) {
+      inputRef.current.value = inputInitialValue;
+    }
+  }, []);
 
   return (
     <ModalContainer title="컬럼 관리">
@@ -25,6 +33,7 @@ const ColumnManageModal = ({
         inputType="text"
         inputWidth={INPUT_WIDTH[viewPortType]}
         errorState={false}
+        inputRef={inputRef}
       />
       <CheckCancleButton
         checkText="변경"

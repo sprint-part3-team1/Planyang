@@ -17,6 +17,7 @@ import EmailInUseModal from './emailInUseModal/EmailInUseModal';
 const ModalContents = ({
   openModalType,
   setOpenModalType,
+  inputInitialValue,
 }: ModalContentFuncPropsType): React.ReactNode => {
   let modalContent: React.ReactNode = null;
   switch (openModalType) {
@@ -34,6 +35,7 @@ const ModalContents = ({
         <ColumnManageModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
+          inputInitialValue={inputInitialValue}
         />
       );
       break;
