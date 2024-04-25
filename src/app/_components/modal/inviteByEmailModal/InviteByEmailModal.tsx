@@ -39,7 +39,7 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
     dispatch(invitationActions.asynchGetMyInvitation({ dashBoardId, page }));
   };
   const InviteButtonHandler = async () => {
-    inviteUserToDashBoard(inputValue, dashBoardDetailDatas?.id);
+    await inviteUserToDashBoard(inputValue, dashBoardDetailDatas?.id);
     if (invitationDatas.data?.invitations.length === 5) {
       dispatch(invitationActions.incrementPage());
       await getMyInvitationList(

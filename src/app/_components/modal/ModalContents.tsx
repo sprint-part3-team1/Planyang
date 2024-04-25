@@ -20,6 +20,7 @@ const ModalContents = ({
   setOpenModalType,
   inputInitialValue,
   modalText,
+  requestId,
 }: ModalContentFuncPropsType): React.ReactNode => {
   let modalContent: React.ReactNode = null;
   switch (openModalType) {
@@ -38,6 +39,7 @@ const ModalContents = ({
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
           inputInitialValue={inputInitialValue}
+          requestId={requestId}
         />
       );
       break;
@@ -94,6 +96,7 @@ const ModalContents = ({
         <TaskCardModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
+          requestId={requestId}
         />
       );
       break;

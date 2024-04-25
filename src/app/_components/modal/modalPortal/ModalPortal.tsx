@@ -9,6 +9,7 @@ const ModalPortal = ({
   setOpenModalType,
   inputInitialValue,
   modalText,
+  requestId,
 }: ModalPortalPropsType) => {
   if (openModalType === '') return null;
 
@@ -18,6 +19,7 @@ const ModalPortal = ({
     setOpenModalType,
     inputInitialValue,
     modalText,
+    requestId,
   });
 
   return createPortal(
