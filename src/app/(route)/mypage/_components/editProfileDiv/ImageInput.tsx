@@ -11,7 +11,6 @@ type Type = {
 };
 const ImageInput = ({ selectedImagePath, setSelectedImagePath }: Type) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [showImageUrl, setShowImageUrl] = useState<string | null>(null);
 
   const formData = new FormData();

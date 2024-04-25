@@ -38,7 +38,6 @@ export type ModalContentFuncPropsType = {
   modalText?: string | null;
   requestId?: number;
 };
-
 export type TaskCardModalPropsType = {
   openModalType?: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
