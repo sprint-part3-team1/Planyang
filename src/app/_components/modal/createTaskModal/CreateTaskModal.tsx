@@ -3,6 +3,9 @@ import { ModalPropsType } from '@/app/_types/modalProps';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import ArrowDown from '@/../public/assets/icons/arrowDown.svg';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
+import { cardActions } from '@/app/_slice/cardSlice';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { useParams } from 'next/navigation';
 import ModalContainer from '../modalContainer/ModalContainer';
 import ManagerDropDown from '../../DropDown/ManagerDropDown';
 import Input from '../../Input';
@@ -10,9 +13,49 @@ import InputModal from '../inputModal/InputModal';
 import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 import styles from './CreateTaskModal.module.css';
 
-const CreateTaskModal = ({ setOpenModalType }: ModalPropsType) => {
+const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+
+  const createCard = async (
+    assigneeUserId: number,
+    title: string,
+    description: string,
+    dueDate: string,
+    tags: [string],
+    imageUrl: string,
+  ) => {
+    try {
+      await dispatch(
+        cardActions.asyncFetchCreateCard({
+          assigneeUserId,
+          dashboardId: Number(params.id),
+          columnId: Number(requestId),
+          title,
+          description,
+          dueDate,
+          tags,
+          imageUrl,
+        }),
+      );
+    } catch (error) {
+      console.error('Error create card:', error);
+    }
+  };
+
   const createTaskButtonHandler = () => {
     /** 생성 버튼을 누르면 실행되는 함수 작성 */
+    createCard(
+      1673,
+      titleRef.current?.value,
+      descriptionRef.current?.value,
+      '2024-04-17 18:27',
+      ['test'],
+      imageUrlData,
+    );
+    setOpenModalType('');
   };
 
   const INPUT_WIDTH = {
@@ -58,8 +101,13 @@ const CreateTaskModal = ({ setOpenModalType }: ModalPropsType) => {
     <ModalContainer title="할 일 생성">
       <div className={styles.container}>
         <ManagerDropDown title="담당자" />
-        <InputModal title="제목" required type="text" />
-        <InputModal title="설명" required type="multiLine" />
+        <InputModal title="제목" required type="text" inputRef={titleRef} />
+        <InputModal
+          title="설명"
+          required
+          type="multiLine"
+          inputRef={descriptionRef}
+        />
         <Input
           inputName="마감일"
           inputType="calendar"
@@ -70,7 +118,7 @@ const CreateTaskModal = ({ setOpenModalType }: ModalPropsType) => {
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
         />
-        <InputModal title="이미지" type="image" ref={ref} />
+        <InputModal title="이미지" type="image" imageRef={ref} />
         <div
           role="button"
           tabIndex={0}

@@ -29,6 +29,7 @@ const TaskCardModal = ({
   const commentDataList = useAppSelector(commentData);
   const columnDataList = useAppSelector(columnData);
   const params = useParams();
+  const commentRef = useRef<HTMLTextAreaElement>(null);
 
   const [myCommentInputValue, setMyCommentInputValue] = useState('');
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
@@ -93,6 +94,7 @@ const TaskCardModal = ({
         }),
       );
       await fetchComment();
+      commentRef.current.value = '';
     } catch (error) {
       console.error('Error post comment:', error);
     }
@@ -246,6 +248,7 @@ const TaskCardModal = ({
                 placeholder="댓글 작성하기"
                 className={styles.myCommentTextarea}
                 onChange={commentInputChangeHandler}
+                ref={commentRef}
               />
               {myCommentInputValue && (
                 <button
