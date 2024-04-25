@@ -8,6 +8,7 @@ export interface RegisterStateType {
     updatedAt: string;
   } | null;
   error: null | string;
+  status: number | null | string;
 }
 
 export interface LoginStateType {
