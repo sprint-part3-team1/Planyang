@@ -87,7 +87,10 @@ const TestPage = () => {
   };
 
   // 유저의 정보를 수정할수 있는 함수입니다 파라미터로 닉네임과 프로필 사진을 받습니다 (현재 프로필 이미지는 null값으로 되있음)
-  const updateMyInformation = (nickname: string, profileImageUrl: null) => {
+  const updateMyInformation = (
+    nickname: string,
+    profileImageUrl: string | null,
+  ) => {
     dispatch(
       registerActions.asynchFetchUpdateInformation({
         nickname,
@@ -320,7 +323,11 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
+<<<<<<< HEAD
             submitRegistration('ff', 'kkkk', 'AS123456');
+=======
+            submitRegistration('min@test.com', '민정민', 'AS123456');
+>>>>>>> 87260e84b39b934c39385d00a0a2ae106b261018
           }}
         >
           회원가입
@@ -436,8 +443,7 @@ const TestPage = () => {
           초대 취소하기
         </button>
 
-        <h1>내가 보낸 초대 목록 (총 {invitationDatas?.totalCount}개)</h1>
-
+        <h1>내가 보낸 초대 목록 (총 {invitationDatas.data?.totalCount}개)</h1>
         {invitationDatas?.data?.invitations.map((i) => {
           return (
             <div key={i.id}>
@@ -572,7 +578,7 @@ const TestPage = () => {
         >
           카드 수정
         </button>
-        <button type="button" onClick={() => getCard(4988)}>
+        <button type="button" onClick={() => getCard(4933)}>
           카드 조회(콘솔 확인)
         </button>
         <button type="button" onClick={() => deleteCard(4988)}>
@@ -580,7 +586,7 @@ const TestPage = () => {
         </button>
         <div>
           <h1>내 카드 조회 (총 {cardDatas?.totalCount}개)</h1>
-          {cardDatas?.cards?.map((item) => {
+          {cardDatas?.cards.map((item) => {
             return (
               <div key={item.id}>
                 <div>카드 id: {item.id}</div>

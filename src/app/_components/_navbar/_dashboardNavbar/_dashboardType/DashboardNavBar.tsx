@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
+import styles from '../DashboardTypeNavBar.module.css';
 import Contour from '@/app/_components/Contour';
 import UserIcon from '@/app/_components/UserIcon';
 import ImageTextButton from '@/app/_components/Button/ImageTextButton';
 import Image from 'next/image';
 import UserIconList from '@/app/_components/UserIconList';
 import { DashboardNavBarProps } from '@/app/_types/DashboardNavBarProps';
-import styles from '../DashboardTypeNavBar.module.css';
 
 const DashboardNavBar = ({
   membersInfo,
@@ -37,19 +37,19 @@ const DashboardNavBar = ({
         <div className={styles.sideMenuButtonWrapper}>
           <ImageTextButton
             text="관리"
-            imageUrl="/assets/icons/setting.svg"
+            imageUrl="/assets/icons/gear.svg"
             onClickEvent={onClickButton}
           />
           <ImageTextButton
             text="초대하기"
-            imageUrl="/assets/icons/vector.svg"
+            imageUrl="/assets/icons/invite.svg"
             onClickEvent={onClickButton}
           />
         </div>
         <UserIconList
           members={membersInfo.members}
           totalCount={membersInfo.totalCount}
-        />
+        ></UserIconList>
         <Contour />
         <div className={styles.sideMenuUserWrapper}>
           <UserIcon nickname={nickname} profileImageUrl={profileImageUrl} />

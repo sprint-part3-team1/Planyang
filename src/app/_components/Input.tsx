@@ -29,7 +29,7 @@ const Input = ({
   const customWidth =
     inputWidth !== '100%'
       ? {
-          width: `${inputWidth}rem`,
+          width: inputWidth + 'rem',
         }
       : {
           width: '100%',
