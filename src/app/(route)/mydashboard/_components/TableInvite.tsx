@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import CancelButton from '@/app/_components/Button/CancelButton/CancelButton';
 import InviteButton from '@/app/_components/Button/InviteButton/InviteButton';
@@ -8,8 +10,8 @@ import {
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
-import ArrowButton from '../../../_components/Button/ArrowButton/ArrowButton';
-import styles from './TableInvite.module.css';
+import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
+import styles from '@/app/(route)/mydashboard/_components/TableInvite.module.css';
 
 const TableInvite = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +35,9 @@ const TableInvite = () => {
   };
 
   const [isMobile, setIsMobile] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  console.log(invitationDatas.data?.invitations.length);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -49,15 +53,9 @@ const TableInvite = () => {
 
   useEffect(() => {
     if (dashBoardDatas?.id) {
-      getMyInvitationList(dashBoardDatas.id, 1);
+      getMyInvitationList(dashBoardDatas.id, currentPage);
     }
-  }, [dashBoardDatas, dispatch]);
-
-  useEffect(() => {
-    if (dashBoardDatas?.id) {
-      getMyInvitationList(dashBoardDatas.id, invitationDatas.page);
-    }
-  }, [invitationDatas.page]);
+  }, [dashBoardDatas, dispatch, currentPage]);
 
   const handleClickCancel = async (
     dashBoardId: number,
@@ -65,16 +63,15 @@ const TableInvite = () => {
   ) => {
     await cancelInvitation(dashBoardId, invitationId);
     if (invitationDatas.data?.invitations.length === 1) {
-      dispatch(invitationActions.decreasePage());
-      await getMyInvitationList(dashBoardDatas?.id, invitationDatas.page - 1);
+      setCurrentPage((prevPage) => prevPage - 1);
     }
   };
 
   const onLeftButtonClick = async () => {
-    dispatch(invitationActions.decreasePage());
+    setCurrentPage((prevPage) => prevPage - 1);
   };
   const onRightButtonClick = async () => {
-    dispatch(invitationActions.incrementPage());
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -82,7 +79,8 @@ const TableInvite = () => {
       <div className={styles.title}>
         <span id={styles.titleInvite}>초대 내역</span>
         <div className={styles.pagination}>
-          <span>1 페이지 중 {invitationDatas.page}</span>
+          <span>1 페이지 중 {currentPage}</span>{' '}
+          {/* 수정: currentPage로 변경 */}
           <ArrowButton
             onRightButtonClick={onRightButtonClick}
             onLeftButtonClick={onLeftButtonClick}

@@ -14,6 +14,7 @@ import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
 import styles from './page.module.css';
 import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
+import { Suspense } from 'react';
 
 const Page = () => {
   const dispatch = useAppDispatch();
@@ -46,26 +47,28 @@ const Page = () => {
 
   return (
     <div>
-      {dashBoardDatas && userData && (
-        <div>
-          <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
-          <MypageHeader
-            nickName={userData.nickname}
-            profileImage={userData.profileImageUrl}
-          />
-          <div className={styles.container}>
-            <div className={styles.goBackDiv}>
-              <LeftArrow />
-              돌아가기
-            </div>
-            <EditProfileDiv
-              inputWidth={EditProfileinputWidth}
-              userData={userData}
+      <Suspense>
+        {dashBoardDatas && userData && (
+          <div>
+            <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
+            <MypageHeader
+              nickName={userData.nickname}
+              profileImage={userData.profileImageUrl}
             />
-            <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
+            <div className={styles.container}>
+              <div className={styles.goBackDiv}>
+                <LeftArrow />
+                돌아가기
+              </div>
+              <EditProfileDiv
+                inputWidth={EditProfileinputWidth}
+                userData={userData}
+              />
+              <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </Suspense>
     </div>
   );
 };

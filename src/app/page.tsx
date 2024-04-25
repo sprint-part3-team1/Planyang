@@ -19,7 +19,7 @@ const Home = () => {
   const router = useRouter();
 
   const getMyDashBoard = () => {
-    dispatch(dashBoardActions.asynchFetchGetDashBoard());
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
   };
 
   useEffect(() => {

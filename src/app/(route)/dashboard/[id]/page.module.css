@@ -1,16 +1,27 @@
 .container {
   width: 100%;
-  height: auto;
-  padding-left: 30rem;
-  overflow: scroll;
+  height: 100vh;
+  overflow: auto;
   background: var(--gray_FAFAFA);
 }
 
 .columnsContainer {
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 1023px) {
+    flex-direction: column;
+  }
 }
 
 .buttonContainer {
   padding-top: 7rem;
+
+  @media (max-width: 1023px) {
+    padding: 2.2rem 0 2.2rem 2rem;
+  }
+
+  @media (max-width: 767px) {
+    padding: 1.7rem 1.2rem 1.7rem 1.2rem;
+  }
 }

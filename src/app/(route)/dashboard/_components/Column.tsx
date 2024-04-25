@@ -119,12 +119,15 @@ const Column = ({
             tagNameArr={card.tags}
             date={card.dueDate}
             image={null}
+            cardInfo={card}
           />
         ))}
       </div>
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
+        inputInitialValue={columnData.title}
+        requestId={columnData.id}
       />
     </div>
   );
