@@ -14,11 +14,19 @@ interface SideMenuPropsType {
 
 const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
   const [openModalType, setOpenModalType] = useState('');
-
+  const [selectedDashboardId, setSelectedDashboardId] = useState<number | null>(
+    null,
+  );
+  // const dispatch = useAppDispatch();
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
+
+  const handleDashboardItemClick = (id: number) => {
+    setSelectedDashboardId(id);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.logoFrame}>
@@ -64,9 +72,12 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
         {dashBoardData?.map((item) => {
           return (
             <Link
-              className={styles.dashList}
+              className={`${styles.dashList} ${selectedDashboardId === item.id ? styles.selected : ''}`}
               href={`/dashboard/${item.id}`}
               key={item.id}
+              onClick={() => {
+                handleDashboardItemClick(item.id);
+              }}
             >
               <div>
                 <DashBoardColorCircle color={item.color} />
