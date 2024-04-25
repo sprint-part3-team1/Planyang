@@ -1,5 +1,10 @@
 .container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fafafa;
   padding-left: 32rem;
+  overflow: auto;
+  padding-bottom: 2rem;
 
   @media (max-width: 1023px) {
     padding-left: 18rem;
@@ -16,6 +21,7 @@
   gap: 0.6rem;
   align-items: center;
   margin-top: 2rem;
+  cursor: pointer;
 
   color: var(--black_33323);
   font-family: Pretendard;

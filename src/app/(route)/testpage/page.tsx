@@ -27,7 +27,7 @@ const TestPage = () => {
 
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
-  console.log(loginDatas);
+
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
@@ -88,7 +88,10 @@ const TestPage = () => {
   };
 
   // 유저의 정보를 수정할수 있는 함수입니다 파라미터로 닉네임과 프로필 사진을 받습니다 (현재 프로필 이미지는 null값으로 되있음)
-  const updateMyInformation = (nickname: string, profileImageUrl: null) => {
+  const updateMyInformation = (
+    nickname: string,
+    profileImageUrl: string | null,
+  ) => {
     dispatch(
       registerActions.asynchFetchUpdateInformation({
         nickname,
@@ -319,7 +322,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('kkkk@test.com', 'kkkk', 'AS123456');
+            submitRegistration('min@test.com', '민정민', 'AS123456');
           }}
         >
           회원가입
@@ -367,14 +370,6 @@ const TestPage = () => {
       <br />
       <div>
         <h1>DashBoard</h1>
-        <button
-          type="button"
-          onClick={() => {
-            getMyDashBoard();
-          }}
-        >
-          내 대시보드 목록 조회
-        </button>
 
         <button
           type="button"

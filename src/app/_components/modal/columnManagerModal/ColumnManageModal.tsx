@@ -53,6 +53,7 @@ const ColumnManageModal = ({
   return (
     <ModalContainer title="컬럼 관리">
       <Input
+        inputId=""
         inputName="이름"
         inputType="text"
         inputWidth={INPUT_WIDTH[viewPortType]}

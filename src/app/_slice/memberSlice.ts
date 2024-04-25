@@ -32,7 +32,7 @@ const asyncGetMembers = createAsyncThunk(
     const { dashboardId } = createdDashboard;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/members?page=1&size=20&dashboardId=${dashboardId}`,
+      `https://sp-taskify-api.vercel.app/4-1/members?page=1&size=4&dashboardId=${dashboardId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

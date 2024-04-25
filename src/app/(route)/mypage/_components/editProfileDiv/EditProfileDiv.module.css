@@ -55,6 +55,7 @@
   border-radius: 4px;
   background: var(--violet_5534DA);
   margin-left: auto;
+  cursor: pointer;
 
   color: var(--white_FFFFFF);
   text-align: center;
