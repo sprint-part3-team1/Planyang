@@ -5,6 +5,7 @@ import Image from 'next/image';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { cardActions, cardData } from '@/app/_slice/cardSlice';
+
 import ManagerInfoBox from './ManagerInfoBox';
 import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
@@ -16,6 +17,10 @@ import MoreIcon from '../../../../../public/assets/icons/more';
 import PopupDropDown from '../../DropDown/PopupDropDown';
 import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
+
+// TODO: 칼럼 status 받아오기
+// TODO: 카드이미지 불러오기 / 댓글
+// TODO: 카드 삭제 및 수정
 
 const TaskCardModal = ({
   setOpenModalType,
@@ -79,6 +84,14 @@ const TaskCardModal = ({
     fetchCardDetail();
   }, [requestId, dispatch]);
 
+  const deleteCard = async (cardId: number) => {
+    try {
+      await dispatch(cardActions.asyncFetchDeleteCard({ cardId }));
+    } catch (error) {
+      console.error('Error fetching delete card:', error);
+    }
+  };
+
   const handleCloseClick = () => {
     setOpenModalType('');
   };
@@ -93,6 +106,8 @@ const TaskCardModal = ({
 
   const deleteOptionClickHandler = () => {
     /** 옵션 삭제하기 버튼을 눌렀을 때 */
+    handleCloseClick();
+    deleteCard(cardInfo?.id);
   };
 
   const editOptionclickHandler = () => {
@@ -162,13 +177,16 @@ const TaskCardModal = ({
             </div>
           </div>
           <div className={styles.contentDiv}>{cardInfo?.description}</div>
-          <div className={styles.ImageDiv}>
-            {isMobile ? (
-              <Image height={133} src={cardImg} alt="card-img" />
-            ) : (
-              <Image height={205} src={cardImg} alt="card-img" />
-            )}
-          </div>
+          {cardInfo?.imageUrl && (
+            <div className={styles.ImageDiv}>
+              {isMobile ? (
+                <Image height={133} src={cardImg} alt="card-img" />
+              ) : (
+                <Image height={205} src={cardImg} alt="card-img" />
+              )}
+            </div>
+          )}
+
           <div className={styles.writeCommentDiv}>
             <p id={styles.title}>댓글</p>
             <div className={styles.myCommentDiv}>

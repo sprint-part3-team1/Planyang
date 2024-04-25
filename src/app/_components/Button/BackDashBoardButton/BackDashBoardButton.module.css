@@ -1,0 +1,8 @@
+.button {
+  color: var(--black-black_333236, #333236);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

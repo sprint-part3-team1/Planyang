@@ -8,9 +8,8 @@ import dashBoardReducer from '../_slice/dashBoardSlice';
 import memberReducer from '../_slice/memberSlice';
 import invitationReducer from '../_slice/invitationSlice';
 import receivedInvitationReducer from '../_slice/receivedInvitationsSlice';
-import dashboardDetailReducer, {
-  dashBoardDetailData,
-} from '../_slice/dashBoardDetail';
+import dashboardDetailReducer from '../_slice/dashBoardDetail';
+import commentReducer from '../_slice/commentSlice';
 
 const store = configureStore({
   reducer: {
@@ -23,6 +22,7 @@ const store = configureStore({
     invitationData: invitationReducer,
     receivedInvitationData: receivedInvitationReducer,
     dashBoardDetailData: dashboardDetailReducer,
+    commentData: commentReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

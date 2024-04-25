@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Suspense } from 'react';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
 import { userResponse } from '@/app/_slice/registerSlice';
@@ -13,7 +12,6 @@ import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
 import styles from './page.module.css';
 import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
-import Loading from './Loading';
 
 const Page = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +42,7 @@ const Page = () => {
 
   return (
     <div>
-      {userData ? (
+      {userData && (
         <div>
           <MypageHeader
             nickName={userData.nickname}
@@ -62,8 +60,6 @@ const Page = () => {
             <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
           </div>
         </div>
-      ) : (
-        <Loading />
       )}
     </div>
   );

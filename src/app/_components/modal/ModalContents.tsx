@@ -48,6 +48,7 @@ const ModalContents = ({
         <DeleteColumnCheckModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
+          requestId={requestId}
         />
       );
       break;
