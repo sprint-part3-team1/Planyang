@@ -5,7 +5,9 @@ import Image from 'next/image';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { cardActions, cardData } from '@/app/_slice/cardSlice';
-
+import { commentActions, commentData } from '@/app/_slice/commentSlice';
+import { columnActions, columnData } from '@/app/_slice/columnSlice';
+import { useParams } from 'next/navigation';
 import ManagerInfoBox from './ManagerInfoBox';
 import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
@@ -18,51 +20,22 @@ import PopupDropDown from '../../DropDown/PopupDropDown';
 import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
 
-// TODO: 칼럼 status 받아오기
-// TODO: 카드이미지 불러오기 / 댓글
-// TODO: 카드 삭제 및 수정
-
 const TaskCardModal = ({
   setOpenModalType,
   requestId,
 }: TaskCardModalPropsType) => {
-  // const CARD_INFO = {
-  //   title: '새로운 일정 관리 Taskify',
-  //   content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh
-  //     arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor,
-  //     diam justo laoreet eros, vel aliquet diam elit at leo.`,
-  //   status: 'To Do',
-  //   tags: [
-  //     '프로젝트',
-  //     '일반',
-  //     '백엔드',
-  //     '상',
-  //     '프로젝트2',
-  //     '일반2',
-  //     '백엔드2',
-  //     '상2',
-  //   ],
-  //   manager: '배유철',
-  //   deadline: '2022.12.30 19:00',
-  // };
-
-  const COMMENT_INFO = [
-    {
-      id: 0,
-      writer: '정만철',
-      content: `오늘안에 오늘안에 오늘안에 오늘안에
-      오늘안에 오늘안에 오늘안에`,
-      date: '2022.13.14 13:00',
-    },
-  ];
-
   const dispatch = useAppDispatch();
   const cardInfo = useAppSelector(cardData);
+  const commentDataList = useAppSelector(commentData);
+  const columnDataList = useAppSelector(columnData);
+  const params = useParams();
 
   const [myCommentInputValue, setMyCommentInputValue] = useState('');
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  let status = null;
 
   useEffect(() => {}, [myCommentInputValue]);
 
@@ -80,15 +53,92 @@ const TaskCardModal = ({
         setIsLoading(true);
       }
     };
+    const fetchColumns = async () => {
+      try {
+        await dispatch(
+          columnActions.asyncFetchGetColumn({ dashboardId: Number(params.id) }),
+        );
+      } catch (error) {
+        console.error('Error fetching columns:', error);
+      }
+    };
 
     fetchCardDetail();
+    fetchColumns();
   }, [requestId, dispatch]);
+
+  const fetchComment = async () => {
+    try {
+      await dispatch(
+        commentActions.asyncFetchGetComment({
+          cardId: Number(requestId),
+        }),
+      );
+    } catch (error) {
+      console.error('Error fetching comment:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchComment();
+  }, [dispatch]);
+  const postComment = async () => {
+    try {
+      await dispatch(
+        commentActions.asyncFetchLeaveComment({
+          content: myCommentInputValue,
+          cardId: Number(requestId),
+          columnId: cardInfo?.columnId,
+          dashboardId: cardInfo?.dashboardId,
+        }),
+      );
+      await fetchComment();
+    } catch (error) {
+      console.error('Error post comment:', error);
+    }
+  };
+
+  const deleteComment = async (commentId: number) => {
+    try {
+      await dispatch(
+        commentActions.asynchFetchDeleteComment({
+          commentId,
+        }),
+      );
+      await fetchComment();
+    } catch (error) {
+      console.error('Error delete comment:', error);
+    }
+  };
+
+  const x = columnDataList?.data?.filter(
+    (item) => item.id === cardInfo?.columnId,
+  );
+  if (x?.length > 0) {
+    status = x[0].title;
+  } else {
+    console.log('No item found matching the condition.');
+  }
+
+  const updateComment = async () => {
+    try {
+      await dispatch(
+        commentActions.asyncFetchUpdateComment({
+          content,
+          cardId: Number(requestId),
+        }),
+      );
+      await updateComment();
+    } catch (error) {
+      console.error('Error update comment:', error);
+    }
+  };
 
   const deleteCard = async (cardId: number) => {
     try {
       await dispatch(cardActions.asyncFetchDeleteCard({ cardId }));
     } catch (error) {
-      console.error('Error fetching delete card:', error);
+      console.error('Error delete card:', error);
     }
   };
 
@@ -106,12 +156,14 @@ const TaskCardModal = ({
 
   const deleteOptionClickHandler = () => {
     /** 옵션 삭제하기 버튼을 눌렀을 때 */
+    // TODO: 삭제는 되지만 모달이 꺼지면서 실시간 반영 X
     handleCloseClick();
     deleteCard(cardInfo?.id);
   };
 
   const editOptionclickHandler = () => {
     /** 옵션 수정하기 버튼을 눌렀을 때  */
+    // TODO: 수정하는 모달창으로 넘어가야 함
   };
 
   const viewPortResizeHandler = () => {
@@ -162,7 +214,7 @@ const TaskCardModal = ({
       <div className={styles.rowDiv}>
         <div className={styles.rowDivOne}>
           <div className={styles.allTagsDiv}>
-            <StatusTag status="To Do" />
+            <StatusTag status={status} />
             <Divider />
             <div className={styles.tagDiv}>
               {cardInfo?.tags.map((tag) => (
@@ -196,18 +248,24 @@ const TaskCardModal = ({
                 onChange={commentInputChangeHandler}
               />
               {myCommentInputValue && (
-                <button type="button" className={styles.inputButton}>
+                <button
+                  type="button"
+                  className={styles.inputButton}
+                  onClick={postComment}
+                >
                   입력
                 </button>
               )}
             </div>
           </div>
-          {COMMENT_INFO.map((comment) => (
+          {commentDataList?.comments?.map((comment) => (
             <React.Fragment key={comment.id}>
               <OtherComment
-                writer={comment.writer}
+                writer={comment.author.nickname}
                 content={comment.content}
-                date={comment.date}
+                date={comment.createdAt}
+                deleteComment={deleteComment}
+                commentId={comment.id}
               />
             </React.Fragment>
           ))}

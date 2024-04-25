@@ -4,7 +4,7 @@ import { OtherCommentProps } from '../_types/otherCommentProps';
 import UserIcon from './UserIcon';
 
 const OtherComment = forwardRef<HTMLDivElement, OtherCommentProps>(
-  ({ writer, content, date }, ref) => {
+  ({ writer, content, date, deleteComment, commentId }, ref) => {
     return (
       <div className={styles.otherCommentDiv} ref={ref}>
         <UserIcon nickname={writer} profileImageUrl={null} />
@@ -18,7 +18,11 @@ const OtherComment = forwardRef<HTMLDivElement, OtherCommentProps>(
             <button className={styles.option} type="button">
               수정
             </button>
-            <button className={styles.option} type="button">
+            <button
+              className={styles.option}
+              type="button"
+              onClick={() => deleteComment(commentId)}
+            >
               삭제
             </button>
           </div>
