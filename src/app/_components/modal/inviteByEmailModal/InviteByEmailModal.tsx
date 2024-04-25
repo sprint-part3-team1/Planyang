@@ -2,10 +2,15 @@ import React, { useState, useRef } from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
-import { invitationActions } from '@/app/_slice/invitationSlice';
+
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import useAppSelector from '@/app/_hooks/useAppSelector';
+import {
+  invitationData,
+  invitationActions,
+} from '@/app/_slice/invitationSlice';
+import { dashBoardData } from '@/app/_slice/dashBoardSlice';
 
 import ModalContainer from '../modalContainer/ModalContainer';
 import Input from '../../Input';
@@ -15,6 +20,8 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
+
+  const invitationDatas = useAppSelector(invitationData);
   const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
   const inviteUserToDashBoard = (email: string, dashBoardId: number) => {
     dispatch(
@@ -25,8 +32,22 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
     );
   };
 
-  const InviteButtonHandler = () => {
+  const getMyInvitationList = (
+    dashBoardId: number | undefined,
+    page: number,
+  ) => {
+    dispatch(invitationActions.asynchGetMyInvitation({ dashBoardId, page }));
+  };
+  const InviteButtonHandler = async () => {
     inviteUserToDashBoard(inputValue, dashBoardDetailDatas?.id);
+    if (invitationDatas.data?.invitations.length === 5) {
+      dispatch(invitationActions.incrementPage());
+      await getMyInvitationList(
+        dashBoardDetailDatas?.id,
+        invitationDatas.page + 1,
+      );
+    }
+
     setOpenModalType('');
   };
   const handleInputChange = () => {

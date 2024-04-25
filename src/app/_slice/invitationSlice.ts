@@ -1,9 +1,8 @@
-import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
 
-interface InivationInformationType {
+interface InvitationInformationType {
   id: number;
   inviter: {
     id: number;
@@ -25,27 +24,31 @@ interface InivationInformationType {
   updatedAt: string;
 }
 
-interface InivitationsType {
+interface InvitationsType {
   data: {
-    invitations: [] | InivationInformationType[];
+    invitations: InvitationInformationType[];
     totalCount: number;
   } | null;
   page: number;
 }
 
-const initialState: InivitationsType = {
-  data: null,
+const initialState: InvitationsType = {
+  data: {
+    invitations: [],
+    totalCount: 0,
+  },
   page: 1,
 };
 
 const asynchGetMyInvitation = createAsyncThunk(
   'invitationSlice/asynchGetMyInvitation',
 
-  async (dashBoardId: number | undefined) => {
+  async (getInvite: { dashBoardId: number | undefined; page: number }) => {
     const accessToken = localStorage.getItem('accessToken');
+    const { dashBoardId, page } = getInvite;
 
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/dashboards/${dashBoardId}/invitations?page=1&size=15`,
+      `https://sp-taskify-api.vercel.app/4-1/dashboards/${dashBoardId}/invitations?page=${page}&size=5`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -103,29 +106,42 @@ const asynchFetchDeleteInvited = createAsyncThunk(
 const invitationSlice = createSlice({
   name: 'invitationSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    incrementPage(state) {
+      if (!state.data || state.page * 5 < state.data.totalCount) {
+        state.page += 1;
+      }
+    },
+    decreasePage(state) {
+      if (state.page > 1) {
+        state.page -= 1;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       asynchGetMyInvitation.fulfilled,
-      (state, action: PayloadAction<InivitationsType['data']>) => {
+      (state, action: PayloadAction<InvitationsType['data']>) => {
         state.data = action.payload;
       },
     );
 
     builder.addCase(
       asynchFetchinviteUserToDashboard.fulfilled,
-      (state, action: PayloadAction<InivationInformationType>) => {
+      (state, action: PayloadAction<InvitationInformationType>) => {
         state.data?.invitations.unshift(action.payload);
       },
     );
 
     builder.addCase(asynchFetchDeleteInvited.fulfilled, (state, action) => {
       const invitationIdToDelete = action.payload;
-      state.data.totalCount--;
-      const updatedInvitations = state.data?.invitations.filter(
-        (invitation) => invitation.id !== invitationIdToDelete,
-      );
-      state.data.invitations = updatedInvitations;
+
+      if (state.data) {
+        const updatedInvitations = state.data.invitations.filter(
+          (invitation) => invitation.id !== invitationIdToDelete,
+        );
+        state.data.invitations = updatedInvitations;
+      }
     });
   },
 });
@@ -139,4 +155,4 @@ export const invitationActions = {
   asynchFetchDeleteInvited,
 };
 
-export const invitationData = (state: RootState) => state.invitationData.data;
+export const invitationData = (state: RootState) => state.invitationData;

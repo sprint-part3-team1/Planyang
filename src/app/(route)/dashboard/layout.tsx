@@ -33,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [pathName]);
 
   useEffect(() => {
-    dispatch(dashBoardActions.asynchFetchGetDashBoard());
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
     dispatch(registerActions.asynchFetchgetUserInfo());
   }, [dispatch]);
   return (
