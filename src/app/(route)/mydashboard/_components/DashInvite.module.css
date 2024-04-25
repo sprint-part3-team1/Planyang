@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 102.2rem;
-  height: 60rem;
+  height: 53rem;
+  max-height: 53rem;
   padding: 3.2rem 0rem 0rem 0rem;
   border-radius: 2rem;
   background: var(--white_FFFFFF);
@@ -134,7 +135,8 @@
 @media (max-width: 1023px) {
   .container {
     width: 50.4rem;
-    height: 59.2rem;
+    height: 46.2rem;
+    max-height: 46.2rem;
     flex-shrink: 0;
   }
 
@@ -158,7 +160,9 @@
   .container {
     padding: 2.4rem 0rem 0rem 0rem;
     width: 27rem;
-    height: 83.6rem;
+    height: 37.2rem;
+    max-height: 37.2rem;
+    /* max-height: 83.6rem; */
   }
 
   .noContainer {
