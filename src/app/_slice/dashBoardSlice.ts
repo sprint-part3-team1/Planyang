@@ -143,7 +143,6 @@ const dashBoardSlice = createSlice({
     builder.addCase(
       asynchFetchDeleteDashBoard.fulfilled,
       (state, action: PayloadAction<number>) => {
-        state.data.totalCount--;
         const deletedDashBoardId = action.payload;
         if (state.data) {
           state.data.dashboards = state.data.dashboards.filter(

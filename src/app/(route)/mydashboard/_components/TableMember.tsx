@@ -50,7 +50,7 @@ const TableMember = () => {
 
               <span id={styles.memberName}>{i.nickname}</span>
             </div>
-            <DeleteButton />
+            <DeleteButton id={i.id} />
           </div>
         );
       })}
