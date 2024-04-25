@@ -53,7 +53,6 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       descriptionRef.current?.value,
       '2024-04-17 18:27',
       ['test'],
-      imageUrlData,
     );
     setOpenModalType('');
   };
