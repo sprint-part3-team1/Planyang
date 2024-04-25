@@ -88,7 +88,10 @@ const TestPage = () => {
   };
 
   // 유저의 정보를 수정할수 있는 함수입니다 파라미터로 닉네임과 프로필 사진을 받습니다 (현재 프로필 이미지는 null값으로 되있음)
-  const updateMyInformation = (nickname: string, profileImageUrl: null) => {
+  const updateMyInformation = (
+    nickname: string,
+    profileImageUrl: string | null,
+  ) => {
     dispatch(
       registerActions.asynchFetchUpdateInformation({
         nickname,
@@ -319,7 +322,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitRegistration('kkkk@test.com', 'kkkk', 'AS123456');
+            submitRegistration('min@test.com', '민정민', 'AS123456');
           }}
         >
           회원가입

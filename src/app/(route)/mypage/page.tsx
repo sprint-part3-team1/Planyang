@@ -7,7 +7,7 @@ import { userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions } from '@/app/_slice/registerSlice';
-import { loginActions } from '@/app/_slice/loginSlice';
+import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import SideMenu from '../mydashboard/_components/SideMenu';
 import MypageHeader from './_components/mypageHeader/MypageHeader';
 import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv';
@@ -17,28 +17,13 @@ import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
 
 const Page = () => {
   const dispatch = useAppDispatch();
-
-  const userData = useAppSelector(userResponse);
-  console.log(userData);
-
-  const getMyInformation = () => {
-    dispatch(registerActions.asynchFetchgetUserInfo());
-  };
-
-  const submitLogin = (email: string, password: string) => {
-    dispatch(
-      loginActions.asynchFetchSignIn({
-        email,
-        password,
-      }),
-    ).then(() => {
-      getMyInformation();
-    });
-  };
+  const dashBoardDatas = useAppSelector(dashBoardData);
+  const userData = useAppSelector(userResponse).data;
 
   useEffect(() => {
-    submitLogin('planyang2@test.com', 'AS123456');
-  }, []);
+    dispatch(registerActions.asynchFetchgetUserInfo());
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
+  }, [dispatch]);
 
   const viewportSize: string = useGetViewportSize();
 
@@ -61,9 +46,9 @@ const Page = () => {
 
   return (
     <div>
-      {userData && (
+      {dashBoardDatas && userData && (
         <div>
-          <SideMenu />
+          <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
           <MypageHeader
             nickName={userData.nickname}
             profileImage={userData.profileImageUrl}
@@ -75,8 +60,7 @@ const Page = () => {
             </div>
             <EditProfileDiv
               inputWidth={EditProfileinputWidth}
-              email={userData.email}
-              nickName={userData.nickname}
+              userData={userData}
             />
             <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
           </div>
