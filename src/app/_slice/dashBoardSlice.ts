@@ -128,7 +128,6 @@ const dashBoardSlice = createSlice({
 
     builder.addCase(asynchFetchCreateDashBoard.fulfilled, (state, action) => {
       state.data?.dashboards.unshift(action.payload);
-      state.data.totalCount++;
     });
 
     builder.addCase(asyncFetchUpdateDashBoard.fulfilled, (state, action) => {
