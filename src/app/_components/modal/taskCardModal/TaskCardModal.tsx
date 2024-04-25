@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { TaskCardModalPropsType } from '@/app/_types/modalProps';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import Image from 'next/image';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import { cardActions, cardData } from '@/app/_slice/cardSlice';
 import ManagerInfoBox from './ManagerInfoBox';
 import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
@@ -14,26 +17,29 @@ import PopupDropDown from '../../DropDown/PopupDropDown';
 import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
 
-const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
-  const CARD_INFO = {
-    title: '새로운 일정 관리 Taskify',
-    content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh 
-      arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, 
-      diam justo laoreet eros, vel aliquet diam elit at leo.`,
-    status: 'To Do',
-    tags: [
-      '프로젝트',
-      '일반',
-      '백엔드',
-      '상',
-      '프로젝트2',
-      '일반2',
-      '백엔드2',
-      '상2',
-    ],
-    manager: '배유철',
-    deadline: '2022.12.30 19:00',
-  };
+const TaskCardModal = ({
+  setOpenModalType,
+  requestId,
+}: TaskCardModalPropsType) => {
+  // const CARD_INFO = {
+  //   title: '새로운 일정 관리 Taskify',
+  //   content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh
+  //     arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor,
+  //     diam justo laoreet eros, vel aliquet diam elit at leo.`,
+  //   status: 'To Do',
+  //   tags: [
+  //     '프로젝트',
+  //     '일반',
+  //     '백엔드',
+  //     '상',
+  //     '프로젝트2',
+  //     '일반2',
+  //     '백엔드2',
+  //     '상2',
+  //   ],
+  //   manager: '배유철',
+  //   deadline: '2022.12.30 19:00',
+  // };
 
   const COMMENT_INFO = [
     {
@@ -45,11 +51,33 @@ const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
     },
   ];
 
+  const dispatch = useAppDispatch();
+  const cardInfo = useAppSelector(cardData);
+
   const [myCommentInputValue, setMyCommentInputValue] = useState('');
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {}, [myCommentInputValue]);
+
+  useEffect(() => {
+    const fetchCardDetail = async () => {
+      try {
+        await dispatch(
+          cardActions.asyncFetchGetCard({
+            cardId: Number(requestId),
+          }),
+        );
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching card detail:', error);
+        setIsLoading(true);
+      }
+    };
+
+    fetchCardDetail();
+  }, [requestId, dispatch]);
 
   const handleCloseClick = () => {
     setOpenModalType('');
@@ -104,12 +132,16 @@ const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, handleCloseClick);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <ModalContainer title={CARD_INFO.title} ref={ref}>
+    <ModalContainer title={cardInfo?.title} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
-          managerName={CARD_INFO.manager}
-          deadline={CARD_INFO.deadline}
+          managerName={cardInfo?.assignee.nickname}
+          deadline={cardInfo?.dueDate}
         />
       )}
       <div className={styles.rowDiv}>
@@ -118,7 +150,7 @@ const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
             <StatusTag status="To Do" />
             <Divider />
             <div className={styles.tagDiv}>
-              {CARD_INFO.tags.map((tag) => (
+              {cardInfo?.tags.map((tag) => (
                 <TagIcon
                   key={tag}
                   tagName={tag}
@@ -129,7 +161,7 @@ const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
               ))}
             </div>
           </div>
-          <div className={styles.contentDiv}>{CARD_INFO.content}</div>
+          <div className={styles.contentDiv}>{cardInfo?.description}</div>
           <div className={styles.ImageDiv}>
             {isMobile ? (
               <Image height={133} src={cardImg} alt="card-img" />
@@ -164,8 +196,8 @@ const TaskCardModal = ({ setOpenModalType }: TaskCardModalPropsType) => {
         </div>
         {isMobile || (
           <ManagerInfoBox
-            managerName={CARD_INFO.manager}
-            deadline={CARD_INFO.deadline}
+            managerName={cardInfo?.assignee.nickname}
+            deadline={cardInfo?.dueDate}
           />
         )}
       </div>

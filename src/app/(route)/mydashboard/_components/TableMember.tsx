@@ -1,16 +1,33 @@
 import Image from 'next/image';
+import { memberActions, memberData } from '@/app/_slice/memberSlice';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { useEffect } from 'react';
+import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
+import useAppSelector from '@/app/_hooks/useAppSelector';
 import styles from './TableMember.module.css';
 import ArrowButton from '../../../_components/Button/ArrowButton/ArrowButton';
 import DeleteButton from '../../../_components/Button/DeleteButton/DeleteButton';
 
 const TableMember = () => {
+  const dispatch = useAppDispatch();
   const PROFILE_ELLIPSE = '/assets/icons/profileEllipse.svg';
-  const memberData = [
-    { name: '정만철', image: PROFILE_ELLIPSE },
-    { name: '김태순', image: PROFILE_ELLIPSE },
-    { name: '최주협', image: PROFILE_ELLIPSE },
-    { name: '윤지현', image: PROFILE_ELLIPSE },
-  ];
+  const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
+  const memberDatas = useAppSelector(memberData);
+  const getMember = (dashboardId: number | undefined) => {
+    dispatch(
+      memberActions.asyncGetMembers({
+        dashboardId,
+      }),
+    );
+  };
+
+  useEffect(() => {
+    if (dashBoardDetailDatas?.id) {
+      // 값이 있는지 확인
+      getMember(dashBoardDetailDatas.id);
+    }
+  }, [dashBoardDetailDatas?.id]); // dashBoardDetailDatas.id를 의존성 배열에 추가
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -21,21 +38,23 @@ const TableMember = () => {
         </div>
       </div>
       <span className={styles.name}> 이름</span>
-      {memberData.map((member, index) => (
-        <div key={index} className={styles.memberContainer}>
-          <div className={styles.profileFrame}>
-            <Image
-              width={38}
-              height={38}
-              src={member.image}
-              alt={member.name}
-              className={styles.memberImage}
-            />
-            <span id={styles.memberName}>{member.name}</span>
+      {memberDatas?.members.map((i) => {
+        return (
+          <div key={i.id} className={styles.memberContainer}>
+            <div className={styles.profileFrame}>
+              {/* <Image
+                width={38}
+                height={38}
+                src={member.image}
+                alt={member.name}
+                className={styles.memberImage}
+              /> */}
+              <span id={styles.memberName}>{i.email}</span>
+            </div>
+            <DeleteButton />
           </div>
-          <DeleteButton />
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

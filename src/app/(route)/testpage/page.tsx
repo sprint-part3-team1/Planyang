@@ -27,7 +27,7 @@ const TestPage = () => {
 
   // 현재 로그인한 유저의 정보가 담긴 데이터 입니다 getMyInformation 함수를 통해 데이터를 불러옵니다
   const userData = useAppSelector(userResponse);
-  console.log(loginDatas);
+
 
   // 대시보드 데이터 입니다
   const dashBoardDatas = useAppSelector(dashBoardData);
@@ -370,14 +370,6 @@ const TestPage = () => {
       <br />
       <div>
         <h1>DashBoard</h1>
-        <button
-          type="button"
-          onClick={() => {
-            getMyDashBoard();
-          }}
-        >
-          내 대시보드 목록 조회
-        </button>
 
         <button
           type="button"
@@ -446,8 +438,8 @@ const TestPage = () => {
           초대 취소하기
         </button>
 
-        <h1>내가 보낸 초대 목록 (총 {invitationDatas?.totalCount}개)</h1>
-        {invitationDatas?.invitations.map((i) => {
+        <h1>내가 보낸 초대 목록 (총 {invitationDatas.data?.totalCount}개)</h1>
+        {invitationDatas?.data?.invitations.map((i) => {
           return (
             <div key={i.id}>
               <div> 초대요청 ID: {i.id}</div>
@@ -581,7 +573,7 @@ const TestPage = () => {
         >
           카드 수정
         </button>
-        <button type="button" onClick={() => getCard(4988)}>
+        <button type="button" onClick={() => getCard(4933)}>
           카드 조회(콘솔 확인)
         </button>
         <button type="button" onClick={() => deleteCard(4988)}>
@@ -589,7 +581,7 @@ const TestPage = () => {
         </button>
         <div>
           <h1>내 카드 조회 (총 {cardDatas?.totalCount}개)</h1>
-          {cardDatas?.cards?.map((item) => {
+          {cardDatas?.cards.map((item) => {
             return (
               <div key={item.id}>
                 <div>카드 id: {item.id}</div>

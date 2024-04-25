@@ -10,8 +10,8 @@ const DashBoardeditPage = () => {
   return (
     <div>
       <EditDashName />
-      <TableInvite />
       <TableMember />
+      <TableInvite />
       <DeleteDashBoardButton />
     </div>
   );

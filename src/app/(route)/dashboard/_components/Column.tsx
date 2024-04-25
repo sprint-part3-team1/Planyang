@@ -73,7 +73,7 @@ const Column = ({
           [columId]: res.data.totalCount,
         }));
       })
-      .catch((error) => alert(`카드 목록 조회 실패(${error})`));
+      .catch((error) => console.log(`카드 목록 조회 실패(${error})`));
   };
 
   useEffect(() => {
@@ -118,13 +118,16 @@ const Column = ({
             title={card.title}
             tagNameArr={card.tags}
             date={card.dueDate}
-            image={null}
+            image={card.imageUrl}
+            cardInfo={card}
           />
         ))}
       </div>
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
+        inputInitialValue={columnData.title}
+        requestId={columnData.id}
       />
     </div>
   );
