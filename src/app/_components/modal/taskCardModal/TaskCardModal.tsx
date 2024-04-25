@@ -57,6 +57,7 @@ const TaskCardModal = ({
   const [myCommentInputValue, setMyCommentInputValue] = useState('');
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {}, [myCommentInputValue]);
 
@@ -68,13 +69,15 @@ const TaskCardModal = ({
             cardId: Number(requestId),
           }),
         );
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching card detail:', error);
+        setIsLoading(true);
       }
     };
 
     fetchCardDetail();
-  }, []);
+  }, [requestId, dispatch]);
 
   const handleCloseClick = () => {
     setOpenModalType('');
@@ -129,11 +132,15 @@ const TaskCardModal = ({
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, handleCloseClick);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <ModalContainer title={cardInfo?.title} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
-          managerName={cardInfo?.assignee?.nickname}
+          managerName={cardInfo?.assignee.nickname}
           deadline={cardInfo?.dueDate}
         />
       )}
