@@ -1,15 +1,12 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Suspense } from 'react';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
 import { userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions } from '@/app/_slice/registerSlice';
-import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
-import SideMenu from '../mydashboard/_components/SideMenu';
 import MypageHeader from './_components/mypageHeader/MypageHeader';
 import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv';
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
@@ -18,12 +15,10 @@ import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
 
 const Page = () => {
   const dispatch = useAppDispatch();
-  const dashBoardDatas = useAppSelector(dashBoardData);
   const userData = useAppSelector(userResponse).data;
 
   useEffect(() => {
     dispatch(registerActions.asynchFetchgetUserInfo());
-    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
   }, [dispatch]);
 
   const viewportSize: string = useGetViewportSize();

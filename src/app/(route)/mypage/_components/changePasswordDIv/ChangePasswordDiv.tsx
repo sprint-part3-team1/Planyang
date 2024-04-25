@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import styles from './ChangePasswordDiv.module.css';
 import Input from '@/app/_components/Input';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
+import styles from './ChangePasswordDiv.module.css';
 
 const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
   const dispatch = useAppDispatch();
