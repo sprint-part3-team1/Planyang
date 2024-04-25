@@ -4,6 +4,7 @@ import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { useEffect } from 'react';
 import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import useAppSelector from '@/app/_hooks/useAppSelector';
+import UserIcon from '@/app/_components/UserIcon';
 import styles from './TableMember.module.css';
 import ArrowButton from '../../../_components/Button/ArrowButton/ArrowButton';
 import DeleteButton from '../../../_components/Button/DeleteButton/DeleteButton';
@@ -42,14 +43,12 @@ const TableMember = () => {
         return (
           <div key={i.id} className={styles.memberContainer}>
             <div className={styles.profileFrame}>
-              {/* <Image
-                width={38}
-                height={38}
-                src={member.image}
-                alt={member.name}
-                className={styles.memberImage}
-              /> */}
-              <span id={styles.memberName}>{i.email}</span>
+              <UserIcon
+                nickname={i.nickname}
+                profileImageUrl={i.profileImageUrl}
+              />
+
+              <span id={styles.memberName}>{i.nickname}</span>
             </div>
             <DeleteButton />
           </div>

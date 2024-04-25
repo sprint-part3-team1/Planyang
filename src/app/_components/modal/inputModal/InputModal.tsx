@@ -9,11 +9,11 @@ import PlusIcon from '../../../../../public/assets/icons/plusIcon.svg';
 type InputModalProps = {
   title: string;
   type: string;
-  essential?: boolean;
+  required?: boolean;
 };
 
 const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
-  ({ title, type, essential }, ref) => {
+  ({ title, type, required = false }, ref) => {
     const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
       null,
     );
@@ -28,12 +28,18 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
       }
     };
 
+    const handleBackgroundDivClick = () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
+
     switch (type) {
       case 'multiLine':
         return (
           <div className={styles.container}>
             <p id={styles.title}>
-              {title} {essential && <span className={styles.essential}>*</span>}
+              {title} {required && <span className={styles.essential}>*</span>}
             </p>
             <textarea
               rows={2}
@@ -45,11 +51,28 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
         return (
           <div className={styles.container} ref={ref}>
             <p id={styles.title}>
-              {title} {essential && <span className={styles.essential}>*</span>}
+              {title} {required && <span className={styles.essential}>*</span>}
             </p>
             <div
               className={`${selectedImagePath ? styles.imageContainer : styles.noImageDiv}`}
             >
+              {selectedImagePath && (
+                <div
+                  className={styles.backgroundDiv}
+                  onClick={handleBackgroundDivClick}
+                  role="button"
+                  aria-label="Upload Image"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleBackgroundDivClick();
+                    }
+                  }}
+                >
+                  <ImageEditIcon className={styles.editIcon} />
+                </div>
+              )}
+
               <label htmlFor="fileInput" className={styles.customFileInput}>
                 <input
                   type="file"
@@ -79,7 +102,7 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
         return (
           <div className={styles.container}>
             <p id={styles.title}>
-              {title} {essential && <span className={styles.essential}>*</span>}
+              {title} {required && <span className={styles.essential}>*</span>}
             </p>
             <input className={styles.input} />
           </div>

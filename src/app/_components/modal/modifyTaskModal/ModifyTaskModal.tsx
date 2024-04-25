@@ -62,12 +62,8 @@ const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
           <StatusDropDown title="상태" />
           <ManagerDropDown title="담당자" />
         </div>
-        <Input
-          inputName="제목"
-          inputType="text"
-          inputWidth={INPUT_WIDTH[viewportType]}
-        />
-        <InputModal title="설명" essential type="multiLine" />
+        <InputModal title="제목" required type="text" />
+        <InputModal title="설명" required type="multiLine" />
         <Input
           inputName="마감일"
           inputType="calendar"

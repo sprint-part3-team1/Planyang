@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import CancelButton from '@/app/_components/Button/CancelButton/CancelButton';
 import InviteButton from '@/app/_components/Button/InviteButton/InviteButton';

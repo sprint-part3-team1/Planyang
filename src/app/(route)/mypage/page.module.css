@@ -2,17 +2,9 @@
   width: 100vw;
   height: 100vh;
   background-color: #fafafa;
-  padding-left: 32rem;
+  padding-left: 2rem;
   overflow: auto;
   padding-bottom: 2rem;
-
-  @media (max-width: 1023px) {
-    padding-left: 18rem;
-  }
-
-  @media (max-width: 767px) {
-    padding-left: 8rem;
-  }
 }
 
 .goBackDiv {
