@@ -32,6 +32,13 @@
   border-radius: 99rem;
   transition: background-color 0.3s ease-in-out;
   z-index: 10;
+
+  @media (max-width: 767px) {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    border: 0.1rem solid red;
+  }
 }
 .deleteImageButton:hover {
   background-color: rgba(255, 0, 0, 0.7); /* 호버 상태 색상 */
