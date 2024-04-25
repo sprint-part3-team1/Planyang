@@ -54,9 +54,11 @@ const DashboardListNavBar = () => {
             nickname={userData.data ? userData.data.nickname : ''}
             profileImageUrl={userData.data?.profileImageUrl}
           />
-          <div className={styles.usernameWrapper}>
-            {userData.data ? userData.data.nickname : ''}
-          </div>
+          <Link href="/mypage">
+            <div className={styles.usernameWrapper}>
+              {userData.data ? userData.data.nickname : ''}
+            </div>
+          </Link>
         </div>
       </div>
     </div>
