@@ -11,5 +11,6 @@ const MODAL_TYPES = {
   wrongPasswordLogin: 'wrongPasswordLogin',
   signup: 'signup',
   emailInUse: 'emailInUse',
+  custom: 'custom',
 };
 export default MODAL_TYPES;
