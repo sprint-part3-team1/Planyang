@@ -443,8 +443,8 @@ const TestPage = () => {
           초대 취소하기
         </button>
 
-        <h1>내가 보낸 초대 목록 (총 {invitationDatas?.totalCount}개)</h1>
-        {invitationDatas?.invitations.map((i) => {
+        <h1>내가 보낸 초대 목록 (총 {invitationDatas.data?.totalCount}개)</h1>
+        {invitationDatas?.data?.invitations.map((i) => {
           return (
             <div key={i.id}>
               <div> 초대요청 ID: {i.id}</div>
@@ -578,7 +578,7 @@ const TestPage = () => {
         >
           카드 수정
         </button>
-        <button type="button" onClick={() => getCard(4988)}>
+        <button type="button" onClick={() => getCard(4933)}>
           카드 조회(콘솔 확인)
         </button>
         <button type="button" onClick={() => deleteCard(4988)}>
@@ -586,7 +586,7 @@ const TestPage = () => {
         </button>
         <div>
           <h1>내 카드 조회 (총 {cardDatas?.totalCount}개)</h1>
-          {cardDatas?.cards?.map((item) => {
+          {cardDatas?.cards.map((item) => {
             return (
               <div key={item.id}>
                 <div>카드 id: {item.id}</div>
