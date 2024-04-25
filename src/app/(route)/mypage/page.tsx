@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { Suspense } from 'react';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
 import { userResponse } from '@/app/_slice/registerSlice';
@@ -46,9 +47,8 @@ const Page = () => {
 
   return (
     <div>
-      {dashBoardDatas && userData && (
+      {userData && (
         <div>
-          <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
           <MypageHeader
             nickName={userData.nickname}
             profileImage={userData.profileImageUrl}
