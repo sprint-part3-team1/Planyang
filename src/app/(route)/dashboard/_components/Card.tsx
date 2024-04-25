@@ -5,6 +5,8 @@ import Image from 'next/image';
 import TagIcon from '@/app/_components/TagIcon';
 import { CardProps } from '@/app/_types/CardProps';
 import UserIcon from '@/app/_components/UserIcon';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import MODAL_TYPES from '@/app/constants/modalTypes';
 import styles from './Card.module.css';
 
 const Card = ({
@@ -14,11 +16,13 @@ const Card = ({
   tagNameArr,
   date,
   image,
+  cardInfo,
 }: CardProps) => {
   const CALENDAR_ICON = '/assets/icons/calendar.svg';
 
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+  const [openModalType, setOpenModalType] = useState('');
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,7 +39,10 @@ const Card = ({
   }, []);
 
   return (
-    <div className={image ? styles.imageContainer : styles.container}>
+    <div
+      className={image ? styles.imageContainer : styles.container}
+      onClick={() => setOpenModalType(MODAL_TYPES.taskCard)}
+    >
       {image ? (
         <Image
           id={styles.cardImage}
@@ -102,6 +109,11 @@ const Card = ({
           </div>
         </>
       )}
+      <ModalPortal
+        openModalType={openModalType}
+        setOpenModalType={setOpenModalType}
+        requestId={cardInfo.id}
+      />
     </div>
   );
 };
