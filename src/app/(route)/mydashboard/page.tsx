@@ -1,18 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
-import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
 import {
   receivedInvitationActions,
   receivedInvitationData,
 } from '@/app/_slice/receivedInvitationsSlice';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
 import DashBoardButton from '@/app/_components/Button/DashBoardButton/DashBoardButton';
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
+import MODAL_TYPES from '@/app/constants/modalTypes';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import fetchDashboards from './_api/dashboardPagination';
 import styles from './page.module.css';
 import DashInvite from './_components/DashInvite';
@@ -27,8 +30,9 @@ interface DashBoardStateType {
 
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
-  const userData = useAppSelector(userResponse);
   const receivedInvitationDatas = useAppSelector(receivedInvitationData);
+
+  const [openModalType, setOpenModalType] = useState('');
 
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -56,7 +60,6 @@ export default function MyDashBoard() {
 
   // 초대받은 대시보드와 계정정보
   useEffect(() => {
-    dispatch(registerActions.asynchFetchgetUserInfo());
     dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
   }, [dispatch]);
 
@@ -104,18 +107,34 @@ export default function MyDashBoard() {
   return (
     <div style={{ width: '100%' }}>
       <DashboardListNavBar />
-      {/* <SideMenu dashBoardData={dashBoardDatas?.dashboards} /> */}
       <div className={styles.content}>
         <div className={styles.dashBoardButtons}>
-          <AddDashBoardButton />
+          <ModalPortal
+            openModalType={openModalType}
+            setOpenModalType={setOpenModalType}
+          />
+          <div onClick={() => setOpenModalType(MODAL_TYPES.newDashboard)}>
+            <AddDashBoardButton />
+          </div>
           {dashBoardDatas?.dashboards?.map((dashBoard, index) => {
             return (
-              <DashBoardButton
+              <Link
                 key={index}
-                color={dashBoard.color}
-                createdByMe={dashBoard.createdByMe}
-                title={dashBoard.title}
-              />
+                href={`/dashboard/${dashBoard.id}`}
+                onClick={() => {
+                  dispatch(
+                    dashBoardDetailActions.asyncFetchGetDashBoardDetail({
+                      dashBoardId: dashBoard.id,
+                    }),
+                  );
+                }}
+              >
+                <DashBoardButton
+                  color={dashBoard.color}
+                  createdByMe={dashBoard.createdByMe}
+                  title={dashBoard.title}
+                />
+              </Link>
             );
           })}
         </div>
