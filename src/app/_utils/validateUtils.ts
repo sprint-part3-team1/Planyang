@@ -25,3 +25,11 @@ export function isValidEmail (email: string) {
 export function isValidPassword (password: string) {
     return password.length < 8;
 }
+
+export function isValidCheckPassword (password: string, checkPassword: string) {
+    return password !== checkPassword;
+}
+
+export function isValidNickname (nickname: string) {
+    return nickname.length >= 10;
+}
