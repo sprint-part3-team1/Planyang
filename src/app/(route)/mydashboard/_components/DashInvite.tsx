@@ -27,6 +27,7 @@ const DashInvite = ({ inviteData }: Props) => {
   const UNSUBSCRIBE_IMAGE = '/assets/images/unsubscribe.svg';
 
   const [isMobile, setIsMobile] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useAppDispatch();
 
   // 초대를 수락합니다 해당 초대목록이 state에서 삭제 됩니다
@@ -48,6 +49,15 @@ const DashInvite = ({ inviteData }: Props) => {
       }),
     );
   };
+
+  // 검색어를 기준으로 필터링을 합니다. 대소문자 상관없음.
+  const filteredInviteData = inviteData
+    ? inviteData.filter((invite) =>
+        invite.dashboard.title
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()),
+      )
+    : [];
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,7 +96,12 @@ const DashInvite = ({ inviteData }: Props) => {
             src={SEARCH_ICON}
             alt="searchIcon"
           />
-          <input id={styles.input} placeholder="검색" />
+          <input
+            id={styles.input}
+            placeholder="검색"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
       </div>
       {inviteData && inviteData.length === 0 ? (
@@ -106,8 +121,8 @@ const DashInvite = ({ inviteData }: Props) => {
           {isMobile ? (
             <>
               {' '}
-              {inviteData &&
-                inviteData.map((invite, index) => (
+              {filteredInviteData &&
+                filteredInviteData.map((invite, index) => (
                   <div key={index} className={styles.dashContainer}>
                     <div className={styles.dashContent}>
                       <span id={styles.name}>이름</span>
@@ -132,8 +147,8 @@ const DashInvite = ({ inviteData }: Props) => {
                 <span id={styles.invite}>초대자</span>
                 <span id={styles.agree}>수락여부</span>
               </div>
-              {inviteData &&
-                inviteData.map((invite, index) => (
+              {filteredInviteData &&
+                filteredInviteData.map((invite, index) => (
                   <div key={index} className={styles.dashContainer}>
                     <span id={styles.dashName}>{invite.dashboard.title}</span>
                     <span id={styles.dashInvite}>
