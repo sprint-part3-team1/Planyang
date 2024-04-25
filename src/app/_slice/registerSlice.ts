@@ -11,27 +11,46 @@ import { RegisterStateType } from '../_types/_redux/_state/reduxState';
 
 interface ErrorResponse {
   message: string;
+  status: number | null;
 }
 
 const initialState: RegisterStateType = {
   data: null,
-  error: null, // 에러 상태 추가
+  error: null,
+  status: null, // 에러 상태 추가
 };
 
 const asynchFetchSignUp = createAsyncThunk(
   'registerSlice/asynchFetchSignup',
-  async (registerData: RegisterPayloadType) => {
-    const { email, nickname, password } = registerData;
+  async (registerData: RegisterPayloadType, { rejectWithValue }) => {
+    try {
+      const { email, nickname, password } = registerData;
 
-    const response = await axios.post(
-      'https://sp-taskify-api.vercel.app/4-1/users',
-      {
-        email,
-        nickname,
-        password,
-      },
-    );
-    return response;
+      const response = await axios.post(
+        'https://sp-taskify-api.vercel.app/4-1/users',
+        {
+          email,
+          nickname,
+          password,
+        },
+      );
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponse;
+        // 실패할 경우 message와 status를 설정하여 반환
+        return rejectWithValue({
+          error: errorResponse.message,
+          status: error.response?.status,
+        });
+      }
+      // 기타 오류 처리
+      console.error('An error occurred:', error);
+      throw error;
+    }
   },
 );
 
@@ -57,12 +76,18 @@ const asynchFetchChangePassword = createAsyncThunk(
           },
         },
       );
-      return response.data;
+      return {
+        data: response.data,
+        status: response.status,
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponse;
-        // 실패할 경우 message를 설정하여 반환
-        return rejectWithValue({ error: errorResponse.message });
+        // 실패할 경우 message와 status를 설정하여 반환
+        return rejectWithValue({
+          error: errorResponse.message,
+          status: error.response?.status,
+        });
       }
       // 기타 오류 처리
       console.error('An error occurred:', error);
@@ -73,41 +98,69 @@ const asynchFetchChangePassword = createAsyncThunk(
 
 const asynchFetchgetUserInfo = createAsyncThunk(
   'registerSlice/asynchFetchgetUserInfo',
-  async () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    const response = await axios.get(
-      'https://sp-taskify-api.vercel.app/4-1/users/me',
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+  async (_, { rejectWithValue }) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await axios.get(
+        'https://sp-taskify-api.vercel.app/4-1/users/me',
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      },
-    );
-
-    return response.data;
+      );
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponse;
+        // 실패할 경우 message와 status를 설정하여 반환
+        return rejectWithValue({
+          error: errorResponse.message,
+          status: error.response?.status,
+        });
+      }
+      // 기타 오류 처리
+      console.error('An error occurred:', error);
+      throw error;
+    }
   },
 );
 
 const asynchFetchUpdateInformation = createAsyncThunk(
   'registerSlice/asynchFetchUpdateInformation',
-  async (updateValue: UpdateInformationPayloadType) => {
-    const accessToken = localStorage.getItem('accessToken');
-    const { nickname, profileImageUrl } = updateValue;
-    const response = await axios.put(
-      'https://sp-taskify-api.vercel.app/4-1/users/me',
-
-      {
-        nickname,
-        profileImageUrl,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+  async (updateValue: UpdateInformationPayloadType, { rejectWithValue }) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const { nickname, profileImageUrl } = updateValue;
+      const response = await axios.put(
+        'https://sp-taskify-api.vercel.app/4-1/users/me',
+        { nickname, profileImageUrl },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      },
-    );
-    return response.data;
+      );
+      return {
+        data: response.data,
+        status: response.status,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ErrorResponse;
+        // 실패할 경우 message와 status를 설정하여 반환
+        return rejectWithValue({
+          error: errorResponse.message,
+          status: error.response?.status,
+        });
+      }
+      // 기타 오류 처리
+      console.error('An error occurred:', error);
+      throw error;
+    }
   },
 );
 
@@ -120,9 +173,14 @@ const registerSlice = createSlice({
       asynchFetchSignUp.fulfilled,
       (
         state: RegisterStateType,
-        action: PayloadAction<RegisterStateType['data']>,
+        action: PayloadAction<{
+          data: RegisterStateType['data'];
+          status: RegisterStateType['status'];
+        }>,
       ) => {
-        state.data = action.payload;
+        state.data = action.payload.data;
+        state.status = action.payload.status;
+        state.error = null; // 성공할 때 error 메시지를 null로 설정
       },
     );
 
@@ -130,14 +188,26 @@ const registerSlice = createSlice({
       asynchFetchChangePassword.fulfilled,
       (
         state: RegisterStateType,
-        action: PayloadAction<RegisterStateType['data']>,
-      ) => {},
+        action: PayloadAction<{
+          data: RegisterStateType['data'];
+          status: RegisterStateType['status'];
+        }>,
+      ) => {
+        state.data = action.payload.data;
+        state.status = action.payload.status;
+        state.error = null; // 성공할 때 error 메시지를 null로 설정
+      },
     );
 
     builder.addCase(
       asynchFetchChangePassword.rejected, // 비밀번호 변경 실패 처리 추가
-      (state: RegisterStateType, action: PayloadAction<{ error: string }>) => {
-        state.error = action.payload.error;
+      (state: RegisterStateType, action) => {
+        const payload = action.payload as { status?: number; error?: string };
+        return {
+          ...state,
+          error: payload?.error,
+          status: payload?.status,
+        };
       },
     );
 
@@ -145,9 +215,14 @@ const registerSlice = createSlice({
       asynchFetchgetUserInfo.fulfilled,
       (
         state: RegisterStateType,
-        action: PayloadAction<RegisterStateType['data']>,
+        action: PayloadAction<{
+          data: RegisterStateType['data'];
+          status: RegisterStateType['status'];
+        }>,
       ) => {
-        state.data = action.payload;
+        state.data = action.payload.data;
+        state.status = action.payload.status;
+        state.error = null; // 성공할 때 error 메시지를 null로 설정
       },
     );
 
@@ -155,9 +230,50 @@ const registerSlice = createSlice({
       asynchFetchUpdateInformation.fulfilled,
       (
         state: RegisterStateType,
-        action: PayloadAction<RegisterStateType['data']>,
+        action: PayloadAction<{
+          data: RegisterStateType['data'];
+          status: RegisterStateType['status'];
+        }>,
       ) => {
-        state.data = action.payload;
+        state.data = action.payload.data;
+        state.status = action.payload.status;
+        state.error = null; // 성공할 때 error 메시지를 null로 설정
+      },
+    );
+
+    builder.addCase(
+      asynchFetchgetUserInfo.rejected,
+      (state: RegisterStateType, action) => {
+        const payload = action.payload as { status?: number; error?: string };
+        return {
+          ...state,
+          error: payload?.error,
+          status: payload?.status,
+        };
+      },
+    );
+
+    builder.addCase(
+      asynchFetchUpdateInformation.rejected,
+      (state: RegisterStateType, action) => {
+        const payload = action.payload as { status?: number; error?: string };
+        return {
+          ...state,
+          error: payload?.error,
+          status: payload?.status,
+        };
+      },
+    );
+
+    builder.addCase(
+      asynchFetchSignUp.rejected,
+      (state: RegisterStateType, action) => {
+        const payload = action.payload as { status?: number; error?: string };
+        return {
+          ...state,
+          error: payload?.error,
+          status: payload?.status,
+        };
       },
     );
   },

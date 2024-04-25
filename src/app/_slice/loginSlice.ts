@@ -5,14 +5,9 @@ import { RootState } from '../_store/store';
 import { LoginPayloadType } from '../_types/_redux/_apiPayload/payloadTypes';
 import { LoginStateType } from '../_types/_redux/_state/reduxState';
 
-interface ErrorResponse {
-  message: string;
-}
-
 const initialState: LoginStateType = {
   data: null,
   status: null,
-  error: null,
 };
 
 const asynchFetchSignIn = createAsyncThunk(
@@ -30,9 +25,8 @@ const asynchFetchSignIn = createAsyncThunk(
       return response;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorResponse = error.response?.data as ErrorResponse;
-        // 실패할 경우 message를 설정하여 반환
-        return rejectWithValue({ error: errorResponse.message });
+        // 실패할 경우 status를 설정하여 반환
+        return rejectWithValue({ status: error.response?.status });
       }
       // 기타 오류 처리
       console.error('An error occurred:', error);
@@ -53,7 +47,6 @@ const loginSlice = createSlice({
           ...state,
           data: action.payload.data,
           status: action.payload.status,
-          error: null,
         };
       },
     );
@@ -61,12 +54,11 @@ const loginSlice = createSlice({
     builder.addCase(
       asynchFetchSignIn.rejected,
       (state: LoginStateType, action) => {
-        const payload = action.payload as { error?: string };
+        const payload = action.payload as { status?: number };
         return {
           ...state,
           data: null,
-          status: 'FAILED',
-          error: payload?.error || 'An unknown error occurred.',
+          status: payload?.status || 'FAILED',
         };
       },
     );
