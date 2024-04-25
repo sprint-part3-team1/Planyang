@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 102.2rem;
-  height: 53rem;
-  max-height: 53rem;
+  height: 50rem;
+  max-height: 50rem;
   padding: 3.2rem 0rem 0rem 0rem;
   border-radius: 2rem;
   background: var(--white_FFFFFF);

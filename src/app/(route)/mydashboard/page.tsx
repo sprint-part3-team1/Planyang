@@ -3,12 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import useAppSelector from '@/app/_hooks/useAppSelector';
+
 import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
-import {
-  receivedInvitationActions,
-  receivedInvitationData,
-} from '@/app/_slice/receivedInvitationsSlice';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
@@ -30,8 +26,6 @@ interface DashBoardStateType {
 
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
-  const receivedInvitationDatas = useAppSelector(receivedInvitationData);
-
   const [openModalType, setOpenModalType] = useState('');
 
   const [page, setPage] = useState<number>(1);
@@ -57,11 +51,6 @@ export default function MyDashBoard() {
       setPage(page + 1);
     }
   };
-
-  // 초대받은 대시보드와 계정정보
-  useEffect(() => {
-    dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
-  }, [dispatch]);
 
   // 대시보드 버튼의 페이지 네이션
   useEffect(() => {
@@ -149,7 +138,7 @@ export default function MyDashBoard() {
             onRightButtonClick={handleRightButtonClick}
           />
         </div>
-        <DashInvite inviteData={receivedInvitationDatas?.invitations} />
+        <DashInvite />
       </div>
     </div>
   );
