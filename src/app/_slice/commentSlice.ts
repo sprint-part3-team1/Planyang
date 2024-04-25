@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import exp from 'constants';
 import { RootState } from '../_store/store';
-import { LoginStateType } from '../_types/_redux/_state/reduxState';
 
 interface AuthorType {
   profileImageUrl: string | null;
@@ -30,10 +28,11 @@ const initialState: CommentStateType = {
   data: null,
 };
 
-// 카드 ID를 파라미터로 받습니다
+// 카드 ID를 객체값으로 파라미터로 받습니다
 const asyncFetchGetComment = createAsyncThunk(
   'commentSlice/asyncFetchGetComment',
-  async (cardId: number) => {
+  async (getCommentValue: { cardId: number }) => {
+    const { cardId } = getCommentValue;
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.get(
@@ -102,6 +101,8 @@ const asyncFetchUpdateComment = createAsyncThunk(
   },
 );
 
+
+// 삭제할 댓글의 ID를 파라미터로 받습니다
 const asynchFetchDeleteComment = createAsyncThunk(
   'commentSlice/asynchFetchDeleteComment',
   async (deleteComment: { commentId: number }) => {
