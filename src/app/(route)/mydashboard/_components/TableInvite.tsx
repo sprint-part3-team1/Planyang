@@ -35,7 +35,6 @@ const TableInvite = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(invitationDatas.data?.invitations.length);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);

@@ -193,8 +193,8 @@ const cardSlice = createSlice({
     );
     builder.addCase(
       asyncFetchGetCards.fulfilled,
-      (state, action: PayloadAction<GetCardsResponseType>) => {
-        state.data = action.payload.data;
+      (state, action: PayloadAction<GetCardsResponseType['data']>) => {
+        state.data = action.payload;
       },
     );
     builder.addCase(asyncFetchPutCard.fulfilled, (state, action) => {

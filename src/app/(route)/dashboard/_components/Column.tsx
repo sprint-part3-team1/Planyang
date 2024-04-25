@@ -76,11 +76,11 @@ const Column = ({
       .catch((error) => console.log(`카드 목록 조회 실패(${error})`));
   };
 
+  const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
+
   useEffect(() => {
     viewCards(columnData.id);
   }, [pages]);
-
-  const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
 
   return (
     <div className={styles.container}>

@@ -58,7 +58,7 @@ const asyncDeleteMember = createAsyncThunk(
         },
       },
     );
-    console.log(memberId);
+
     return memberId;
   },
 );
@@ -74,16 +74,17 @@ const memberSlice = createSlice({
         state.data = action.payload;
       },
     );
-    builder.addCase(asyncDeleteMember.fulfilled, (state, action) => {
-      const memberId = action.payload;
-      const updatedMembers = state.data?.members?.filter(
-        (item) => item.id !== memberId,
-      );
-      state.data.members = updatedMembers;
-      if (state.data && state.data.totalCount !== null) {
-        state.data.totalCount--;
-      }
-    });
+    builder.addCase(
+      asyncDeleteMember.fulfilled,
+      (state, action: PayloadAction<number>) => {
+        const memberId = action.payload;
+        if (state.data) {
+          state.data.members = state.data?.members?.filter(
+            (item) => item.id !== memberId,
+          );
+        }
+      },
+    );
   },
 });
 
