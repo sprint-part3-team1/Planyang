@@ -13,11 +13,13 @@ import TaskCardModal from './taskCardModal/TaskCardModal';
 import WrongPasswordLoginModal from './wrongPasswordLoginModal/WrongPasswordLoginModal';
 import SignupModal from './signupModal/SignupModal';
 import EmailInUseModal from './emailInUseModal/EmailInUseModal';
+import CustomModal from './customModal/CustomModal';
 
 const ModalContents = ({
   openModalType,
   setOpenModalType,
   inputInitialValue,
+  modalText,
   requestId,
 }: ModalContentFuncPropsType): React.ReactNode => {
   let modalContent: React.ReactNode = null;
@@ -118,6 +120,14 @@ const ModalContents = ({
       modalContent = (
         <EmailInUseModal
           openModalType={openModalType}
+          setOpenModalType={setOpenModalType}
+        />
+      );
+      break;
+    case MODAL_TYPES.custom:
+      modalContent = (
+        <CustomModal
+          modalText={modalText}
           setOpenModalType={setOpenModalType}
         />
       );

@@ -1,27 +1,69 @@
-import React, { useState, useRef, ChangeEvent } from 'react';
-import Image from 'next/image';
+import React, { useState, useRef, ChangeEvent, SetStateAction } from 'react';
+import axios from 'axios';
+// import Image from 'next/image';
 import styles from './ImageInput.module.css';
 import PlusIcon from '../../../../../../public/assets/icons/plusIcon.svg';
 import ImageEditIcon from '../../../../../../public/assets/icons/imageEditIcon.svg';
 
-const ImageInput = () => {
-  const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
-    null,
-  );
-
+type Type = {
+  selectedImagePath: any;
+  setSelectedImagePath: React.Dispatch<SetStateAction<any>>;
+};
+const ImageInput = ({ selectedImagePath, setSelectedImagePath }: Type) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const [showImageUrl, setShowImageUrl] = useState<string | null>(null);
+
+  const formData = new FormData();
+
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImagePath(imageUrl);
+      const imageURL = URL.createObjectURL(file);
+      setShowImageUrl(imageURL);
+
+      formData.append('image', file);
+      const accessToken = localStorage.getItem('accessToken');
+      try {
+        const response = await axios.post(
+          'https://sp-taskify-api.vercel.app/4-1/users/me/image',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          },
+        );
+        setSelectedImagePath(response.data.profileImageUrl);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
+  const onDeleteImageButtonClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e?.preventDefault();
+    setShowImageUrl(null);
+    setSelectedImagePath(null);
+  };
+
   return (
     <div
-      className={`${selectedImagePath ? styles.imageContainer : styles.noImageDiv}`}
+      className={`${styles.container} ${selectedImagePath ? styles.imageContainer : styles.noImageDiv}`}
     >
+      {(!showImageUrl && !selectedImagePath) || (
+        <button
+          type="button"
+          className={styles.deleteImageButton}
+          onClick={onDeleteImageButtonClickHandler}
+        >
+          X
+        </button>
+      )}
       <label htmlFor="fileInput" className={styles.customFileInput}>
         <input
           type="file"
@@ -29,13 +71,13 @@ const ImageInput = () => {
           ref={fileInputRef}
           onChange={handleImageChange}
           className={styles.fileInput}
+          accept=".png, .jpg, .jpeg"
         />
-        {selectedImagePath ? (
+        {showImageUrl || selectedImagePath ? (
           <div className={styles.imageDiv}>
-            <Image
-              fill
+            <img
               src={selectedImagePath}
-              alt="대시보드 이미지"
+              alt="프로필 이미지"
               className={styles.image}
             />
             <ImageEditIcon className={styles.editIcon} />

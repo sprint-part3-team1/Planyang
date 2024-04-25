@@ -17,6 +17,7 @@ export type ModalPortalPropsType = {
   openModalType: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
   inputInitialValue?: string;
+  modalText?: string | null;
   requestId?: number;
 };
 
@@ -34,6 +35,7 @@ export type ModalContentFuncPropsType = {
   openModalType?: string;
   setOpenModalType: React.Dispatch<React.SetStateAction<string>>;
   inputInitialValue?: string;
+  modalText?: string | null;
   requestId?: number;
 };
 
