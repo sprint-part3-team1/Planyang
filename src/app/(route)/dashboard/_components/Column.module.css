@@ -1,6 +1,5 @@
 .container {
   width: 35.4rem;
-  height: 101rem;
   flex-shrink: 0;
   padding: 2.2rem 2rem 2.2rem 2rem;
 }
@@ -65,14 +64,12 @@
 @media (max-width: 1023px) {
   .container {
     width: 58.4rem;
-    height: 34.6rem;
   }
 }
 
 @media (max-width: 767px) {
   .container {
     width: 30.8rem;
-    height: 47rem;
     padding: 1.7rem 1.2rem 1.7rem 1.2rem;
   }
 
