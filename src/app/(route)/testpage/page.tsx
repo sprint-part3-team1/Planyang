@@ -98,9 +98,9 @@ const TestPage = () => {
   };
 
   // 내 대시보드 목록을 모두 불러오는 함수입니다 api 호출에 성공하면 데이터가 대시보드 데이터에 담깁니다
-  const getMyDashBoard = () => {
-    dispatch(dashBoardActions.asynchFetchGetDashBoard());
-  };
+  // const getMyDashBoard = () => {
+  //   dispatch(dashBoardActions.asynchFetchGetDashBoard());
+  // };
 
   // 대시보드를 만드는 함수입니다 color로 hex 코드 값을 받습니다
   const createDashBoard = (title: string, color: string) => {
