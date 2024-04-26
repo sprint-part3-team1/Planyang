@@ -3,12 +3,8 @@
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { useEffect, useState } from 'react';
-import {
-  dashBoardDetailData,
-  dashBoardDetailActions,
-} from '@/app/_slice/dashBoardDetail';
-import { memberActions, memberData } from '@/app/_slice/memberSlice';
-import { registerActions, userResponse } from '@/app/_slice/registerSlice';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
+import { registerActions } from '@/app/_slice/registerSlice';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import styles from '@/app/(route)/dashboard/[id]/page.module.css';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
@@ -36,17 +32,6 @@ const DashBoard = ({ params }: { params: { id: string } }) => {
         console.error('Error fetching dashboard detail:', error);
       }
     };
-    const fetchMember = async () => {
-      try {
-        await dispatch(
-          memberActions.asyncGetMembers({
-            dashboardId: Number(params.id),
-          }),
-        );
-      } catch (error) {
-        console.error('Error fetching member List:', error);
-      }
-    };
     const fetchRegister = async () => {
       try {
         await dispatch(registerActions.asynchFetchgetUserInfo());
@@ -65,7 +50,6 @@ const DashBoard = ({ params }: { params: { id: string } }) => {
     };
 
     fetchDashboardDetail();
-    fetchMember();
     fetchRegister();
     fetchColumns();
   }, [params.id, dispatch]);
