@@ -206,7 +206,7 @@ const TaskCardModal = ({
   ];
 
   const ref = useRef<HTMLDivElement>(null);
-  // useOutsideClick(ref, handleCloseClick);
+  useOutsideClick(ref, handleCloseClick);
 
   if (isLoading) {
     return <div>Loading...</div>;
