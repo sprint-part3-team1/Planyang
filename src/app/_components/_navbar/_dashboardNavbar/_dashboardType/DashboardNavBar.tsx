@@ -8,6 +8,7 @@ import ImageTextButton from '@/app/_components/Button/ImageTextButton';
 import Image from 'next/image';
 import UserIconList from '@/app/_components/UserIconList';
 import { DashboardNavBarProps } from '@/app/_types/DashboardNavBarProps';
+import Link from 'next/link';
 
 const DashboardNavBar = ({
   membersInfo,
@@ -53,7 +54,9 @@ const DashboardNavBar = ({
         <Contour />
         <div className={styles.sideMenuUserWrapper}>
           <UserIcon nickname={nickname} profileImageUrl={profileImageUrl} />
-          <div className={styles.usernameWrapper}>{nickname}</div>
+          <Link href="/mypage">
+            <div className={styles.usernameWrapper}>{nickname}</div>
+          </Link>
         </div>
       </div>
     </div>
