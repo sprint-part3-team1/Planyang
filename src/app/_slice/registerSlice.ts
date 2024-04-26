@@ -164,10 +164,15 @@ const asynchFetchUpdateInformation = createAsyncThunk(
   },
 );
 
+const resetData = (state: RegisterStateType) => {
+    state.data = null;
+    state.status = null;
+};
+
 const registerSlice = createSlice({
   name: 'registerSlice',
   initialState,
-  reducers: {},
+  reducers: { resetData },
   extraReducers: (builder) => {
     builder.addCase(
       asynchFetchSignUp.fulfilled,
