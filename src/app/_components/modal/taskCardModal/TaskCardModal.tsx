@@ -21,7 +21,6 @@ import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
 
 const TaskCardModal = ({
-  openModalType,
   setOpenModalType,
   requestId,
 }: TaskCardModalPropsType) => {
@@ -36,8 +35,15 @@ const TaskCardModal = ({
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isClickedClose, setIsClickedClose] = useState(false);
 
   let status = '';
+
+  useEffect(() => {
+    if (isClickedClose) {
+      setOpenModalType('');
+    }
+  }, [isClickedClose]);
 
   useEffect(() => {}, [myCommentInputValue]);
 
@@ -146,8 +152,7 @@ const TaskCardModal = ({
   };
 
   const handleCloseClick = () => {
-    setOpenModalType('');
-    console.log('닫히자');
+    setIsClickedClose(true);
   };
 
   const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -201,8 +206,7 @@ const TaskCardModal = ({
   ];
 
   const ref = useRef<HTMLDivElement>(null);
-  useOutsideClick(ref, handleCloseClick);
-  console.log(openModalType);
+  // useOutsideClick(ref, handleCloseClick);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -243,7 +247,9 @@ const TaskCardModal = ({
               )}
             </div>
           )}
-
+          <button onClick={handleCloseClick} type="button">
+            모달창을 닫아보자
+          </button>
           <div className={styles.writeCommentDiv}>
             <p id={styles.title}>댓글</p>
             <div className={styles.myCommentDiv}>
@@ -289,17 +295,13 @@ const TaskCardModal = ({
         <MoreIcon
           width={isMobile ? 20 : 28}
           height={isMobile ? 20 : 24}
-          handleClick={handleCloseClick}
+          handleClick={moreIconClickHandler}
         />
-        <div onClick={handleCloseClick}>
-          <CloseIcon
-            width={isMobile ? 24 : 32}
-            height={isMobile ? 24 : 32}
-            handleCloseClick={handleCloseClick}
-            openModalType={openModalType}
-            setOpenModalType={setOpenModalType}
-          />
-        </div>
+        <CloseIcon
+          width={isMobile ? 24 : 32}
+          height={isMobile ? 24 : 32}
+          handleCloseClick={handleCloseClick}
+        />
       </div>
       {isPressedMoreIcon && (
         <PopupDropDown

@@ -5,18 +5,15 @@ const CloseIcon = ({
   width = 20,
   height = 20,
   handleCloseClick,
-  openModalType,
-  setOpenModalType,
 }: CloseIconPropsType) => {
   return (
-    <div onClick={handleCloseClick}>
     <svg
       width={width}
       height={height}
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      
+      onClick={handleCloseClick}
       style={{ cursor: 'pointer' }}
     >
       <g id="close_FILL0_wght300_GRAD0_opsz24">
@@ -27,7 +24,6 @@ const CloseIcon = ({
         />
       </g>
     </svg>
-    </div>
   );
 };
 
