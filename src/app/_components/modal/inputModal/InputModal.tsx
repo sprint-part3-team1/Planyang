@@ -10,10 +10,11 @@ type InputModalProps = {
   title: string;
   type: string;
   required?: boolean;
+  inputRef?: React.MutableRefObject<any>;
 };
 
 const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
-  ({ title, type, required = false }, ref) => {
+  ({ title, type, required = false, inputRef }, imageRef) => {
     const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
       null,
     );
@@ -44,12 +45,13 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
             <textarea
               rows={2}
               className={`${styles.input} ${styles.multiLineInput}`}
+              ref={inputRef}
             />
           </div>
         );
       case 'image':
         return (
-          <div className={styles.container} ref={ref}>
+          <div className={styles.container} ref={imageRef}>
             <p id={styles.title}>
               {title} {required && <span className={styles.essential}>*</span>}
             </p>
@@ -104,7 +106,7 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
             <p id={styles.title}>
               {title} {required && <span className={styles.essential}>*</span>}
             </p>
-            <input className={styles.input} />
+            <input className={styles.input} ref={inputRef} />
           </div>
         );
     }

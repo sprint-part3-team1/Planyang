@@ -20,7 +20,7 @@ export interface CommentDetailType {
 interface CommentStateType {
   data: {
     cursorId: number;
-    comment: CommentDetailType[];
+    comments: CommentDetailType[];
   } | null;
 }
 
@@ -36,7 +36,7 @@ const asyncFetchGetComment = createAsyncThunk(
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/comments?size=10&cursorId=0&cardId=${cardId}`,
+      `https://sp-taskify-api.vercel.app/4-1/comments?size=10&cardId=${cardId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -101,7 +101,6 @@ const asyncFetchUpdateComment = createAsyncThunk(
   },
 );
 
-
 // 삭제할 댓글의 ID를 파라미터로 받습니다
 const asynchFetchDeleteComment = createAsyncThunk(
   'commentSlice/asynchFetchDeleteComment',
@@ -132,7 +131,7 @@ const commentSlice = createSlice({
     );
 
     builder.addCase(asyncFetchLeaveComment.fulfilled, (state, action) => {
-      state.data?.comment.unshift(action.payload);
+      state.data?.comment?.unshift(action.payload);
     });
 
     builder.addCase(asyncFetchUpdateComment.fulfilled, (state, action) => {
@@ -150,7 +149,7 @@ const commentSlice = createSlice({
       (state, action: PayloadAction<number>) => {
         const deletedCommentId = action.payload;
         if (state.data) {
-          state.data.comment = state.data.comment.filter(
+          state.data.comment = state.data.comment?.filter(
             (item) => item.id !== deletedCommentId,
           );
         }
@@ -169,4 +168,4 @@ export const commentActions = {
   asynchFetchDeleteComment,
 };
 
-export const commentData = (state: RootState) => state.columnData.data;
+export const commentData = (state: RootState) => state.commentData.data;
