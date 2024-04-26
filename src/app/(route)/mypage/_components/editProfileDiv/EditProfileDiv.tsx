@@ -15,7 +15,7 @@ type EditProfileTypeProps = {
     email: string;
     id: number;
     nickname: string;
-    profileImageUrl: string;
+    profileImageUrl: string | null;
     updatedAt: string;
   };
 };
