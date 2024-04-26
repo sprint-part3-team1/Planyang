@@ -6,7 +6,7 @@ import { ModalPropsType } from '@/app/_types/modalProps';
 import Input from '@/app/_components/Input';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { useParams } from 'next/navigation';
-import { columnActions, columnData } from '@/app/_slice/columnSlice';
+import { columnActions } from '@/app/_slice/columnSlice';
 import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
 const NewColumnModal = ({ setOpenModalType }: ModalPropsType) => {
