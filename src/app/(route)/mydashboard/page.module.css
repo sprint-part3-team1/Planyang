@@ -19,6 +19,9 @@
   width: 102.2rem;
   gap: 1rem;
 }
+#pageFont {
+  font-size: var(--font14);
+}
 
 @media (max-width: 1023px) {
   .content {
@@ -47,5 +50,8 @@
 
   .paginationFrame {
     width: 26rem;
+  }
+  #pageFont {
+    font-size: var(--font12);
   }
 }

@@ -56,7 +56,7 @@ export default function MyDashBoard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchDashboards(page);
+        const data = await fetchDashboards(page, 5);
         setDashBoardDatas(data);
       } catch (error) {
         console.error('Error fetching dashboards:', error);
@@ -128,7 +128,7 @@ export default function MyDashBoard() {
           })}
         </div>
         <div className={styles.paginationFrame}>
-          <span>
+          <span id={styles.pageFont}>
             {totalPages} 페이지 중 {page} 페이지
           </span>
           <ArrowButton
