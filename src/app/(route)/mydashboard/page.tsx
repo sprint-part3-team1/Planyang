@@ -52,6 +52,11 @@ export default function MyDashBoard() {
     }
   };
 
+  // 페이지 1로 바뀌게 하는 함수
+  const setPageOne = () => {
+    setPage(1);
+  };
+
   // 대시보드 버튼의 페이지 네이션
   useEffect(() => {
     const fetchData = async () => {
@@ -138,7 +143,7 @@ export default function MyDashBoard() {
             onRightButtonClick={handleRightButtonClick}
           />
         </div>
-        <DashInvite />
+        <DashInvite setPageOne={setPageOne} />
       </div>
     </div>
   );

@@ -9,30 +9,32 @@ import RejectButton from '@/app/_components/Button/RejectButton/RejectButton';
 import styles from './DashInvite.module.css';
 import { fetchInviteData, fetchInviteDataCursor } from '../_api/inviteScroll';
 
-const DashInvite = () => {
+const DashInvite = ({ setPageOne }) => {
   const SEARCH_ICON = '/assets/icons/search.svg';
   const UNSUBSCRIBE_IMAGE = '/assets/images/unsubscribe.svg';
 
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [inviteDatas, setInviteDatas] = useState(null); // 초대받은 목록에 관한 데이터
+  const [needRender, setNeedRender] = useState(false);
   const [cursorId, setCursorId] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useAppDispatch();
 
   // 대시보드 버튼의 페이지 네이션
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchInviteData();
-        setInviteDatas(data.invitations);
-        setCursorId(data.cursorId);
-      } catch (error) {
-        console.error('Error fetching invites:', error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const data = await fetchInviteData();
+      setInviteDatas(data.invitations);
+      setCursorId(data.cursorId);
+      setNeedRender(true);
+    } catch (error) {
+      console.error('Error fetching invites:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -56,6 +58,18 @@ const DashInvite = () => {
         isAccept: true,
       }),
     );
+    setInviteDatas((prevData) =>
+      prevData.filter((invite) => invite.id !== invitationId),
+    ); // 해당 항목 제거
+    if (needRender === true) {
+      // needRender가 true일 때에만 재랜더링을 실행합니다.
+      setTimeout(() => {
+        console.log('재랜더링');
+        fetchData(); // 데이터를 삭제한 후에 재랜더링을 실행합니다.
+      }, 100); // 1초 뒤에 재랜더링을 실행합니다. 필요에 따라 시간을 조정할 수 있습니다.
+    }
+    // 대시보드 버튼 페이지 초기화
+    setPageOne();
   };
 
   // 초대를 거절합니다 해당 초대목록이 state에서 삭제 됩니다
@@ -66,6 +80,16 @@ const DashInvite = () => {
         isAccept: false,
       }),
     );
+    setInviteDatas((prevData) =>
+      prevData.filter((invite) => invite.id !== invitationId),
+    ); // 해당 항목 제거
+    if (needRender === true) {
+      // needRender가 true일 때에만 재랜더링을 실행합니다.
+      setTimeout(() => {
+        console.log('재랜더링');
+        fetchData(); // 데이터를 삭제한 후에 재랜더링을 실행합니다.
+      }, 100); // 1초 뒤에 재랜더링을 실행합니다. 필요에 따라 시간을 조정할 수 있습니다.
+    }
   };
 
   // 검색어를 기준으로 필터링을 합니다. 대소문자 상관없음.
@@ -93,8 +117,10 @@ const DashInvite = () => {
                 }
                 return data.invitations;
               });
-              // setInviteDatas(data.invitations);
               setCursorId(data.cursorId);
+              if (needRender === true) {
+                setNeedRender(false);
+              }
             } catch (error) {
               console.error('Error fetching invites:', error);
             }
@@ -113,6 +139,10 @@ const DashInvite = () => {
     };
   }, [cursorId, containerRef, inviteDatas]);
 
+  const chkData = () => {
+    console.log(inviteDatas);
+  };
+
   return (
     <div
       ref={containerRef}
@@ -122,6 +152,14 @@ const DashInvite = () => {
           : styles.container
       }
     >
+      <button
+        type="button"
+        onClick={() => {
+          chkData();
+        }}
+      >
+        확인
+      </button>
       <span className={styles.title}>초대받은 대시보드</span>
       <div
         className={
