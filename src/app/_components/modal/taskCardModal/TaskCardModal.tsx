@@ -21,6 +21,7 @@ import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
 
 const TaskCardModal = ({
+  openModalType,
   setOpenModalType,
   requestId,
 }: TaskCardModalPropsType) => {
@@ -37,7 +38,6 @@ const TaskCardModal = ({
   const [isLoading, setIsLoading] = useState(true);
 
   let status = null;
-
   useEffect(() => {}, [myCommentInputValue]);
 
   useEffect(() => {
@@ -146,6 +146,7 @@ const TaskCardModal = ({
 
   const handleCloseClick = () => {
     setOpenModalType('');
+    console.log('닫히자');
   };
 
   const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -200,6 +201,7 @@ const TaskCardModal = ({
 
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, handleCloseClick);
+  console.log(openModalType);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -284,13 +286,17 @@ const TaskCardModal = ({
         <MoreIcon
           width={isMobile ? 20 : 28}
           height={isMobile ? 20 : 24}
-          handleClick={moreIconClickHandler}
+          handleClick={handleCloseClick}
         />
-        <CloseIcon
-          width={isMobile ? 24 : 32}
-          height={isMobile ? 24 : 32}
-          handleCloseClick={handleCloseClick}
-        />
+        <div onClick={handleCloseClick}>
+          <CloseIcon
+            width={isMobile ? 24 : 32}
+            height={isMobile ? 24 : 32}
+            handleCloseClick={handleCloseClick}
+            openModalType={openModalType}
+            setOpenModalType={setOpenModalType}
+          />
+          </div>
       </div>
       {isPressedMoreIcon && (
         <PopupDropDown
