@@ -5,13 +5,14 @@ import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
 import CheckIcon from '../../../../public/assets/icons/checkIcon';
 import StatusTag from './StatusTag';
 
-const StatusDropDown = ({ title }: DropDownPropsType) => {
+const StatusDropDown = ({ title, status, setStatus }: DropDownPropsType) => {
   const [isDropDown, setIsDropDown] = useState(false);
   const [selectedDivIndex, setSelectedDivIndex] = useState(0);
   const STATUS = ['To Do', 'On Progress', 'Done'];
 
   const handleDivClick = (index: number) => {
     setSelectedDivIndex(index);
+    setStatus(STATUS[index]);
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);

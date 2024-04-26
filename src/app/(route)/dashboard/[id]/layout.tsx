@@ -11,7 +11,6 @@ const DashBoardDetailLayout = ({
   children: ReactNode;
   params: { id: string };
 }) => {
-
   return (
     <div style={{ width: '100%' }}>
       <DashboardListNavBar
