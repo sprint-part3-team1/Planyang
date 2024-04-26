@@ -5,15 +5,14 @@ import { useState, useEffect } from 'react';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
+
 import styles from './SideMenu.module.css';
 import DashBoardColorCircle from './DashBoardColorCircle';
 import fetchDashboards from '../_api/dashboardPagination';
 
 const SideMenu = () => {
   const [openModalType, setOpenModalType] = useState('');
-  const [selectedDashboardId, setSelectedDashboardId] = useState<number | null>(
-    null,
-  );
+  const [selectedDashboardId] = useState<number | null>(null);
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -26,15 +25,10 @@ const SideMenu = () => {
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
-
-  const handleDashboardItemClick = (id: number) => {
-    setSelectedDashboardId(id);
-  };
-
+  console.log(dashBoardDatas?.dashboards.reverse());
   const handleLeftButtonClick = () => {
     // 좌측 버튼을 클릭했을 때의 동작 구현
     if (isLeftActive) {
-      console.log('페이지 -1');
       setPage(page - 1);
     }
   };
@@ -42,7 +36,6 @@ const SideMenu = () => {
   const handleRightButtonClick = () => {
     // 우측 버튼을 클릭했을 때의 동작 구현
     if (isRightActive) {
-      console.log('페이지 +1');
       setPage(page + 1);
     }
   };
@@ -65,8 +58,7 @@ const SideMenu = () => {
   useEffect(() => {
     if (dashBoardDatas) {
       setTotalCount(dashBoardDatas?.totalCount);
-      console.log(dashBoardDatas);
-      console.log(totalCount);
+
       setTotalPages(Math.ceil(totalCount / 8));
     }
   }, [dashBoardDatas, totalCount]);
@@ -132,9 +124,6 @@ const SideMenu = () => {
               className={`${styles.dashList} ${selectedDashboardId === item.id ? styles.selected : ''}`}
               href={`/dashboard/${item.id}`}
               key={item.id}
-              onClick={() => {
-                handleDashboardItemClick(item.id);
-              }}
             >
               <div>
                 <DashBoardColorCircle color={item.color} />
@@ -161,9 +150,6 @@ const SideMenu = () => {
             onLeftButtonClick={handleLeftButtonClick}
             onRightButtonClick={handleRightButtonClick}
           />
-          {/* <span id={styles.pageFont}>
-            {page} Page / {totalPages} Pages
-          </span> */}
         </div>
       </div>
     </div>
