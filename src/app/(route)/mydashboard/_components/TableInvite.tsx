@@ -92,7 +92,7 @@ const TableInvite = () => {
 
       {invitationDatas?.data?.invitations.map((item) => (
         <div key={item.id} className={styles.emailContainer}>
-          <span id={styles.emailName}>{item.inviter.email}</span>
+          <span id={styles.emailName}>{item.invitee.email}</span>
           <CancelButton
             boardId={dashBoardDatas?.id}
             invitationId={item.id}

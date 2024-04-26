@@ -1,23 +1,27 @@
 import Image from 'next/image';
-import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
 import styles from './SideMenu.module.css';
 import DashBoardColorCircle from './DashBoardColorCircle';
+import fetchDashboards from '../_api/dashboardPagination';
 
-interface SideMenuPropsType {
-  dashBoardData: DashBoardInformationType[];
-}
-
-const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
+const SideMenu = () => {
   const [openModalType, setOpenModalType] = useState('');
   const [selectedDashboardId, setSelectedDashboardId] = useState<number | null>(
     null,
   );
-  // const dispatch = useAppDispatch();
+  const [page, setPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [isLeftActive, setIsLeftActive] = useState<boolean>(false);
+  const [isRightActive, setIsRightActive] = useState<boolean>(false);
+  const [dashBoardDatas, setDashBoardDatas] =
+    useState<null | DashBoardStateType>(null);
+
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
@@ -26,6 +30,63 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
   const handleDashboardItemClick = (id: number) => {
     setSelectedDashboardId(id);
   };
+
+  const handleLeftButtonClick = () => {
+    // 좌측 버튼을 클릭했을 때의 동작 구현
+    if (isLeftActive) {
+      console.log('페이지 -1');
+      setPage(page - 1);
+    }
+  };
+
+  const handleRightButtonClick = () => {
+    // 우측 버튼을 클릭했을 때의 동작 구현
+    if (isRightActive) {
+      console.log('페이지 +1');
+      setPage(page + 1);
+    }
+  };
+
+  // 대시보드 버튼의 페이지 네이션
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchDashboards(page, 8);
+        setDashBoardDatas(data);
+      } catch (error) {
+        console.error('Error fetching dashboards:', error);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
+  // 전체 대시보드 수와 전체 페이지 지정
+  useEffect(() => {
+    if (dashBoardDatas) {
+      setTotalCount(dashBoardDatas?.totalCount);
+      console.log(dashBoardDatas);
+      console.log(totalCount);
+      setTotalPages(Math.ceil(totalCount / 8));
+    }
+  }, [dashBoardDatas, totalCount]);
+
+  // 화살표 버튼 활성화 기능
+  useEffect(() => {
+    if (page === 1 && totalPages === 1) {
+      setIsLeftActive(false);
+      setIsRightActive(false);
+    } else if (page === 1 && totalPages > page) {
+      setIsLeftActive(false);
+      setIsRightActive(true);
+    } else if (page > 1 && page < totalPages) {
+      setIsLeftActive(true);
+      setIsRightActive(true);
+    } else if (page === totalPages) {
+      setIsLeftActive(true);
+      setIsRightActive(false);
+    }
+  }, [page, totalPages]);
 
   return (
     <div className={styles.container}>
@@ -62,14 +123,10 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
             setOpenModalType(MODAL_TYPES.newDashboard);
           }}
         />
-
-        {/* onClick 모달창 연결 */}
       </div>
 
       <div className={styles.listWrapper}>
-        {/* 반복문으로 대시보드 띄워주기 */}
-
-        {dashBoardData?.map((item) => {
+        {dashBoardDatas?.dashboards.map((item) => {
           return (
             <Link
               className={`${styles.dashList} ${selectedDashboardId === item.id ? styles.selected : ''}`}
@@ -95,6 +152,19 @@ const SideMenu = ({ dashBoardData }: SideMenuPropsType) => {
             </Link>
           );
         })}
+      </div>
+      <div>
+        <div className={styles.paginationFrame}>
+          <ArrowButton
+            isLeftActive={isLeftActive}
+            isRightActive={isRightActive}
+            onLeftButtonClick={handleLeftButtonClick}
+            onRightButtonClick={handleRightButtonClick}
+          />
+          {/* <span id={styles.pageFont}>
+            {page} Page / {totalPages} Pages
+          </span> */}
+        </div>
       </div>
     </div>
   );

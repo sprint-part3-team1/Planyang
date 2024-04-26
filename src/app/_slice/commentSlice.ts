@@ -79,15 +79,15 @@ const asyncFetchLeaveComment = createAsyncThunk(
   },
 );
 
-// 수정할 댓글값, 수정할 카드 ID를 순서대로 객체값으로 받습니다
+// 수정할 댓글값, 수정할 댓글 ID를 순서대로 객체값으로 받습니다
 const asyncFetchUpdateComment = createAsyncThunk(
   'commentSlice/asyncFetchUpdateComment',
-  async (updateCommentValue: { content: string; cardId: number }) => {
-    const { content, cardId } = updateCommentValue;
+  async (updateCommentValue: { content: string; commentId: number }) => {
+    const { content, commentId } = updateCommentValue;
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.put(
-      `https://sp-taskify-api.vercel.app/4-1/comments/${cardId}`,
+      `https://sp-taskify-api.vercel.app/4-1/comments/${commentId}`,
       {
         content,
       },
@@ -131,16 +131,16 @@ const commentSlice = createSlice({
     );
 
     builder.addCase(asyncFetchLeaveComment.fulfilled, (state, action) => {
-      state.data?.comment?.unshift(action.payload);
+      state.data?.comments?.unshift(action.payload);
     });
 
     builder.addCase(asyncFetchUpdateComment.fulfilled, (state, action) => {
       const updateComment = action.payload;
-      const index = state.data?.comment.findIndex(
+      const index = state.data?.comments?.findIndex(
         (item) => item.id === updateComment.id,
       );
-      if (index !== -1) {
-        state.data.comment[index] = updateComment;
+      if (state.data && index !== -1) {
+        state.data.comments[index] = updateComment;
       }
     });
 
@@ -149,7 +149,7 @@ const commentSlice = createSlice({
       (state, action: PayloadAction<number>) => {
         const deletedCommentId = action.payload;
         if (state.data) {
-          state.data.comment = state.data.comment?.filter(
+          state.data.comments = state.data.comments?.filter(
             (item) => item.id !== deletedCommentId,
           );
         }

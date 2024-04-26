@@ -20,6 +20,10 @@ const initialState: RegisterStateType = {
   status: null, // 에러 상태 추가
 };
 
+const resetData = (state: RegisterStateType) => {
+  state.data = null;
+};
+
 const asynchFetchSignUp = createAsyncThunk(
   'registerSlice/asynchFetchSignup',
   async (registerData: RegisterPayloadType, { rejectWithValue }) => {
@@ -116,13 +120,13 @@ const asynchFetchgetUserInfo = createAsyncThunk(
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponse;
-        // 실패할 경우 message와 status를 설정하여 반환
+
         return rejectWithValue({
           error: errorResponse.message,
           status: error.response?.status,
         });
       }
-      // 기타 오류 처리
+
       console.error('An error occurred:', error);
       throw error;
     }
@@ -151,7 +155,7 @@ const asynchFetchUpdateInformation = createAsyncThunk(
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data as ErrorResponse;
-        // 실패할 경우 message와 status를 설정하여 반환
+
         return rejectWithValue({
           error: errorResponse.message,
           status: error.response?.status,
@@ -185,7 +189,7 @@ const registerSlice = createSlice({
       ) => {
         state.data = action.payload.data;
         state.status = action.payload.status;
-        state.error = null; // 성공할 때 error 메시지를 null로 설정
+        state.error = null;
       },
     );
 
@@ -200,12 +204,12 @@ const registerSlice = createSlice({
       ) => {
         state.data = action.payload.data;
         state.status = action.payload.status;
-        state.error = null; // 성공할 때 error 메시지를 null로 설정
+        state.error = null;
       },
     );
 
     builder.addCase(
-      asynchFetchChangePassword.rejected, // 비밀번호 변경 실패 처리 추가
+      asynchFetchChangePassword.rejected,
       (state: RegisterStateType, action) => {
         const payload = action.payload as { status?: number; error?: string };
         return {

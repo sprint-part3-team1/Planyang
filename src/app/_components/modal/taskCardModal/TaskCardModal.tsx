@@ -37,7 +37,8 @@ const TaskCardModal = ({
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  let status = null;
+  let status = '';
+
   useEffect(() => {}, [myCommentInputValue]);
 
   useEffect(() => {
@@ -116,21 +117,21 @@ const TaskCardModal = ({
   const x = columnDataList?.data?.filter(
     (item) => item.id === cardInfo?.columnId,
   );
-  if (x?.length > 0) {
+  if (x && x?.length > 0) {
     status = x[0].title;
   } else {
     console.log('No item found matching the condition.');
   }
 
-  const updateComment = async () => {
+  const updateComment = async (content: string, commentId: number) => {
     try {
       await dispatch(
         commentActions.asyncFetchUpdateComment({
           content,
-          cardId: Number(requestId),
+          commentId,
         }),
       );
-      await updateComment();
+      await fetchComment();
     } catch (error) {
       console.error('Error update comment:', error);
     }
@@ -267,10 +268,12 @@ const TaskCardModal = ({
             <React.Fragment key={comment.id}>
               <OtherComment
                 writer={comment.author.nickname}
+                writerProfile={comment.author.profileImageUrl}
                 content={comment.content}
                 date={comment.createdAt}
                 deleteComment={deleteComment}
                 commentId={comment.id}
+                updateComment={updateComment}
               />
             </React.Fragment>
           ))}
@@ -296,7 +299,7 @@ const TaskCardModal = ({
             openModalType={openModalType}
             setOpenModalType={setOpenModalType}
           />
-          </div>
+        </div>
       </div>
       {isPressedMoreIcon && (
         <PopupDropDown
