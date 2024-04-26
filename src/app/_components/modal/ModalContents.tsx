@@ -89,6 +89,7 @@ const ModalContents = ({
         <CreateTaskModal
           openModalType={openModalType}
           setOpenModalType={setOpenModalType}
+          requestId={requestId}
         />
       );
       break;

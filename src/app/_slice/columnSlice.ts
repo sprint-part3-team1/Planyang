@@ -109,6 +109,28 @@ const asyncFetchDeleteColumn = createAsyncThunk(
   },
 );
 
+const asyncUploadCardImage = createAsyncThunk(
+  'columnSlice/asyncUploadCardImage',
+
+  async (columnData: { columnId: number; imageUrl: string }) => {
+    const { columnId, imageUrl } = columnData;
+    const accessToken = localStorage.getItem('accessToken');
+    const response = await axios.post(
+      `https://sp-taskify-api.vercel.app/4-1/columns/${columnId}/card-image
+    `,
+      { imageUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    console.log(response.data);
+    return response.data;
+  },
+);
+
 const columnSlice = createSlice({
   name: 'columnSlice',
   initialState,
@@ -139,6 +161,9 @@ const columnSlice = createSlice({
       );
       state.data.data = updatedColumns;
     });
+    builder.addCase(asyncUploadCardImage.fulfilled, (state, action) => {
+      state.data?.data?.push(action.payload);
+    });
   },
 });
 
@@ -150,5 +175,6 @@ export const columnActions = {
   asyncFetchGetColumn,
   asyncFetchPutColumn,
   asyncFetchDeleteColumn,
+  asyncUploadCardImage,
 };
 export const columnData = (state: RootState) => state.columnData.data;

@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DropDownPropsType } from '@/app/_types/dropdownProps';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import { memberActions, memberData } from '@/app/_slice/memberSlice';
+import { useParams } from 'next/navigation';
 import styles from './ManagerDropDown.module.css';
 import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
 import CheckIcon from '../../../../public/assets/icons/checkIcon';
@@ -7,11 +11,21 @@ import CloseIcon from '../../../../public/assets/icons/close';
 import UserIcon from '../UserIcon';
 
 const ManagerDropDown = ({ title }: DropDownPropsType) => {
+  const dispatch = useAppDispatch();
+  const memberDataList = useAppSelector(memberData);
+
   const [isDropDown, setIsDropDown] = useState(false);
   const [selectedDivIndex, setSelectedDivIndex] = useState(-1);
-  const MANAGERS = ['배상욱', '배동철', '배민정', '김민정', '박민정', '플래냥'];
+  const MANAGERS: string[] = [];
   const [managerNames, setManagerNames] = useState(MANAGERS);
   const [managerNamesearch, setManagerNameSearch] = useState('');
+
+  const params = useParams();
+
+  let filteredMangers: string[] = [];
+  memberDataList?.members.forEach((member) => {
+    MANAGERS.push(member.nickname);
+  });
 
   const handleDivClick = (index: number) => {
     setSelectedDivIndex(index);
@@ -20,7 +34,7 @@ const ManagerDropDown = ({ title }: DropDownPropsType) => {
   const onchangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
     setManagerNameSearch(value);
-    const filteredMangers = MANAGERS.filter((manager) =>
+    filteredMangers = MANAGERS.filter((manager) =>
       manager.includes(managerNamesearch),
     );
     setIsDropDown(true);
@@ -33,6 +47,20 @@ const ManagerDropDown = ({ title }: DropDownPropsType) => {
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        await dispatch(
+          memberActions.asyncGetMembers({ dashboardId: Number(params.id) }),
+        );
+      } catch (error) {
+        console.error('Error fetching members:', error);
+      }
+    };
+
+    fetchMembers();
+  }, []);
 
   useEffect(() => {
     const handleClickOutSide = (e: MouseEvent) => {
