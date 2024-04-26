@@ -25,9 +25,11 @@
 }
 
 .listWrapper {
+  height: 500px;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1.2rem;
+  margin-bottom: 15rem;
 }
 
 .dashList {
@@ -48,6 +50,18 @@
 .selected {
   background-color: var(--violet_8);
 }
+
+.paginationFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* #pageFont {
+  font-size: var(--font16);
+} */
 
 @media (max-width: 1023px) {
   .container {
@@ -83,11 +97,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: auto;
   }
 
   .dashList {
     display: block;
   }
+
+  .paginationFrame,
   #title,
   #logoTitle,
   #dashBoardName,
