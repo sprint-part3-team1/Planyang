@@ -111,6 +111,7 @@ const SideMenu = () => {
           id={styles.vector}
           src={VECTOR_ICON_SRC}
           alt="vector"
+          style={{ cursor: 'pointer' }}
           onClick={() => {
             setOpenModalType(MODAL_TYPES.newDashboard);
           }}
