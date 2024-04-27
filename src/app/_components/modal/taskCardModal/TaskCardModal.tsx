@@ -35,8 +35,15 @@ const TaskCardModal = ({
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isClickedClose, setIsClickedClose] = useState(false);
 
   let status = '';
+
+  useEffect(() => {
+    if (isClickedClose) {
+      setOpenModalType('');
+    }
+  }, [isClickedClose]);
 
   useEffect(() => {}, [myCommentInputValue]);
 
@@ -145,7 +152,7 @@ const TaskCardModal = ({
   };
 
   const handleCloseClick = () => {
-    setOpenModalType('');
+    setIsClickedClose(true);
   };
 
   const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -240,7 +247,9 @@ const TaskCardModal = ({
               )}
             </div>
           )}
-
+          <button onClick={handleCloseClick} type="button">
+            모달창을 닫아보자
+          </button>
           <div className={styles.writeCommentDiv}>
             <p id={styles.title}>댓글</p>
             <div className={styles.myCommentDiv}>

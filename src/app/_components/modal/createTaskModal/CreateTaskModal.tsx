@@ -64,15 +64,18 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       console.log('제목 :', titleInputValue);
       console.log('설명: ', descriptionInputValue);
       console.log('이미지 url', selectedImagePath);
+
+      createCard(
+        manager.userId,
+        titleInputValue,
+        descriptionInputValue,
+        '2024-04-17 18:27',
+        ['test'],
+        selectedImagePath,
+      );
+
+      setOpenModalType('');
     }
-    // createCard(
-    //   1673,
-    //   titleRef.current?.value,
-    //   descriptionRef.current?.value,
-    //   '2024-04-17 18:27',
-    //   ['test'],
-    // );
-    setOpenModalType('');
   };
 
   const INPUT_WIDTH = {
