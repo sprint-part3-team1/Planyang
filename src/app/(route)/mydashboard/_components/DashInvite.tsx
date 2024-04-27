@@ -1,11 +1,14 @@
-'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import { receivedInvitationActions } from '@/app/_slice/receivedInvitationsSlice';
+import {
+  receivedInvitationActions,
+  receivedInvitationData,
+} from '@/app/_slice/receivedInvitationsSlice';
 import Image from 'next/image';
 import AcceptButton from '@/app/_components/Button/AcceptButton/AcceptButton';
 import RejectButton from '@/app/_components/Button/RejectButton/RejectButton';
+import useAppSelector from '@/app/_hooks/useAppSelector';
 import styles from './DashInvite.module.css';
 import { fetchInviteData, fetchInviteDataCursor } from '../_api/inviteScroll';
 
@@ -15,14 +18,54 @@ const DashInvite = ({ setPageOne }) => {
 
   const [isMobile, setIsMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [inviteDatas, setInviteDatas] = useState(null); // 초대받은 목록에 관한 데이터
+  const [inviteDatas, setInviteDatas] = useState(null);
   const [needRender, setNeedRender] = useState(false);
   const [cursorId, setCursorId] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const inviteInformation = useAppSelector(receivedInvitationData);
   const dispatch = useAppDispatch();
 
-  // 대시보드 버튼의 페이지 네이션
+  const [cursor, setCursor] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 1,
+  });
+
+  const getInvitation = async () => {
+    try {
+      await dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
+      // 초대 정보를 받은 후에 새로운 cursorId를 가져와서 설정합니다.
+      const newCursorId = inviteInformation?.cursorId;
+      if (newCursorId !== undefined && newCursorId !== cursorId) {
+        setCursorId(newCursorId);
+      }
+    } catch (error) {
+      console.error('Error fetching invites:', error);
+    }
+  };
+
+  const getInvitationByCursor = async (cursorId: number) => {
+    dispatch(
+      receivedInvitationActions.asyncGetReceivedInvitationsByCursorId(cursorId),
+    );
+  };
+
+  console.log(inviteInformation?.invitations);
+  useEffect(() => {
+    try {
+      getInvitation();
+    } catch (error) {
+      console.error('Error fetching invites:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (inviteInformation) {
+      setCursor(inviteInformation.cursorId);
+    }
+  }, [inviteInformation?.cursorId, dispatch]);
+
   const fetchData = async () => {
     try {
       const data = await fetchInviteData();
@@ -34,6 +77,15 @@ const DashInvite = ({ setPageOne }) => {
     }
   };
 
+  // const testButtonClickHandler = () => {
+  //   if (isVisible) {
+  //     // isVisible 상태가 true 일 때만 실행
+  //     if (inviteInformation) {
+  //       getInvitationByCursor(inviteInformation.cursorId);
+  //     }
+  //   }
+  // };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -44,13 +96,12 @@ const DashInvite = ({ setPageOne }) => {
     };
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // 초기 렌더링 시 한 번 호출하여 초기 상태 설정
+    handleResize();
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // 초대를 수락합니다 해당 초대목록이 state에서 삭제 됩니다
   const acceptInvite = (invitationId: number) => {
     dispatch(
       receivedInvitationActions.asyncAcceptInvite({
@@ -60,19 +111,16 @@ const DashInvite = ({ setPageOne }) => {
     );
     setInviteDatas((prevData) =>
       prevData.filter((invite) => invite.id !== invitationId),
-    ); // 해당 항목 제거
+    );
     if (needRender === true) {
-      // needRender가 true일 때에만 재랜더링을 실행합니다.
       setTimeout(() => {
         console.log('재랜더링');
-        fetchData(); // 데이터를 삭제한 후에 재랜더링을 실행합니다.
-      }, 100); // 1초 뒤에 재랜더링을 실행합니다. 필요에 따라 시간을 조정할 수 있습니다.
+        fetchData();
+      }, 100);
     }
-    // 대시보드 버튼 페이지 초기화
     setPageOne();
   };
 
-  // 초대를 거절합니다 해당 초대목록이 state에서 삭제 됩니다
   const rejectInvite = (invitationId: number) => {
     dispatch(
       receivedInvitationActions.asyncAcceptInvite({
@@ -82,17 +130,15 @@ const DashInvite = ({ setPageOne }) => {
     );
     setInviteDatas((prevData) =>
       prevData.filter((invite) => invite.id !== invitationId),
-    ); // 해당 항목 제거
+    );
     if (needRender === true) {
-      // needRender가 true일 때에만 재랜더링을 실행합니다.
       setTimeout(() => {
         console.log('재랜더링');
-        fetchData(); // 데이터를 삭제한 후에 재랜더링을 실행합니다.
-      }, 100); // 1초 뒤에 재랜더링을 실행합니다. 필요에 따라 시간을 조정할 수 있습니다.
+        fetchData();
+      }, 100);
     }
   };
 
-  // 검색어를 기준으로 필터링을 합니다. 대소문자 상관없음.
   const filteredInviteData = inviteDatas
     ? inviteDatas.filter((invite) =>
         invite.dashboard.title
@@ -102,7 +148,6 @@ const DashInvite = ({ setPageOne }) => {
     : [];
 
   useEffect(() => {
-    // 스크롤 함수
     const handleScroll = async () => {
       const container = containerRef.current;
       if (container) {
@@ -143,109 +188,141 @@ const DashInvite = ({ setPageOne }) => {
     console.log(inviteDatas);
   };
 
+  // observe
+  useEffect(() => {
+    if (inView) {
+      console.log('보임');
+      getInvitationByCursor(inviteInformation?.cursorId);
+    }
+  }, [inView]);
   return (
-    <div
-      ref={containerRef}
-      className={
-        inviteDatas && inviteDatas.length === 0
-          ? styles.noContainer
-          : styles.container
-      }
-    >
-      <button
-        type="button"
-        onClick={() => {
-          chkData();
+    <div ref={containerRef} className={styles.container}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10ㅂ0px' }}>
+        {inviteInformation?.invitations.map((item) => {
+          return (
+            <div key={item.id} style={{ display: 'flex', gap: '120px' }}>
+              <div style={{ fontSize: '30px' }}>{item.dashboard.title}</div>
+              <div style={{ fontSize: '30px' }}>{item.invitee.nickname}</div>
+
+              <AcceptButton />
+              <RejectButton />
+            </div>
+          );
+        })}
+      </div>
+      <div
+        ref={ref}
+        style={{
+          width: '10px',
+          height: '10px',
+          background: 'lightblue',
         }}
       >
-        확인
-      </button>
-      <span className={styles.title}>초대받은 대시보드</span>
-      <div
-        className={
-          inviteDatas && inviteDatas.length === 0
-            ? styles.noSearchBar
-            : styles.searchBar
-        }
-      >
-        <div className={styles.searchBarContent}>
-          <Image
-            id={styles.searchIcon}
-            width={24}
-            height={24}
-            src={SEARCH_ICON}
-            alt="searchIcon"
-          />
-          <input
-            id={styles.input}
-            placeholder="검색"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
+        박스
       </div>
-      {inviteDatas && inviteDatas.length === 0 ? (
-        <div className={styles.messageFrame}>
-          <Image
-            id={styles.unsubscribeImage}
-            width={100}
-            height={100}
-            src={UNSUBSCRIBE_IMAGE}
-            alt="unsubscribeImage"
-          />
-          <span id={styles.message}>초대받은 대시보드가 없습니다.</span>
-        </div>
-      ) : (
-        <>
-          {' '}
-          {isMobile ? (
-            <>
-              {' '}
-              {filteredInviteData &&
-                filteredInviteData.map((invite, index) => (
-                  <div key={index} className={styles.dashContainer}>
-                    <div className={styles.dashContent}>
-                      <span id={styles.name}>이름</span>
-                      <span id={styles.dashName}>{invite.dashboard.title}</span>
-                      <span id={styles.invite}>초대자</span>
-                      <span id={styles.dashInvite}>
-                        {invite.inviter.nickname}
-                      </span>
-                    </div>
-                    <div className={styles.buttonContainer}>
-                      <AcceptButton onClick={() => acceptInvite(invite.id)} />
-                      <RejectButton onClick={() => rejectInvite(invite.id)} />
-                    </div>
-                  </div>
-                ))}
-            </>
-          ) : (
-            <>
-              {' '}
-              <div className={styles.contentTitle}>
-                <span id={styles.name}>이름</span>
-                <span id={styles.invite}>초대자</span>
-                <span id={styles.agree}>수락여부</span>
-              </div>
-              {filteredInviteData &&
-                filteredInviteData.map((invite, index) => (
-                  <div key={index} className={styles.dashContainer}>
-                    <span id={styles.dashName}>{invite.dashboard.title}</span>
-                    <span id={styles.dashInvite}>
-                      {invite.inviter.nickname}
-                    </span>
-                    <div className={styles.buttonContainer}>
-                      <AcceptButton onClick={() => acceptInvite(invite.id)} />
-                      <RejectButton onClick={() => rejectInvite(invite.id)} />
-                    </div>
-                  </div>
-                ))}
-            </>
-          )}
-        </>
-      )}
     </div>
   );
 };
 
 export default DashInvite;
+
+// <div
+//   ref={containerRef}
+//   className={
+//     inviteDatas && inviteDatas.length === 0
+//       ? styles.noContainer
+//       : styles.container
+//   }
+// >
+//   <button
+//     type="button"
+//     onClick={() => {
+//       chkData();
+//     }}
+//   >
+//     확인
+//   </button>
+//   <span className={styles.title}>초대받은 대시보드</span>
+//   <div
+//     className={
+//       inviteDatas && inviteDatas.length === 0
+//         ? styles.noSearchBar
+//         : styles.searchBar
+//     }
+//   >
+//     <div className={styles.searchBarContent}>
+//       <Image
+//         id={styles.searchIcon}
+//         width={24}
+//         height={24}
+//         src={SEARCH_ICON}
+//         alt="searchIcon"
+//       />
+//       <input
+//         id={styles.input}
+//         placeholder="검색"
+//         value={searchQuery}
+//         onChange={(e) => setSearchQuery(e.target.value)}
+//       />
+//     </div>
+//   </div>
+//   {inviteDatas && inviteDatas.length === 0 ? (
+//     <div className={styles.messageFrame}>
+//       <Image
+//         id={styles.unsubscribeImage}
+//         width={100}
+//         height={100}
+//         src={UNSUBSCRIBE_IMAGE}
+//         alt="unsubscribeImage"
+//       />
+//       <span id={styles.message}>초대받은 대시보드가 없습니다.</span>
+//     </div>
+//   ) : (
+//     <>
+//       {' '}
+//       {isMobile ? (
+//         <>
+//           {' '}
+//           {filteredInviteData &&
+//             filteredInviteData.map((invite, index) => (
+//               <div key={index} className={styles.dashContainer}>
+//                 <div className={styles.dashContent}>
+//                   <span id={styles.name}>이름</span>
+//                   <span id={styles.dashName}>{invite.dashboard.title}</span>
+//                   <span id={styles.invite}>초대자</span>
+//                   <span id={styles.dashInvite}>
+//                     {invite.inviter.nickname}
+//                   </span>
+//                 </div>
+//                 <div className={styles.buttonContainer}>
+//                   <AcceptButton onClick={() => acceptInvite(invite.id)} />
+//                   <RejectButton onClick={() => rejectInvite(invite.id)} />
+//                 </div>
+//               </div>
+//             ))}
+//         </>
+//       ) : (
+//         <>
+//           <div className={styles.contentTitle}>
+//             <span id={styles.name}>이름</span>
+//             <span id={styles.invite}>초대자</span>
+//             <span id={styles.agree}>수락여부</span>
+//           </div>
+//           {filteredInviteData &&
+//             filteredInviteData.map((invite, index) => (
+//               <div key={index} className={styles.dashContainer}>
+//                 <span id={styles.dashName}>{invite.dashboard.title}</span>
+//                 <span id={styles.dashInvite}>
+//                   {invite.inviter.nickname}
+//                 </span>
+//                 <div className={styles.buttonContainer}>
+//                   <AcceptButton onClick={() => acceptInvite(invite.id)} />
+//                   <RejectButton onClick={() => rejectInvite(invite.id)} />
+//                 </div>
+//               </div>
+//             ))}
+//         </>
+//       )}
+//     </>
+//   )}
+// </div>

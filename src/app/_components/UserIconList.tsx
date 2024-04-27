@@ -23,7 +23,7 @@ const UserIconList = ({ totalCount }: MemberListDto) => {
 
   const leftValue = (index: number) => 30 * index;
 
-  const [listStyle, setListStyle] = useState(false); // Default to false
+  const [listStyle, setListStyle] = useState(false);
 
   const lastWidth = useRef(0);
 
@@ -40,12 +40,11 @@ const UserIconList = ({ totalCount }: MemberListDto) => {
       }
     };
     fetchData();
-  }, [dashboardDetailDatas?.id]); // useEffect의 의존성 배열에 dashboardDetailDatas?.id 추가
+  }, [dashboardDetailDatas?.id]);
 
   useEffect(() => {
     const handleResize = () => {
       if (typeof window !== 'undefined') {
-        // Check if window is defined (browser environment)
         if (window.innerWidth >= DESKTOP_WIDTH) {
           setListStyle(true);
         } else {
@@ -55,7 +54,7 @@ const UserIconList = ({ totalCount }: MemberListDto) => {
       }
     };
 
-    handleResize(); // Call handleResize once when component mounts
+    handleResize();
 
     if (typeof window !== 'undefined') {
       // Check if window is defined (browser environment)
