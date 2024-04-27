@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Contour from '@/app/_components/Contour';
 import UserIcon from '@/app/_components/UserIcon';
 import ImageTextButton from '@/app/_components/Button/ImageTextButton';
@@ -12,9 +12,7 @@ import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import styles from '../DashboardTypeNavBar.module.css';
 
 const DashboardListNavBar = () => {
-  const onClickButton = () => {
-    console.log(' ');
-  };
+  const onClickButton = () => {};
 
   const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
   const dispatch = useAppDispatch();

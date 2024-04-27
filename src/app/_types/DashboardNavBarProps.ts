@@ -1,9 +1,10 @@
-import {MemberListDto} from "@/app/_types/_dto/MemberListDto";
+import { MemberListDto } from '@/app/_types/_dto/MemberListDto';
 
 export interface DashboardNavBarProps {
-    membersInfo: MemberListDto;
-    nickname: string;
-    createdByMe: boolean;
-    dashboardTitle: string;
-    profileImageUrl?: string | null;
+  membersInfo: MemberListDto;
+
+  createdByMe: boolean;
+  dashboardTitle: string;
+  boardId: string;
+  dashboardId: number;
 }
