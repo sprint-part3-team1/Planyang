@@ -9,15 +9,16 @@ import styles from '@/app/(route)/dashboard/[id]/page.module.css';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import { useDispatch } from 'react-redux';
 import Column from '../_components/Column';
 
-const DashBoard = () => {
+const DashBoard = ({ params }: { id: string }) => {
   const columnDataList = useAppSelector(columnData);
 
   const [openModalType, setOpenModalType] = useState('');
   const [cardInfo, setCardInfo] = useState(null);
   const [totalCount, setTotalCount] = useState<Record<number, number>>();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchDashboardDetail = async () => {
       try {
