@@ -197,7 +197,7 @@ const DashInvite = ({ setPageOne }) => {
   }, [inView]);
   return (
     <div ref={containerRef} className={styles.container}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10ㅂ0px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '100px' }}>
         {inviteInformation?.invitations.map((item) => {
           return (
             <div key={item.id} style={{ display: 'flex', gap: '120px' }}>
