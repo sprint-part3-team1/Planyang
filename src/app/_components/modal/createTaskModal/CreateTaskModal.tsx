@@ -26,11 +26,13 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [titleInputValue, setTitleInputValue] = useState('');
   const [descriptionInputValue, setdescriptionInputValue] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
+
   const imageInputProps = {
     columnId: requestId,
     selectedImagePath,
     setSelectedImagePath,
   };
+
   const createCard = async (
     assigneeUserId: number,
     title: string,
@@ -58,13 +60,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   };
 
   const createTaskButtonHandler = () => {
-    /** 생성 버튼을 누르면 실행되는 함수 작성 */
-    if (manager) {
-      console.log('관리자: ', manager.nickname);
-      console.log('제목 :', titleInputValue);
-      console.log('설명: ', descriptionInputValue);
-      console.log('이미지 url', selectedImagePath);
-
+    if (manager && selectedImagePath) {
       createCard(
         manager.userId,
         titleInputValue,
@@ -72,6 +68,16 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         '2024-04-17 18:27',
         ['test'],
         selectedImagePath,
+      );
+
+      setOpenModalType('');
+    } else if (manager) {
+      createCard(
+        manager.userId,
+        titleInputValue,
+        descriptionInputValue,
+        '2024-04-17 18:27',
+        ['test'],
       );
 
       setOpenModalType('');
