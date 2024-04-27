@@ -1,6 +1,5 @@
 'use client';
 
-import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { useEffect, useState } from 'react';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
@@ -12,8 +11,7 @@ import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import Column from '../_components/Column';
 
-const DashBoard = ({ params }: { params: { id: string } }) => {
-  const dispatch = useAppDispatch();
+const DashBoard = () => {
   const columnDataList = useAppSelector(columnData);
 
   const [openModalType, setOpenModalType] = useState('');

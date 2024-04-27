@@ -23,17 +23,7 @@ const TableInvite = () => {
     dispatch(invitationActions.asynchGetMyInvitation({ dashBoardId, page }));
   };
 
-  const cancelInvitation = (dashBoardId: number, invitationId: number) => {
-    dispatch(
-      invitationActions.asynchFetchDeleteInvited({
-        dashBoardId,
-        invitationId,
-      }),
-    );
-  };
-
   const [isMobile, setIsMobile] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,25 +40,38 @@ const TableInvite = () => {
 
   useEffect(() => {
     if (dashBoardDatas?.id) {
-      getMyInvitationList(dashBoardDatas.id, currentPage);
+      getMyInvitationList(dashBoardDatas.id, invitationDatas.page);
     }
-  }, [dashBoardDatas, dispatch, currentPage]);
+  }, [dashBoardDatas, dispatch, invitationDatas.page]);
 
-  const handleClickCancel = async (
-    dashBoardId: number,
-    invitationId: number,
-  ) => {
-    await cancelInvitation(dashBoardId, invitationId);
-    if (invitationDatas.data?.invitations.length === 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
+  const onRightButtonClick = async () => {
+    if (invitationDatas.page * 5 < invitationDatas.data?.totalCount)
+      dispatch(invitationActions.incrementPage());
   };
 
   const onLeftButtonClick = async () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    if (invitationDatas.page !== 1) {
+      dispatch(invitationActions.decreasePage());
+    }
   };
-  const onRightButtonClick = async () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+
+  const handleDeleteAndNavigate = async (
+    dashBoardId: number,
+    invitationId: number,
+  ) => {
+    await dispatch(
+      invitationActions.asynchFetchDeleteInvited({ dashBoardId, invitationId }),
+    );
+    await dispatch(
+      invitationActions.asynchGetMyInvitation({
+        dashBoardId,
+        page: invitationDatas.page,
+      }),
+    );
+
+    if (invitationDatas.data?.invitations.length === 1) {
+      dispatch(invitationActions.setMaxPage());
+    }
   };
 
   return (
@@ -76,8 +79,7 @@ const TableInvite = () => {
       <div className={styles.title}>
         <span id={styles.titleInvite}>초대 내역</span>
         <div className={styles.pagination}>
-          <span>1 페이지 중 {currentPage}</span>{' '}
-          {/* 수정: currentPage로 변경 */}
+          <span>1 페이지 중 {invitationDatas.page}</span>{' '}
           <ArrowButton
             onRightButtonClick={onRightButtonClick}
             onLeftButtonClick={onLeftButtonClick}
@@ -96,7 +98,7 @@ const TableInvite = () => {
           <CancelButton
             boardId={dashBoardDatas?.id}
             invitationId={item.id}
-            onClick={handleClickCancel}
+            handleDeleteAndNavigate={handleDeleteAndNavigate}
           />
         </div>
       ))}

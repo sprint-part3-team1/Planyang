@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './UserIcon.module.css';
 import { UserIconProps } from '@/app/_types/UserIconProps';
 import { createRandomColor } from '@/app/_utils/colorUtils';
+import styles from './UserIcon.module.css';
 
 const UserIcon = ({ nickname, profileImageUrl }: UserIconProps) => {
   const customImage = () => {
@@ -11,10 +11,10 @@ const UserIcon = ({ nickname, profileImageUrl }: UserIconProps) => {
       return {
         backgroundImage: `url(${profileImageUrl})`,
       };
-    } else
-      return {
-        backgroundColor: backgroundColor,
-      };
+    }
+    return {
+      backgroundColor,
+    };
   };
 
   return (
