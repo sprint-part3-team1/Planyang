@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { useEffect, useState } from 'react';
@@ -11,7 +10,7 @@ import DeleteButton from '../../../_components/Button/DeleteButton/DeleteButton'
 
 const TableMember = () => {
   const dispatch = useAppDispatch();
-  const PROFILE_ELLIPSE = '/assets/icons/profileEllipse.svg';
+
   const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
   const memberDatas = useAppSelector(memberData);
   const getMember = (dashboardId: number | undefined, page: number) => {
@@ -22,8 +21,9 @@ const TableMember = () => {
       }),
     );
   };
+
   const [page, setPage] = useState(1);
-  console.log(memberDatas?.members.length);
+
   const onRightButtonClick = () => {
     if (page * 4 < memberDatas?.totalCount) {
       setPage((prev) => prev + 1);
@@ -35,12 +35,25 @@ const TableMember = () => {
       setPage((prev) => prev - 1);
     }
   };
+
+  const handleDeleteAndNavigate = async (memberId: number) => {
+    await dispatch(memberActions.asyncDeleteMember({ memberId }));
+    await dispatch(
+      memberActions.asyncGetMembers({
+        dashboardId: dashBoardDetailDatas.id,
+        page,
+      }),
+    );
+    if (memberDatas?.members.length === 1) {
+      setPage((prev) => Math.max(prev - 1, 1));
+    }
+  };
+
   useEffect(() => {
     if (dashBoardDetailDatas?.id) {
-      // 값이 있는지 확인
       getMember(dashBoardDetailDatas.id, page);
     }
-  }, [dashBoardDetailDatas?.id, page]); // dashBoardDetailDatas.id를 의존성 배열에 추가
+  }, [dashBoardDetailDatas?.id, page]);
 
   return (
     <div className={styles.container}>
@@ -56,25 +69,23 @@ const TableMember = () => {
         </div>
       </div>
       <span className={styles.name}> 이름</span>
-      {memberDatas?.members.map((i) => {
-        return (
-          <div key={i.id} className={styles.memberContainer}>
-            <div className={styles.profileFrame}>
-              <UserIcon
-                nickname={i.nickname}
-                profileImageUrl={i.profileImageUrl}
-              />
-
-              <span id={styles.memberName}>{i.nickname}</span>
-            </div>
+      {memberDatas?.members.map((i) => (
+        <div key={i.id} className={styles.memberContainer}>
+          <div className={styles.profileFrame}>
+            <UserIcon
+              nickname={i.nickname}
+              profileImageUrl={i.profileImageUrl}
+            />
+            <span id={styles.memberName}>{i.nickname}</span>
+          </div>
+          {!i.isOwner && (
             <DeleteButton
               id={i.id}
-              setPage={setPage}
-              member={memberDatas.members}
+              handleDeleteAndNavigate={handleDeleteAndNavigate}
             />
-          </div>
-        );
-      })}
+          )}
+        </div>
+      ))}
     </div>
   );
 };

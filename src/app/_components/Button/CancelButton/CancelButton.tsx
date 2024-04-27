@@ -1,12 +1,16 @@
 import styles from './CancelButton.module.css';
 
-const CancelButton = ({ boardId, invitationId, onClick }) => {
+const CancelButton = ({ boardId, invitationId, handleDeleteAndNavigate }) => {
+  
+  const handleCancleButton = (boardId, invitationId) => {
+    handleDeleteAndNavigate(boardId, invitationId);
+  };
   return (
     <button
       type="button"
       className={styles.cancelBtn}
       onClick={() => {
-        onClick(boardId, invitationId);
+        handleCancleButton(boardId, invitationId);
       }}
     >
       취소

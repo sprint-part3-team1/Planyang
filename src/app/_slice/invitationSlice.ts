@@ -43,7 +43,7 @@ const initialState: InvitationsType = {
 const asynchGetMyInvitation = createAsyncThunk(
   'invitationSlice/asynchGetMyInvitation',
 
-  async (getInvite: { dashBoardId: number | undefined; page: number }) => {
+  async (getInvite: { dashBoardId: number | undefined; page: any }) => {
     const accessToken = localStorage.getItem('accessToken');
     const { dashBoardId, page } = getInvite;
 
@@ -116,6 +116,15 @@ const invitationSlice = createSlice({
       if (state.page > 1) {
         state.page -= 1;
       }
+    },
+    navigateMaxPage(state) {
+      state.page = Math.max(state.page, 1);
+    },
+    setPage(state, action: PayloadAction<number>) {
+      state.page = action.payload;
+    },
+    setMaxPage(state) {
+      state.page = Math.ceil(state.data?.totalCount / 5);
     },
   },
   extraReducers: (builder) => {
