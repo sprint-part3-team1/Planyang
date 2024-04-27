@@ -58,13 +58,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   };
 
   const createTaskButtonHandler = () => {
-    /** 생성 버튼을 누르면 실행되는 함수 작성 */
     if (manager) {
-      console.log('관리자: ', manager.nickname);
-      console.log('제목 :', titleInputValue);
-      console.log('설명: ', descriptionInputValue);
-      console.log('이미지 url', selectedImagePath);
-
       createCard(
         manager.userId,
         titleInputValue,
