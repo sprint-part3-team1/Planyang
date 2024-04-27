@@ -17,6 +17,7 @@ import MoreIcon from '../../../../../public/assets/icons/more';
 import PopupDropDown from '../../DropDown/PopupDropDown';
 import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
+import MODAL_TYPES from '@/app/constants/modalTypes';
 
 const TaskCardModal = ({
   setOpenModalType,
@@ -34,14 +35,18 @@ const TaskCardModal = ({
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isClickedClose, setIsClickedClose] = useState(false);
+  const [isClickEditMode, setIsClickEditMode] = useState(false);
 
   let status = '';
 
   useEffect(() => {
     if (isClickedClose) {
       setOpenModalType('');
+    } else if (isClickEditMode) {
+      setOpenModalType('');
+      setOpenModalType(MODAL_TYPES.modifyTask);
     }
-  }, [isClickedClose]);
+  }, [isClickedClose, isClickEditMode]);
 
   useEffect(() => {}, [myCommentInputValue]);
 
@@ -150,7 +155,12 @@ const TaskCardModal = ({
   };
 
   const handleCloseClick = () => {
-    setIsClickedClose(true);
+    console.log(isClickEditMode);
+    if (isClickEditMode) {
+      setIsClickedClose(false);
+    } else {
+      setIsClickedClose(true);
+    }
   };
 
   const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -171,6 +181,7 @@ const TaskCardModal = ({
   const editOptionclickHandler = () => {
     /** 옵션 수정하기 버튼을 눌렀을 때  */
     // TODO: 수정하는 모달창으로 넘어가야 함
+    setIsClickEditMode(true);
   };
 
   const viewPortResizeHandler = () => {
