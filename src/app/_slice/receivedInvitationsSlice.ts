@@ -43,7 +43,7 @@ const asyncGetReceivedInvitations = createAsyncThunk(
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.get(
-      'https://sp-taskify-api.vercel.app/4-1/invitations?size=10',
+      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -55,6 +55,24 @@ const asyncGetReceivedInvitations = createAsyncThunk(
   },
 );
 
+const asyncGetReceivedInvitationsByCursorId = createAsyncThunk(
+  'receivedInvitationsSlice/asyncGetReceivedInvitationsByCursorId',
+
+  async (cursorId: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await axios.get(
+      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5&cursorId=${cursorId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    return response.data;
+  },
+);
 const asyncAcceptInvite = createAsyncThunk(
   'receivedInvitationsSlice/asyncAcceptInvite',
 
@@ -98,6 +116,17 @@ const receivedInvitationsSlice = createSlice({
         );
       }
     });
+
+    builder.addCase(
+      asyncGetReceivedInvitationsByCursorId.fulfilled,
+      (state, action: PayloadAction<ReceivedInvitationsType['data']>) => {
+        state.data.invitations = [
+          ...state.data.invitations,
+          ...action.payload.invitations,
+        ];
+        state.data.cursorId = action.payload?.cursorId;
+      },
+    );
   },
 });
 
@@ -107,6 +136,7 @@ export const receivedInvitationActions = {
   ...receivedInvitationsSlice.actions,
   asyncGetReceivedInvitations,
   asyncAcceptInvite,
+  asyncGetReceivedInvitationsByCursorId,
 };
 
 export const receivedInvitationData = (state: RootState) =>

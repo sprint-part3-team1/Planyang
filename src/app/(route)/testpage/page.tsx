@@ -332,7 +332,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-            submitLogin('kkkk@test.com', 'AS123456');
+            submitLogin('planyang1@test.com', 'AS123456');
           }}
         >
           로그인
