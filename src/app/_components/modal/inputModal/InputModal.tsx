@@ -1,5 +1,6 @@
 import React, { useState, useRef, ChangeEvent, forwardRef } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import styles from './InputModal.module.css';
 import ImageEditIcon from '../../../../../public/assets/icons/imageEditIcon.svg';
 import PlusIcon from '../../../../../public/assets/icons/plusIcon.svg';
@@ -10,22 +11,50 @@ type InputModalProps = {
   title: string;
   type: string;
   required?: boolean;
-  inputRef?: React.MutableRefObject<any>;
+  inputRef?: React.MutableRefObject<any> | null;
+  focusoutFunc?: () => void;
+  imageInputProps?: {
+    columnId: number;
+    selectedImagePath: any;
+    setSelectedImagePath: React.Dispatch<React.SetStateAction<any>>;
+  };
 };
 
 const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
-  ({ title, type, required = false, inputRef }, imageRef) => {
-    const [selectedImagePath, setSelectedImagePath] = useState<string | null>(
-      null,
-    );
-
+  (
+    { title, type, required = false, inputRef, focusoutFunc, imageInputProps },
+    imageRef,
+  ) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const formData = new FormData();
+    const [showImageUrl, setShowImageUrl] = useState<string | null>(null);
 
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
-      if (file) {
+
+      if (file && imageInputProps) {
+        const { columnId, selectedImagePath, setSelectedImagePath } =
+          imageInputProps;
         const imageUrl = URL.createObjectURL(file);
-        setSelectedImagePath(imageUrl);
+        setShowImageUrl(imageUrl);
+
+        formData.append('image', file);
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+          const response = await axios.post(
+            `https://sp-taskify-api.vercel.app/4-1/columns/${columnId}/card-image`,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'multipart/form-data',
+              },
+            },
+          );
+          setSelectedImagePath(response.data.imageUrl);
+        } catch (error) {
+          console.error(error);
+        }
       }
     };
 
@@ -46,6 +75,7 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
               rows={2}
               className={`${styles.input} ${styles.multiLineInput}`}
               ref={inputRef}
+              onChange={focusoutFunc}
             />
           </div>
         );
@@ -56,9 +86,9 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
               {title} {required && <span className={styles.essential}>*</span>}
             </p>
             <div
-              className={`${selectedImagePath ? styles.imageContainer : styles.noImageDiv}`}
+              className={`${showImageUrl ? styles.imageContainer : styles.noImageDiv}`}
             >
-              {selectedImagePath && (
+              {showImageUrl && (
                 <div
                   className={styles.backgroundDiv}
                   onClick={handleBackgroundDivClick}
@@ -83,11 +113,11 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
                   onChange={handleImageChange}
                   className={styles.fileInput}
                 />
-                {selectedImagePath ? (
+                {showImageUrl ? (
                   <div className={styles.imageDiv}>
                     <Image
                       fill
-                      src={selectedImagePath}
+                      src={showImageUrl}
                       alt="대시보드 이미지"
                       className={styles.image}
                     />
@@ -106,12 +136,27 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
             <p id={styles.title}>
               {title} {required && <span className={styles.essential}>*</span>}
             </p>
-            <input className={styles.input} ref={inputRef} />
+            <input
+              className={styles.input}
+              ref={inputRef}
+              onChange={focusoutFunc}
+            />
           </div>
         );
     }
   },
 );
+
+InputModal.defaultProps = {
+  required: false,
+  inputRef: null,
+  focusoutFunc: () => {},
+  imageInputProps: {
+    columnId: 0,
+    selectedImagePath: '',
+    setSelectedImagePath: (value: React.SetStateAction<any>) => {},
+  },
+};
 
 InputModal.displayName = 'InputModal';
 

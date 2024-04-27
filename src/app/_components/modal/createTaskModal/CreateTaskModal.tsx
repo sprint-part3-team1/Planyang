@@ -4,6 +4,7 @@ import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import ArrowDown from '@/../public/assets/icons/arrowDown.svg';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
 import { cardActions } from '@/app/_slice/cardSlice';
+import { MemberInfoType } from '@/app/_types/dropdownProps';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { useParams } from 'next/navigation';
 import ModalContainer from '../modalContainer/ModalContainer';
@@ -19,6 +20,17 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
+  const [manager, setManager] = useState<MemberInfoType | null | undefined>(
+    null,
+  );
+  const [titleInputValue, setTitleInputValue] = useState('');
+  const [descriptionInputValue, setdescriptionInputValue] = useState('');
+  const [selectedImagePath, setSelectedImagePath] = useState('');
+  const imageInputProps = {
+    columnId: requestId,
+    selectedImagePath,
+    setSelectedImagePath,
+  };
   const createCard = async (
     assigneeUserId: number,
     title: string,
@@ -47,13 +59,19 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
 
   const createTaskButtonHandler = () => {
     /** 생성 버튼을 누르면 실행되는 함수 작성 */
-    createCard(
-      1673,
-      titleRef.current?.value,
-      descriptionRef.current?.value,
-      '2024-04-17 18:27',
-      ['test'],
-    );
+    if (manager) {
+      console.log('관리자: ', manager.nickname);
+      console.log('제목 :', titleInputValue);
+      console.log('설명: ', descriptionInputValue);
+      console.log('이미지 url', selectedImagePath);
+    }
+    // createCard(
+    //   1673,
+    //   titleRef.current?.value,
+    //   descriptionRef.current?.value,
+    //   '2024-04-17 18:27',
+    //   ['test'],
+    // );
     setOpenModalType('');
   };
 
@@ -71,6 +89,18 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const downArrowButtonHandler = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
     setIsDownArrowClicked(true);
+  };
+
+  const hadleTitleInput = () => {
+    if (titleRef.current) {
+      setTitleInputValue(titleRef.current.value);
+    }
+  };
+
+  const handleContentInput = () => {
+    if (descriptionRef.current) {
+      setdescriptionInputValue(descriptionRef.current.value);
+    }
   };
 
   useEffect(() => {
@@ -99,13 +129,24 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   return (
     <ModalContainer title="할 일 생성">
       <div className={styles.container}>
-        <ManagerDropDown title="담당자" />
-        <InputModal title="제목" required type="text" inputRef={titleRef} />
+        <ManagerDropDown
+          title="담당자"
+          clickedMember={manager}
+          setClickedMember={setManager}
+        />
+        <InputModal
+          title="제목"
+          required
+          type="text"
+          inputRef={titleRef}
+          focusoutFunc={hadleTitleInput}
+        />
         <InputModal
           title="설명"
           required
           type="multiLine"
           inputRef={descriptionRef}
+          focusoutFunc={handleContentInput}
         />
         <Input
           inputName="마감일"
@@ -117,7 +158,12 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
         />
-        <InputModal title="이미지" type="image" imageRef={ref} />
+        <InputModal
+          title="이미지"
+          type="image"
+          ref={ref}
+          imageInputProps={imageInputProps}
+        />
         <div
           role="button"
           tabIndex={0}

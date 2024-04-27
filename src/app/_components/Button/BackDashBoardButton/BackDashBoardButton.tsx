@@ -8,7 +8,7 @@ const BackDashBoardButton = () => {
   const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
   const boardId = dashBoardDetailDatas?.id;
   return (
-    <div>
+    <Link href={`/dashboard/${boardId}`} className={styles.button}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -21,10 +21,8 @@ const BackDashBoardButton = () => {
           fill="#333236"
         />
       </svg>
-      <Link href={`/dashboard/${boardId}`} className={styles.button}>
-        돌아가기
-      </Link>
-    </div>
+      돌아가기
+    </Link>
   );
 };
 

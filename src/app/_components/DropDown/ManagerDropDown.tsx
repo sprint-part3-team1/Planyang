@@ -10,7 +10,7 @@ import CheckIcon from '../../../../public/assets/icons/checkIcon';
 import CloseIcon from '../../../../public/assets/icons/close';
 import UserIcon from '../UserIcon';
 
-const ManagerDropDown = ({ title }: DropDownPropsType) => {
+const ManagerDropDown = ({ title, setClickedMember }: DropDownPropsType) => {
   const dispatch = useAppDispatch();
   const memberDataList = useAppSelector(memberData);
 
@@ -29,6 +29,10 @@ const ManagerDropDown = ({ title }: DropDownPropsType) => {
 
   const handleDivClick = (index: number) => {
     setSelectedDivIndex(index);
+
+    if (setClickedMember && memberDataList && memberDataList.members[index]) {
+      setClickedMember(memberDataList.members[index]);
+    }
   };
 
   const onchangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +48,7 @@ const ManagerDropDown = ({ title }: DropDownPropsType) => {
   const resetInput = () => {
     setManagerNameSearch('');
     setSelectedDivIndex(-1);
+    setClickedMember?.(null);
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
