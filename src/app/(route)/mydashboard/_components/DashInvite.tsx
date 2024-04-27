@@ -201,6 +201,7 @@ const DashInvite = ({ setPageOne }) => {
         {inviteInformation?.invitations.map((item) => {
           return (
             <div key={item.id} style={{ display: 'flex', gap: '120px' }}>
+              <div style={{ fontSize: '30px' }}>{item.id}</div>
               <div style={{ fontSize: '30px' }}>{item.dashboard.title}</div>
               <div style={{ fontSize: '30px' }}>{item.invitee.nickname}</div>
 
