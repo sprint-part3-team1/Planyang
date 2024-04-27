@@ -247,9 +247,6 @@ const TaskCardModal = ({
               )}
             </div>
           )}
-          <button onClick={handleCloseClick} type="button">
-            모달창을 닫아보자
-          </button>
           <div className={styles.writeCommentDiv}>
             <p id={styles.title}>댓글</p>
             <div className={styles.myCommentDiv}>

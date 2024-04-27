@@ -8,6 +8,8 @@ import { CardResponseType } from '@/app/_slice/cardSlice';
 import styles from './Column.module.css';
 import Card from './Card';
 
+import { useDrop } from 'react-dnd';
+
 const axiosInstance = axios.create({
   baseURL: `https://sp-taskify-api.vercel.app/4-1/`,
   timeout: 5000,
@@ -51,7 +53,15 @@ const Column = ({
   setCardInfo,
   totalCount,
   setTotalCount,
+  onDrop,
 }: Props) => {
+  const [{ isOver }, drop] = useDrop({
+    accept: 'item',
+    drop: (item) => onDrop(item, columnData.id),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
   const ELLIPSE_ICON = '/assets/icons/profileEllipse.svg';
   const SETTING_ICON = '/assets/icons/setting.svg';
 
@@ -83,7 +93,11 @@ const Column = ({
   }, [pages]);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      ref={drop}
+      style={{ filter: isOver && 'brightness(90%)' }}
+    >
       <div className={styles.title}>
         <div className={styles.columnName}>
           <Image width={8} height={8} src={ELLIPSE_ICON} alt="ellipseIcon" />
