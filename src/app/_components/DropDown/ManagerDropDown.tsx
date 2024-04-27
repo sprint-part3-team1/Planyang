@@ -57,7 +57,10 @@ const ManagerDropDown = ({ title, setClickedMember }: DropDownPropsType) => {
     const fetchMembers = async () => {
       try {
         await dispatch(
-          memberActions.asyncGetMembers({ dashboardId: Number(params.id) }),
+          memberActions.asyncGetMembers({
+            dashboardId: Number(params.id),
+            page: 1,
+          }),
         );
       } catch (error) {
         console.error('Error fetching members:', error);

@@ -3,7 +3,6 @@
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { useEffect, useState } from 'react';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
-import { registerActions } from '@/app/_slice/registerSlice';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import styles from '@/app/(route)/dashboard/[id]/page.module.css';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
@@ -11,6 +10,7 @@ import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import { useDispatch } from 'react-redux';
 
+import { useParams } from 'next/navigation';
 import Column from '../_components/Column';
 import { cardActions } from '@/app/_slice/cardSlice';
 
@@ -19,13 +19,14 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import axios from 'axios';
 
-const DashBoard = ({ params }: { id: string }) => {
+const DashBoard = () => {
   const columnDataList = useAppSelector(columnData);
+  const dispatch = useDispatch();
+  const params = useParams();
 
   const [openModalType, setOpenModalType] = useState('');
   const [cardInfo, setCardInfo] = useState(null);
   const [totalCount, setTotalCount] = useState<Record<number, number>>();
-  const dispatch = useDispatch();
 
   const handleDrop = async (item, droppedColumnId) => {
     try {
@@ -56,37 +57,29 @@ const DashBoard = ({ params }: { id: string }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchDashboardDetail = async () => {
-      try {
-        await dispatch(
-          dashBoardDetailActions.asyncFetchGetDashBoardDetail({
-            dashBoardId: Number(params.id),
-          }),
-        );
-      } catch (error) {
-        console.error('Error fetching dashboard detail:', error);
-      }
-    };
-    const fetchRegister = async () => {
-      try {
-        await dispatch(registerActions.asynchFetchgetUserInfo());
-      } catch (error) {
-        console.error('Error fetching register:', error);
-      }
-    };
-    const fetchColumns = async () => {
-      try {
-        await dispatch(
-          columnActions.asyncFetchGetColumn({ dashboardId: Number(params.id) }),
-        );
-      } catch (error) {
-        console.error('Error fetching columns:', error);
-      }
-    };
+  const fetchDashboardDetail = async () => {
+    try {
+      await dispatch(
+        dashBoardDetailActions.asyncFetchGetDashBoardDetail({
+          dashBoardId: Number(params.id),
+        }),
+      );
+    } catch (error) {
+      console.error('Error fetching dashboard detail:', error);
+    }
+  };
+  const fetchColumns = async () => {
+    try {
+      await dispatch(
+        columnActions.asyncFetchGetColumn({ dashboardId: Number(params.id) }),
+      );
+    } catch (error) {
+      console.error('Error fetching columns:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchDashboardDetail();
-    fetchRegister();
     fetchColumns();
   }, [params.id, dispatch]);
 

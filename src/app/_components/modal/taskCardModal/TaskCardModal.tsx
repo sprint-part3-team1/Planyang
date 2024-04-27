@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { TaskCardModalPropsType } from '@/app/_types/modalProps';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
-import Image from 'next/image';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { cardActions, cardData } from '@/app/_slice/cardSlice';
@@ -13,7 +12,6 @@ import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
 import styles from './TaskCardModal.module.css';
 import Divider from '../../../../../public/assets/icons/divider.svg';
-import cardImg from '../../../../../public/assets/images/exampleCardImg.png';
 import CloseIcon from '../../../../../public/assets/icons/close';
 import MoreIcon from '../../../../../public/assets/icons/more';
 import PopupDropDown from '../../DropDown/PopupDropDown';
@@ -165,7 +163,7 @@ const TaskCardModal = ({
 
   const deleteOptionClickHandler = () => {
     /** 옵션 삭제하기 버튼을 눌렀을 때 */
-    // TODO: 삭제는 되지만 모달이 꺼지면서 실시간 반영 X
+    // TODO: 삭제는 되지만 실시간 반영 X
     handleCloseClick();
     deleteCard(cardInfo?.id);
   };
@@ -211,12 +209,13 @@ const TaskCardModal = ({
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  console.log(cardInfo);
   return (
     <ModalContainer title={cardInfo?.title} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
           managerName={cardInfo?.assignee.nickname}
+          managerProfileImageUrl={cardInfo?.assignee.profileImageUrl}
           deadline={cardInfo?.dueDate}
         />
       )}
@@ -240,11 +239,7 @@ const TaskCardModal = ({
           <div className={styles.contentDiv}>{cardInfo?.description}</div>
           {cardInfo?.imageUrl && (
             <div className={styles.ImageDiv}>
-              {isMobile ? (
-                <Image height={133} src={cardImg} alt="card-img" />
-              ) : (
-                <Image height={205} src={cardImg} alt="card-img" />
-              )}
+              <img width="100%" src={cardInfo?.imageUrl} alt="card-img" />
             </div>
           )}
           <div className={styles.writeCommentDiv}>
@@ -284,6 +279,7 @@ const TaskCardModal = ({
         {isMobile || (
           <ManagerInfoBox
             managerName={cardInfo?.assignee.nickname}
+            managerProfileImageUrl={cardInfo?.assignee.profileImageUrl}
             deadline={cardInfo?.dueDate}
           />
         )}
