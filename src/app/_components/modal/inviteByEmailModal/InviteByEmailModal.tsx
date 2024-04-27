@@ -23,29 +23,28 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
 
   const invitationDatas = useAppSelector(invitationData);
   const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
-  const inviteUserToDashBoard = (email: string, dashBoardId: number) => {
-    dispatch(
+
+  const InviteButtonHandler = async () => {
+    await dispatch(
       invitationActions.asynchFetchinviteUserToDashboard({
-        email,
-        dashBoardId,
+        email: inputValue,
+        dashBoardId: dashBoardDetailDatas?.id,
       }),
     );
-  };
-
-  const getMyInvitationList = (
-    dashBoardId: number | undefined,
-    page: number,
-  ) => {
-    dispatch(invitationActions.asynchGetMyInvitation({ dashBoardId, page }));
-  };
-  const InviteButtonHandler = async () => {
-    await inviteUserToDashBoard(inputValue, dashBoardDetailDatas?.id);
+    await dispatch(
+      invitationActions.asynchGetMyInvitation({
+        dashBoardId: dashBoardDetailDatas?.id,
+        page: invitationDatas.page,
+      }),
+    );
+    const totalCount = invitationDatas.data?.totalCount || 0;
+    const maxPage = Math.ceil(totalCount / 5);
     if (invitationDatas.data?.invitations.length === 5) {
-      dispatch(invitationActions.incrementPage());
-      await getMyInvitationList(
-        dashBoardDetailDatas?.id,
-        invitationDatas.page + 1,
-      );
+      if (invitationDatas.page === maxPage) {
+        dispatch(invitationActions.setPage(maxPage + 1));
+      } else {
+        dispatch(invitationActions.setPage(maxPage));
+      }
     }
 
     setOpenModalType('');

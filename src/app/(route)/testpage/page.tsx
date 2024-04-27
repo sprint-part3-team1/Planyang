@@ -323,11 +323,7 @@ const TestPage = () => {
         <button
           type="button"
           onClick={() => {
-<<<<<<< HEAD
-            submitRegistration('ff', 'kkkk', 'AS123456');
-=======
             submitRegistration('min@test.com', '민정민', 'AS123456');
->>>>>>> 87260e84b39b934c39385d00a0a2ae106b261018
           }}
         >
           회원가입

@@ -20,10 +20,6 @@ const initialState: RegisterStateType = {
   status: null, // 에러 상태 추가
 };
 
-const resetData = (state: RegisterStateType) => {
-  state.data = null;
-};
-
 const asynchFetchSignUp = createAsyncThunk(
   'registerSlice/asynchFetchSignup',
   async (registerData: RegisterPayloadType, { rejectWithValue }) => {
@@ -169,8 +165,8 @@ const asynchFetchUpdateInformation = createAsyncThunk(
 );
 
 const resetData = (state: RegisterStateType) => {
-    state.data = null;
-    state.status = null;
+  state.data = null;
+  state.status = null;
 };
 
 const registerSlice = createSlice({

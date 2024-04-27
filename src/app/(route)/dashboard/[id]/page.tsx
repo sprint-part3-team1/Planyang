@@ -1,29 +1,24 @@
 'use client';
 
-import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { useEffect, useState } from 'react';
-import {
-  dashBoardDetailData,
-  dashBoardDetailActions,
-} from '@/app/_slice/dashBoardDetail';
-import { memberActions, memberData } from '@/app/_slice/memberSlice';
-import { registerActions, userResponse } from '@/app/_slice/registerSlice';
+import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
+import { registerActions } from '@/app/_slice/registerSlice';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import styles from '@/app/(route)/dashboard/[id]/page.module.css';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import { useDispatch } from 'react-redux';
 import Column from '../_components/Column';
 
-const DashBoard = ({ params }: { params: { id: string } }) => {
-  const dispatch = useAppDispatch();
+const DashBoard = ({ params }: { id: string }) => {
   const columnDataList = useAppSelector(columnData);
 
   const [openModalType, setOpenModalType] = useState('');
   const [cardInfo, setCardInfo] = useState(null);
   const [totalCount, setTotalCount] = useState<Record<number, number>>();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchDashboardDetail = async () => {
       try {
@@ -34,17 +29,6 @@ const DashBoard = ({ params }: { params: { id: string } }) => {
         );
       } catch (error) {
         console.error('Error fetching dashboard detail:', error);
-      }
-    };
-    const fetchMember = async () => {
-      try {
-        await dispatch(
-          memberActions.asyncGetMembers({
-            dashboardId: Number(params.id),
-          }),
-        );
-      } catch (error) {
-        console.error('Error fetching member List:', error);
       }
     };
     const fetchRegister = async () => {
@@ -65,7 +49,6 @@ const DashBoard = ({ params }: { params: { id: string } }) => {
     };
 
     fetchDashboardDetail();
-    fetchMember();
     fetchRegister();
     fetchColumns();
   }, [params.id, dispatch]);

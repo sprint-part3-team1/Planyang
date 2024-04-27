@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import styles from '../DashboardTypeNavBar.module.css';
+import React, { useState, useEffect } from 'react';
 import Contour from '@/app/_components/Contour';
 import UserIcon from '@/app/_components/UserIcon';
 import ImageTextButton from '@/app/_components/Button/ImageTextButton';
@@ -9,17 +8,42 @@ import Image from 'next/image';
 import UserIconList from '@/app/_components/UserIconList';
 import { DashboardNavBarProps } from '@/app/_types/DashboardNavBarProps';
 import Link from 'next/link';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import MODAL_TYPES from '@/app/constants/modalTypes';
+import { userInfo } from 'os';
+import { useDispatch } from 'react-redux';
+import { registerActions, userResponse } from '@/app/_slice/registerSlice';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import { memberActions, memberData } from '@/app/_slice/memberSlice';
+import styles from '../DashboardTypeNavBar.module.css';
 
 const DashboardNavBar = ({
-  membersInfo,
   createdByMe,
   dashboardTitle,
-  nickname,
-  profileImageUrl,
+  boardId,
 }: DashboardNavBarProps) => {
+  const [openModalType, setOpenModalType] = useState('');
+  const membersInfo = useAppSelector(memberData);
   const onClickButton = () => {
-    console.log(' ');
+    setOpenModalType(MODAL_TYPES.inviteByEmail);
   };
+
+  const dispatch = useDispatch();
+  const userData = useAppSelector(userResponse);
+  useEffect(() => {
+    const getUserInformation = async () => {
+      dispatch(registerActions.asynchFetchgetUserInfo());
+    };
+
+    const getMemberInformation = async () => {
+      dispatch(memberActions.asyncGetMembers({ boardId, page: 1 }));
+    };
+    getUserInformation();
+    getMemberInformation();
+  }, [dispatch]);
+
+  console.log(membersInfo?.members);
+  console.log(membersInfo?.totalCount);
 
   return (
     <div className={styles.navbarWrapper}>
@@ -36,26 +60,31 @@ const DashboardNavBar = ({
       </div>
       <div className={styles.sideMenuWrapper}>
         <div className={styles.sideMenuButtonWrapper}>
-          <ImageTextButton
-            text="관리"
-            imageUrl="/assets/icons/gear.svg"
-            onClickEvent={onClickButton}
-          />
+          <Link href={`/dashboard/${boardId}/edit`}>
+            <ImageTextButton text="관리" imageUrl="/assets/icons/gear.svg" />
+          </Link>
           <ImageTextButton
             text="초대하기"
             imageUrl="/assets/icons/invite.svg"
             onClickEvent={onClickButton}
           />
+          <ModalPortal
+            openModalType={openModalType}
+            setOpenModalType={setOpenModalType}
+          />
         </div>
-        <UserIconList
-          members={membersInfo.members}
-          totalCount={membersInfo.totalCount}
-        ></UserIconList>
+
+        <UserIconList totalCount={membersInfo?.totalCount || 1} />
         <Contour />
         <div className={styles.sideMenuUserWrapper}>
-          <UserIcon nickname={nickname} profileImageUrl={profileImageUrl} />
+          <UserIcon
+            nickname={userData.data ? userData.data.nickname : ''}
+            profileImageUrl={userData.data?.profileImageUrl}
+          />
           <Link href="/mypage">
-            <div className={styles.usernameWrapper}>{nickname}</div>
+            <div className={styles.usernameWrapper}>
+              {userData.data?.nickname}
+            </div>
           </Link>
         </div>
       </div>

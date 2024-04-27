@@ -44,7 +44,7 @@ const Card = ({
       onClick={() => setOpenModalType(MODAL_TYPES.taskCard)}
     >
       {image ? (
-        <Image
+        <img
           id={styles.cardImage}
           width={274}
           height={160}

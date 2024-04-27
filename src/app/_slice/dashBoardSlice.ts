@@ -132,11 +132,13 @@ const dashBoardSlice = createSlice({
 
     builder.addCase(asyncFetchUpdateDashBoard.fulfilled, (state, action) => {
       const updateDashBoard = action.payload;
-      const index = state.data?.dashboards.findIndex(
-        (item) => item.id === updateDashBoard.id,
-      );
-      if (index !== -1) {
-        state.data.dashboards[index] = updateDashBoard;
+      if (state.data) {
+        const index = state.data.dashboards.findIndex(
+          (item) => item.id === updateDashBoard.id,
+        );
+        if (index !== -1) {
+          state.data.dashboards[index] = updateDashBoard;
+        }
       }
     });
 
