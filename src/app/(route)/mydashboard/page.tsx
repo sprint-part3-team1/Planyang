@@ -25,82 +25,82 @@ interface DashBoardStateType {
 }
 
 export default function MyDashBoard() {
-  const dispatch = useAppDispatch();
-  const [openModalType, setOpenModalType] = useState('');
+  // const dispatch = useAppDispatch();
+  // const [openModalType, setOpenModalType] = useState('');
 
-  const [page, setPage] = useState<number>(1);
-  const [totalCount, setTotalCount] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [isLeftActive, setIsLeftActive] = useState<boolean>(false);
-  const [isRightActive, setIsRightActive] = useState<boolean>(false);
-  const [dashBoardDatas, setDashBoardDatas] =
-    useState<null | DashBoardStateType>(null);
+  // const [page, setPage] = useState<number>(1);
+  // const [totalCount, setTotalCount] = useState<number>(0);
+  // const [totalPages, setTotalPages] = useState<number>(0);
+  // const [isLeftActive, setIsLeftActive] = useState<boolean>(false);
+  // const [isRightActive, setIsRightActive] = useState<boolean>(false);
+  // const [dashBoardDatas, setDashBoardDatas] =
+  //   useState<null | DashBoardStateType>(null);
 
-  const handleLeftButtonClick = () => {
-    // 좌측 버튼을 클릭했을 때의 동작 구현
-    if (isLeftActive) {
-      console.log('페이지 -1');
-      setPage(page - 1);
-    }
-  };
+  // const handleLeftButtonClick = () => {
+  //   // 좌측 버튼을 클릭했을 때의 동작 구현
+  //   if (isLeftActive) {
+  //     console.log('페이지 -1');
+  //     setPage(page - 1);
+  //   }
+  // };
 
-  const handleRightButtonClick = () => {
-    // 우측 버튼을 클릭했을 때의 동작 구현
-    if (isRightActive) {
-      console.log('페이지 +1');
-      setPage(page + 1);
-    }
-  };
+  // const handleRightButtonClick = () => {
+  //   // 우측 버튼을 클릭했을 때의 동작 구현
+  //   if (isRightActive) {
+  //     console.log('페이지 +1');
+  //     setPage(page + 1);
+  //   }
+  // };
 
-  // 페이지 1로 바뀌게 하는 함수
-  const setPageOne = () => {
-    setPage(1);
-  };
+  // // 페이지 1로 바뀌게 하는 함수
+  // const setPageOne = () => {
+  //   setPage(1);
+  // };
 
-  // 대시보드 버튼의 페이지 네이션
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchDashboards(page, 5);
-        setDashBoardDatas(data);
-      } catch (error) {
-        console.error('Error fetching dashboards:', error);
-      }
-    };
+  // // 대시보드 버튼의 페이지 네이션
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await fetchDashboards(page, 5);
+  //       setDashBoardDatas(data);
+  //     } catch (error) {
+  //       console.error('Error fetching dashboards:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [page, dispatch]);
+  //   fetchData();
+  // }, [page, dispatch]);
 
-  // 전체 대시보드 수와 전체 페이지 지정
-  useEffect(() => {
-    if (dashBoardDatas) {
-      setTotalCount(dashBoardDatas?.totalCount);
-      console.log(dashBoardDatas);
-      console.log(totalCount);
-      setTotalPages(Math.ceil(totalCount / 5));
-    }
-  }, [dashBoardDatas, totalCount]);
+  // // 전체 대시보드 수와 전체 페이지 지정
+  // useEffect(() => {
+  //   if (dashBoardDatas) {
+  //     setTotalCount(dashBoardDatas?.totalCount);
+  //     console.log(dashBoardDatas);
+  //     console.log(totalCount);
+  //     setTotalPages(Math.ceil(totalCount / 5));
+  //   }
+  // }, [dashBoardDatas, totalCount]);
 
-  // 화살표 버튼 활성화 기능
-  useEffect(() => {
-    if (page === 1 && totalPages === 1) {
-      setIsLeftActive(false);
-      setIsRightActive(false);
-    } else if (page === 1 && totalPages > page) {
-      setIsLeftActive(false);
-      setIsRightActive(true);
-    } else if (page > 1 && page < totalPages) {
-      setIsLeftActive(true);
-      setIsRightActive(true);
-    } else if (page === totalPages) {
-      setIsLeftActive(true);
-      setIsRightActive(false);
-    }
-  }, [page, totalPages]);
+  // // 화살표 버튼 활성화 기능
+  // useEffect(() => {
+  //   if (page === 1 && totalPages === 1) {
+  //     setIsLeftActive(false);
+  //     setIsRightActive(false);
+  //   } else if (page === 1 && totalPages > page) {
+  //     setIsLeftActive(false);
+  //     setIsRightActive(true);
+  //   } else if (page > 1 && page < totalPages) {
+  //     setIsLeftActive(true);
+  //     setIsRightActive(true);
+  //   } else if (page === totalPages) {
+  //     setIsLeftActive(true);
+  //     setIsRightActive(false);
+  //   }
+  // }, [page, totalPages]);
 
   return (
     <div style={{ width: '100%' }}>
-      <DashboardListNavBar />
+      {/* <DashboardListNavBar />
       <div className={styles.content}>
         <div className={styles.dashBoardButtons}>
           <ModalPortal
@@ -144,7 +144,7 @@ export default function MyDashBoard() {
           />
         </div>
         <DashInvite setPageOne={setPageOne} />
-      </div>
+      </div> */}
     </div>
   );
 }

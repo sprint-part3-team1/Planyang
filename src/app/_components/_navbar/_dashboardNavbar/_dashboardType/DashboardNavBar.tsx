@@ -57,10 +57,12 @@ const DashboardNavBar = ({
       </div>
       <div className={styles.sideMenuWrapper}>
         <div className={styles.sideMenuButtonWrapper}>
-
           {createdByMe && (
             <Link href={`/dashboard/${boardId}/edit`}>
-              <ImageTextButton text="관리" imageUrl="/assets/icons/gear.svg" />
+              <ImageTextButton
+                text="관리"
+                imageUrl="/assets/icons/setting.svg"
+              />
             </Link>
           )}
 
