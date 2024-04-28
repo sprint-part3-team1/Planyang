@@ -39,11 +39,31 @@ const initialState: ReceivedInvitationsType = {
 const asyncGetReceivedInvitations = createAsyncThunk(
   'receivedInvitationsSlice/asyncGetReceivedInvitations',
 
-  async () => {
+  async (searchQuery: string | null) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5`,
+      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5${searchQuery}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    return response.data;
+  },
+);
+// https://sp-taskify-api.vercel.app/4-1/invitations?size=10&title=1
+
+const asyncGetReceivedInvitationsByCursorId = createAsyncThunk(
+  'receivedInvitationsSlice/asyncGetReceivedInvitationsByCursorId',
+
+  async (cursorId: number) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const response = await axios.get(
+      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5&cursorId=${cursorId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -55,14 +75,14 @@ const asyncGetReceivedInvitations = createAsyncThunk(
   },
 );
 
-const asyncGetReceivedInvitationsByCursorId = createAsyncThunk(
-  'receivedInvitationsSlice/asyncGetReceivedInvitationsByCursorId',
+const asynchGetReceivedInvitationsBySearchQuery = createAsyncThunk(
+  'receivedInvitationsSlice/asynchGetReceivedInvitationsBySearchQuery',
 
-  async (cursorId: number) => {
-    const accessToken = localStorage.getItem('accessToken');
+  async (searchQuery: string | null) => {
+    const accessToken = localStorage.getItem('accesToken');
 
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5&cursorId=${cursorId}`,
+      `https://sp-taskify-api.vercel.app/4-1/invitations?size=5${searchQuery}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -127,6 +147,13 @@ const receivedInvitationsSlice = createSlice({
         state.data.cursorId = action.payload?.cursorId;
       },
     );
+
+    builder.addCase(
+      asynchGetReceivedInvitationsBySearchQuery.fulfilled,
+      (state, action: PayloadAction<ReceivedInvitationsType['data']>) => {
+        state.data = action.payload;
+      },
+    );
   },
 });
 
@@ -137,6 +164,7 @@ export const receivedInvitationActions = {
   asyncGetReceivedInvitations,
   asyncAcceptInvite,
   asyncGetReceivedInvitationsByCursorId,
+  asynchGetReceivedInvitationsBySearchQuery,
 };
 
 export const receivedInvitationData = (state: RootState) =>

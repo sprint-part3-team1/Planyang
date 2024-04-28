@@ -237,3 +237,26 @@
     color: var(--gray_9FA6B2);
   }
 }
+
+.container::-webkit-scrollbar,
+.noContainer::-webkit-scrollbar {
+  width: 13px;
+}
+
+.container::-webkit-scrollbar-track,
+.noContainer::-webkit-scrollbar-track {
+  background-color: #7d5ae0;
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.container::-webkit-scrollbar-thumb,
+.noContainer::-webkit-scrollbar-thumb {
+  background-color: #5534da;
+  border-radius: 5px;
+}
+
+.container::-webkit-scrollbar-thumb:hover,
+.noContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #402899;
+}
