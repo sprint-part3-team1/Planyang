@@ -103,7 +103,7 @@ const DashInvite = ({ setPageOne }) => {
 
   // observe
   useEffect(() => {
-    if (inView) {
+    if (inView && inviteInformation?.cursorId) {
       getInvitationByCursor(inviteInformation?.cursorId);
     }
   }, [inView]);
