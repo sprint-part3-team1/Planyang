@@ -61,11 +61,11 @@ const DashboardNavBar = ({
       <div className={styles.sideMenuWrapper}>
         <div className={styles.sideMenuButtonWrapper}>
           <Link href={`/dashboard/${boardId}/edit`}>
-            <ImageTextButton text="관리" imageUrl="/assets/icons/gear.svg" />
+            <ImageTextButton text="관리" imageUrl="/assets/icons/setting.svg" />
           </Link>
           <ImageTextButton
             text="초대하기"
-            imageUrl="/assets/icons/invite.svg"
+            imageUrl="/assets/icons/vector.svg"
             onClickEvent={onClickButton}
           />
           <ModalPortal

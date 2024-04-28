@@ -10,6 +10,22 @@
   box-shadow: 0rem 0.4rem 1rem var(--gray_EEEEEE);
   overflow-y: scroll;
 }
+
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+.container::-webkit-scrollbar-track {
+  background-color: gray;
+  border-radius: 1rem;
+}
+.container::-webkit-scrollbar-thumb {
+  background: var(--violet_5534DA);
+  border-radius: 1rem;
+}
+.container::-webkit-scrollbar-button {
+  display: none;
+}
+
 .noContainer {
   display: flex;
   flex-direction: column;
