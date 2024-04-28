@@ -27,7 +27,7 @@ const DashInvite = ({ setPageOne }) => {
   const { ref, inView } = useInView({
     threshold: 0.5,
   });
-
+  const [isFirstGetInvite, setIsFirstGetInvite] = useState(false);
   const getInvitation = async (searchQuery: string | null) => {
     try {
       await dispatch(
@@ -49,17 +49,10 @@ const DashInvite = ({ setPageOne }) => {
     );
   };
 
-  const getInvitationBySearchQuery = async (searchQuery: string) => {
-    dispatch(
-      receivedInvitationActions.asynchGetReceivedInvitationsBySearchQuery(
-        searchQuery,
-      ),
-    );
-  };
-
   useEffect(() => {
     try {
       getInvitation('');
+      setIsFirstGetInvite(true);
     } catch (error) {
       console.error('Error fetching invites:', error);
     }
@@ -103,21 +96,22 @@ const DashInvite = ({ setPageOne }) => {
 
   // observe
   useEffect(() => {
-    if (inView) {
+    if (inView && isFirstGetInvite && inviteInformation?.cursorId) {
       getInvitationByCursor(inviteInformation?.cursorId);
     }
   }, [inView]);
 
   const onChangeInput = async (e) => {
     setInputValue(e.target.value);
-    const searchTitle = `&title=${inputValue}`;
   };
 
   useEffect(() => {
-    if (inputValue === '') {
-      getInvitation('');
-    } else {
-      getInvitation(`&title=${inputValue}`);
+    if (isFirstGetInvite) {
+      if (inputValue === '') {
+        getInvitation('');
+      } else {
+        getInvitation(`&title=${inputValue}`);
+      }
     }
   }, [inputValue]);
 
