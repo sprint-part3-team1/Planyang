@@ -42,9 +42,6 @@ const DashboardNavBar = ({
     getMemberInformation();
   }, [dispatch]);
 
-  console.log(membersInfo?.members);
-  console.log(membersInfo?.totalCount);
-
   return (
     <div className={styles.navbarWrapper}>
       <div className={styles.navBarInfoWrapper}>
