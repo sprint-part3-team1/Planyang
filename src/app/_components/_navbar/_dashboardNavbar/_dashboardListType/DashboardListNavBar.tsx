@@ -31,21 +31,6 @@ const DashboardListNavBar = () => {
         {dashBoardDetailDatas?.title}
       </div>
       <div className={styles.sideMenuWrapper}>
-        <div className={styles.sideMenuButtonWrapper}>
-          <Link href={`/dashboard/${dashBoardDetailDatas?.id}/edit`}>
-            <ImageTextButton
-              text="관리"
-              imageUrl="/assets/icons/setting.svg"
-              onClickEvent={onClickButton}
-            />
-          </Link>
-
-          <ImageTextButton
-            text="초대하기"
-            imageUrl="/assets/icons/vector.svg"
-            onClickEvent={onClickButton}
-          />
-        </div>
         <Contour />
         <div className={styles.sideMenuUserWrapper}>
           <UserIcon
