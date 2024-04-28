@@ -66,7 +66,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     title: string,
     description: string,
     dueDate: string,
-    tags: [string],
+    tags: string[],
     imageUrl: string,
   ) => {
     try {
@@ -91,7 +91,6 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     updateCard(
       Number(statusColumnId),
       Number(manager?.userId),
-      // Number(cardInfo.assignee.id),
       Number(requestId),
       titleInputValue,
       descriptionInputValue,

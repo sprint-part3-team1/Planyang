@@ -10,7 +10,7 @@ interface CardPayload {
   title: string;
   description: string;
   dueDate: string | null;
-  tags: [string] | null;
+  tags: string[] | null;
   imageUrl: string | null;
 }
 
@@ -18,7 +18,7 @@ export interface CardResponseType {
   id: number;
   title: string;
   description: string;
-  tags: [string] | null;
+  tags: string[] | null;
   dueDate: string | null;
   assignee: {
     profileImageUrl: string | null;
