@@ -28,10 +28,10 @@ const DashboardListNavBar = () => {
   return (
     <div className={styles.navbarWrapper}>
       <div className={styles.navBarTitleWrapper}>
-        {dashBoardDetailDatas?.title}
+        {/* {dashBoardDetailDatas?.title} */}내 대시보드
       </div>
       <div className={styles.sideMenuWrapper}>
-        <div className={styles.sideMenuButtonWrapper}>
+        {/* <div className={styles.sideMenuButtonWrapper}>
           <Link href={`/dashboard/${dashBoardDetailDatas?.id}/edit`}>
             <ImageTextButton
               text="관리"
@@ -46,7 +46,7 @@ const DashboardListNavBar = () => {
             onClickEvent={onClickButton}
           />
         </div>
-        <Contour />
+        <Contour /> */}
         <div className={styles.sideMenuUserWrapper}>
           <UserIcon
             nickname={userData.data ? userData.data.nickname : ''}
