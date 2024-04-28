@@ -18,19 +18,21 @@ const DashInvite = ({ setPageOne }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   const [cursorId, setCursorId] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const inviteInformation = useAppSelector(receivedInvitationData);
   const dispatch = useAppDispatch();
 
   const [cursor, setCursor] = useState<number | null>(null);
-
+  const [inputValue, setInputValue] = useState<string | null>(null);
   const { ref, inView } = useInView({
-    /* Optional options */
     threshold: 0.5,
   });
 
-  const getInvitation = async () => {
+  const getInvitation = async (searchQuery: string | null) => {
     try {
-      await dispatch(receivedInvitationActions.asyncGetReceivedInvitations());
+      await dispatch(
+        receivedInvitationActions.asyncGetReceivedInvitations(searchQuery),
+      );
       // 초대 정보를 받은 후에 새로운 cursorId를 가져와서 설정합니다.
       const newCursorId = inviteInformation?.cursorId;
       if (newCursorId !== undefined && newCursorId !== cursorId) {
@@ -47,9 +49,17 @@ const DashInvite = ({ setPageOne }) => {
     );
   };
 
+  const getInvitationBySearchQuery = async (searchQuery: string) => {
+    dispatch(
+      receivedInvitationActions.asynchGetReceivedInvitationsBySearchQuery(
+        searchQuery,
+      ),
+    );
+  };
+
   useEffect(() => {
     try {
-      getInvitation();
+      getInvitation('');
     } catch (error) {
       console.error('Error fetching invites:', error);
     }
@@ -98,6 +108,19 @@ const DashInvite = ({ setPageOne }) => {
     }
   }, [inView]);
 
+  const onChangeInput = async (e) => {
+    setInputValue(e.target.value);
+    const searchTitle = `&title=${inputValue}`;
+  };
+
+  useEffect(() => {
+    if (inputValue === '') {
+      getInvitation('');
+    } else {
+      getInvitation(`&title=${inputValue}`);
+    }
+  }, [inputValue]);
+
   return (
     <div
       className={
@@ -108,6 +131,21 @@ const DashInvite = ({ setPageOne }) => {
       }
     >
       <span className={styles.title}>초대받은 대시보드</span>
+      <div className={styles.searchBarContent}>
+        <Image
+          id={styles.searchIcon}
+          width={24}
+          height={24}
+          src={SEARCH_ICON}
+          alt="searchIcon"
+        />
+        <input
+          id={styles.input}
+          placeholder="검색"
+          value={inputValue}
+          onChange={onChangeInput}
+        />
+      </div>
       <div
         className={
           inviteInformation?.invitations &&
@@ -115,18 +153,7 @@ const DashInvite = ({ setPageOne }) => {
             ? styles.noSearchBar
             : styles.searchBar
         }
-      >
-        <div className={styles.searchBarContent}>
-          <Image
-            id={styles.searchIcon}
-            width={24}
-            height={24}
-            src={SEARCH_ICON}
-            alt="searchIcon"
-          />
-          <input id={styles.input} placeholder="검색" />
-        </div>
-      </div>
+      />
       {inviteInformation?.invitations &&
       inviteInformation?.invitations.length === 0 ? (
         <div className={styles.messageFrame}>
@@ -193,11 +220,8 @@ const DashInvite = ({ setPageOne }) => {
         style={{
           width: '10px',
           height: '10px',
-          background: 'lightblue',
         }}
-      >
-        박스
-      </div>
+      />
     </div>
   );
 };
