@@ -60,9 +60,13 @@ const DashboardNavBar = ({
       </div>
       <div className={styles.sideMenuWrapper}>
         <div className={styles.sideMenuButtonWrapper}>
-          <Link href={`/dashboard/${boardId}/edit`}>
-            <ImageTextButton text="관리" imageUrl="/assets/icons/setting.svg" />
-          </Link>
+
+          {createdByMe && (
+            <Link href={`/dashboard/${boardId}/edit`}>
+              <ImageTextButton text="관리" imageUrl="/assets/icons/gear.svg" />
+            </Link>
+          )}
+
           <ImageTextButton
             text="초대하기"
             imageUrl="/assets/icons/vector.svg"
