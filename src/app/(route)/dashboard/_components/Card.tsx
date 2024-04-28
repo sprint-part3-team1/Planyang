@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useDrag } from 'react-dnd';
 import Image from 'next/image';
 import TagIcon from '@/app/_components/TagIcon';
 import { CardProps } from '@/app/_types/CardProps';
@@ -18,6 +19,14 @@ const Card = ({
   image,
   cardInfo,
 }: CardProps) => {
+  const [{ isDragging }, drag] = useDrag({
+    type: 'item',
+    item: () => cardInfo,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
   const CALENDAR_ICON = '/assets/icons/calendar.svg';
 
   const [isMobile, setIsMobile] = useState(false);
@@ -42,6 +51,7 @@ const Card = ({
     <div
       className={image ? styles.imageContainer : styles.container}
       onClick={() => setOpenModalType(MODAL_TYPES.taskCard)}
+      ref={drag}
     >
       {image ? (
         <img
