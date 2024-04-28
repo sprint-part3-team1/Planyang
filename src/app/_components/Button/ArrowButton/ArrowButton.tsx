@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import styles from './ArrowButton.module.css';
 
 interface ArrowButtonProps {
