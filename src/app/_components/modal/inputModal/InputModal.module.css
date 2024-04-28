@@ -81,7 +81,6 @@
   }
 }
 
-
 .imageContainer {
   width: 7.6rem;
   height: 7.6rem;
@@ -105,6 +104,8 @@
 }
 
 .image {
+  width: 100%;
+
   &:hover {
     z-index: 0;
     background-color: rgba(0, 0, 0, 0.6);

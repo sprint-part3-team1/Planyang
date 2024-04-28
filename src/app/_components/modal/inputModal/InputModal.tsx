@@ -27,7 +27,9 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
   ) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const formData = new FormData();
-    const [showImageUrl, setShowImageUrl] = useState<string | null>(null);
+    const [showImageUrl, setShowImageUrl] = useState<string | null>(
+      imageInputProps?.selectedImagePath,
+    );
 
     const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
@@ -115,8 +117,7 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
                 />
                 {showImageUrl ? (
                   <div className={styles.imageDiv}>
-                    <Image
-                      fill
+                    <img
                       src={showImageUrl}
                       alt="대시보드 이미지"
                       className={styles.image}

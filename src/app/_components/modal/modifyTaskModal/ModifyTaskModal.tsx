@@ -39,7 +39,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
 
-  // TODO:  마감일, 태그, 이미지도 수정할 수 있도록 수정 필요
+  // TODO:  마감일, 태그 수정할 수 있도록 수정 필요
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
   const [statusColumnId, setStatusColumnId] = useState(cardInfo?.columnId);
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
@@ -49,6 +49,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [descriptionInputValue, setdescriptionInputValue] = useState(
     cardInfo?.description,
   );
+  const [dueDateValue, setDueDateValue] = useState('');
+  const [tagInputValue, setTagInputValue] = useState<string[]>([]);
   const [selectedImagePath, setSelectedImagePath] = useState(
     cardInfo?.imageUrl,
   );
@@ -65,9 +67,9 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     cardId: number,
     title: string,
     description: string,
-    dueDate: string,
-    tags: string[],
-    imageUrl: string,
+    dueDate: string | undefined,
+    tags: string[] | undefined,
+    imageUrl: string | undefined,
   ) => {
     try {
       await dispatch(
@@ -94,6 +96,9 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       Number(requestId),
       titleInputValue,
       descriptionInputValue,
+      dueDateValue || undefined,
+      tagInputValue || undefined,
+      selectedImagePath || undefined,
     );
   };
 
