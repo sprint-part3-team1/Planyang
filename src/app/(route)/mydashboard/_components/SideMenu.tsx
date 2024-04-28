@@ -32,6 +32,16 @@ const SideMenu = () => {
 
   useEffect(() => {
     getDashboardData(page);
+    if (page === 1 && dashboardDatas?.totalCount === 1) {
+      setIsLeftActive(false);
+      setIsRightActive(false);
+    } else if (page === 1) {
+      setIsLeftActive(false);
+      setIsRightActive(true);
+    } else if (page * 7 === dashboardDatas?.totalCount) {
+      setIsLeftActive(true);
+      setIsRightActive(false);
+    }
   }, [page, dispatch]);
 
   const onRightButtonClick = () => {
