@@ -131,29 +131,23 @@ const DashInvite = ({ setPageOne }) => {
       }
     >
       <span className={styles.title}>초대받은 대시보드</span>
-      <div className={styles.searchBarContent}>
-        <Image
-          id={styles.searchIcon}
-          width={24}
-          height={24}
-          src={SEARCH_ICON}
-          alt="searchIcon"
-        />
-        <input
-          id={styles.input}
-          placeholder="검색"
-          value={inputValue}
-          onChange={onChangeInput}
-        />
+      <div className={styles.searchBar}>
+        <div className={styles.searchBarContent}>
+          <Image
+            id={styles.searchIcon}
+            width={24}
+            height={24}
+            src={SEARCH_ICON}
+            alt="searchIcon"
+          />
+          <input
+            id={styles.input}
+            placeholder="검색"
+            value={inputValue}
+            onChange={onChangeInput}
+          />
+        </div>
       </div>
-      <div
-        className={
-          inviteInformation?.invitations &&
-          inviteInformation?.invitations.length === 0
-            ? styles.noSearchBar
-            : styles.searchBar
-        }
-      />
       {inviteInformation?.invitations &&
       inviteInformation?.invitations.length === 0 ? (
         <div className={styles.messageFrame}>

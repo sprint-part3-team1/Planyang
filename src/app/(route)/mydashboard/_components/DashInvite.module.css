@@ -10,6 +10,7 @@
   box-shadow: 0rem 0.4rem 1rem var(--gray_EEEEEE);
   overflow-y: scroll;
 }
+
 .noContainer {
   display: flex;
   flex-direction: column;
@@ -43,10 +44,6 @@
   background: var(--white_FFFFFF);
   margin-left: 2.8rem;
   margin-bottom: 2rem;
-}
-
-.noSearchBar {
-  display: none;
 }
 
 .messageFrame {
