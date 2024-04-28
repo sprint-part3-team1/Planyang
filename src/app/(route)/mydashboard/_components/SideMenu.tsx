@@ -1,5 +1,6 @@
-import Image from 'next/image';
+'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import MODAL_TYPES from '@/app/constants/modalTypes';
@@ -25,9 +26,27 @@ const SideMenu = () => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard(page));
   };
 
+  const [page, setPage] = useState(1);
+  const [isLeftActive, setIsLeftActive] = useState(false);
+  const [isRightActive, setIsRightActive] = useState(false);
+
   useEffect(() => {
-    getDashboardData(1);
-  }, [dispatch]);
+    getDashboardData(page);
+  }, [page, dispatch]);
+
+  const onRightButtonClick = () => {
+    if (page * 7 < dashboardDatas?.totalCount) {
+      setPage((prev) => prev + 1);
+      setIsRightActive(true);
+    }
+  };
+
+  const onLeftButtonClick = () => {
+    if (page !== 1) {
+      setPage((prev) => prev - 1);
+      setIsLeftActive(true);
+    }
+  };
 
   console.log(dashboardDatas);
   return (
@@ -75,7 +94,7 @@ const SideMenu = () => {
             <Link
               className={`${styles.dashList} `}
               href={`/dashboard/${item.id}`}
-              key={item.id}
+              key={item.createAt}
             >
               <div>
                 <DashBoardColorCircle color={item.color} />
@@ -96,12 +115,12 @@ const SideMenu = () => {
       </div>
       <div>
         <div className={styles.paginationFrame}>
-          {/* <ArrowButton
+          <ArrowButton
             isLeftActive={isLeftActive}
             isRightActive={isRightActive}
-            onLeftButtonClick={handleLeftButtonClick}
-            onRightButtonClick={handleRightButtonClick}
-          /> */}
+            onLeftButtonClick={onLeftButtonClick}
+            onRightButtonClick={onRightButtonClick}
+          />
         </div>
       </div>
     </div>

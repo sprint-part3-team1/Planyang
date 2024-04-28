@@ -110,7 +110,7 @@ export default function MyDashBoard() {
           <div onClick={() => setOpenModalType(MODAL_TYPES.newDashboard)}>
             <AddDashBoardButton />
           </div>
-          {/* {dashBoardDatas?.dashboards?.map((dashBoard, index) => {
+          {dashBoardDatas?.dashboards?.map((dashBoard, index) => {
             return (
               <Link
                 key={index}
@@ -130,7 +130,7 @@ export default function MyDashBoard() {
                 />
               </Link>
             );
-          })} */}
+          })}
         </div>
         <div className={styles.paginationFrame}>
           <span id={styles.pageFont}>
