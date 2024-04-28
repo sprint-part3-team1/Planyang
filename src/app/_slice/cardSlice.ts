@@ -103,11 +103,20 @@ const asyncFetchGetCards = createAsyncThunk(
 const asyncFetchPutCard = createAsyncThunk(
   'cardSlice/asyncFetchPutCard',
 
-  async (cardData: CardResponseType) => {
+  async (cardData: {
+    columnId: number;
+    assigneeUserId: number;
+    cardId: number;
+    title: string;
+    description: string;
+    dueDate: string | null;
+    tags: string[] | null;
+    imageUrl: string | null;
+  }) => {
     const {
       columnId,
-      assignee: { id },
-      id: cardId,
+      assigneeUserId,
+      cardId,
       title,
       description,
       dueDate,
@@ -119,7 +128,7 @@ const asyncFetchPutCard = createAsyncThunk(
       `https://sp-taskify-api.vercel.app/4-1/cards/${cardId}`,
       {
         columnId,
-        assignee: { id },
+        assigneeUserId,
         title,
         description,
         dueDate,
@@ -199,12 +208,12 @@ const cardSlice = createSlice({
     );
     builder.addCase(asyncFetchPutCard.fulfilled, (state, action) => {
       const updateCard = action.payload;
-      const index = state.data?.cards.findIndex(
+      const index = state.data?.cards?.findIndex(
         (item) => item.id === updateCard.id,
       );
-      if (index !== -1) {
-        state.data.cards[index] = updateCard;
-      }
+      // if (state.data && index !== -1) {
+      //   state.data.cards[index] = updateCard;
+      // }
     });
     builder.addCase(
       asyncFetchGetCard.fulfilled,
