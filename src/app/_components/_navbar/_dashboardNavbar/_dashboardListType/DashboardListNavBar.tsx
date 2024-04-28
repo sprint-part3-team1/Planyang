@@ -28,10 +28,11 @@ const DashboardListNavBar = () => {
   return (
     <div className={styles.navbarWrapper}>
       <div className={styles.navBarTitleWrapper}>
-        {dashBoardDetailDatas?.title}
+        {/* {dashBoardDetailDatas?.title} */}내 대시보드
       </div>
       <div className={styles.sideMenuWrapper}>
         <Contour />
+
         <div className={styles.sideMenuUserWrapper}>
           <UserIcon
             nickname={userData.data ? userData.data.nickname : ''}

@@ -4,9 +4,11 @@ import UserIcon from '../../UserIcon';
 
 const ManagerInfoBox = ({
   managerName,
+  managerProfileImageUrl,
   deadline,
 }: {
   managerName: string;
+  managerProfileImageUrl: string;
   deadline: string;
 }) => {
   return (
@@ -14,7 +16,10 @@ const ManagerInfoBox = ({
       <div className={styles.innerContainer}>
         <p className={styles.title}>담당자</p>
         <div className={styles.managerNameDiv}>
-          <UserIcon nickname={managerName} profileImageUrl={null} />
+          <UserIcon
+            nickname={managerName}
+            profileImageUrl={managerProfileImageUrl}
+          />
           <p>{managerName}</p>
         </div>
       </div>

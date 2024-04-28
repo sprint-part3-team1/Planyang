@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 import { TaskCardModalPropsType } from '@/app/_types/modalProps';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
-import Image from 'next/image';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { cardActions, cardData } from '@/app/_slice/cardSlice';
@@ -13,12 +12,12 @@ import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
 import styles from './TaskCardModal.module.css';
 import Divider from '../../../../../public/assets/icons/divider.svg';
-import cardImg from '../../../../../public/assets/images/exampleCardImg.png';
 import CloseIcon from '../../../../../public/assets/icons/close';
 import MoreIcon from '../../../../../public/assets/icons/more';
 import PopupDropDown from '../../DropDown/PopupDropDown';
 import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
+import MODAL_TYPES from '@/app/constants/modalTypes';
 
 const TaskCardModal = ({
   setOpenModalType,
@@ -36,14 +35,18 @@ const TaskCardModal = ({
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isClickedClose, setIsClickedClose] = useState(false);
+  const [isClickEditMode, setIsClickEditMode] = useState(false);
 
   let status = '';
 
   useEffect(() => {
     if (isClickedClose) {
       setOpenModalType('');
+    } else if (isClickEditMode) {
+      setOpenModalType('');
+      setOpenModalType(MODAL_TYPES.modifyTask);
     }
-  }, [isClickedClose]);
+  }, [isClickedClose, isClickEditMode]);
 
   useEffect(() => {}, [myCommentInputValue]);
 
@@ -152,7 +155,12 @@ const TaskCardModal = ({
   };
 
   const handleCloseClick = () => {
-    setIsClickedClose(true);
+    console.log(isClickEditMode);
+    if (isClickEditMode) {
+      setIsClickedClose(false);
+    } else {
+      setIsClickedClose(true);
+    }
   };
 
   const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -165,7 +173,7 @@ const TaskCardModal = ({
 
   const deleteOptionClickHandler = () => {
     /** 옵션 삭제하기 버튼을 눌렀을 때 */
-    // TODO: 삭제는 되지만 모달이 꺼지면서 실시간 반영 X
+    // TODO: 삭제는 되지만 실시간 반영 X
     handleCloseClick();
     deleteCard(cardInfo?.id);
   };
@@ -173,6 +181,7 @@ const TaskCardModal = ({
   const editOptionclickHandler = () => {
     /** 옵션 수정하기 버튼을 눌렀을 때  */
     // TODO: 수정하는 모달창으로 넘어가야 함
+    setIsClickEditMode(true);
   };
 
   const viewPortResizeHandler = () => {
@@ -211,12 +220,13 @@ const TaskCardModal = ({
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  console.log(cardInfo);
   return (
     <ModalContainer title={cardInfo?.title} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
           managerName={cardInfo?.assignee.nickname}
+          managerProfileImageUrl={cardInfo?.assignee.profileImageUrl}
           deadline={cardInfo?.dueDate}
         />
       )}
@@ -240,16 +250,9 @@ const TaskCardModal = ({
           <div className={styles.contentDiv}>{cardInfo?.description}</div>
           {cardInfo?.imageUrl && (
             <div className={styles.ImageDiv}>
-              {isMobile ? (
-                <Image height={133} src={cardImg} alt="card-img" />
-              ) : (
-                <Image height={205} src={cardImg} alt="card-img" />
-              )}
+              <img width="100%" src={cardInfo?.imageUrl} alt="card-img" />
             </div>
           )}
-          <button onClick={handleCloseClick} type="button">
-            모달창을 닫아보자
-          </button>
           <div className={styles.writeCommentDiv}>
             <p id={styles.title}>댓글</p>
             <div className={styles.myCommentDiv}>
@@ -287,6 +290,7 @@ const TaskCardModal = ({
         {isMobile || (
           <ManagerInfoBox
             managerName={cardInfo?.assignee.nickname}
+            managerProfileImageUrl={cardInfo?.assignee.profileImageUrl}
             deadline={cardInfo?.dueDate}
           />
         )}

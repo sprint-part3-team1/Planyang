@@ -42,9 +42,6 @@ const DashboardNavBar = ({
     getMemberInformation();
   }, [dispatch]);
 
-  console.log(membersInfo?.members);
-  console.log(membersInfo?.totalCount);
-
   return (
     <div className={styles.navbarWrapper}>
       <div className={styles.navBarInfoWrapper}>
@@ -65,9 +62,10 @@ const DashboardNavBar = ({
               <ImageTextButton text="관리" imageUrl="/assets/icons/gear.svg" />
             </Link>
           )}
+
           <ImageTextButton
             text="초대하기"
-            imageUrl="/assets/icons/invite.svg"
+            imageUrl="/assets/icons/vector.svg"
             onClickEvent={onClickButton}
           />
           <ModalPortal

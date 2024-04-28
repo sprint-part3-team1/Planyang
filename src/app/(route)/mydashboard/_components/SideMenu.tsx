@@ -6,80 +6,30 @@ import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
 
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import styles from './SideMenu.module.css';
 import DashBoardColorCircle from './DashBoardColorCircle';
-import fetchDashboards from '../_api/dashboardPagination';
 
 const SideMenu = () => {
   const [openModalType, setOpenModalType] = useState('');
-  const [selectedDashboardId] = useState<number | null>(null);
-  const [page, setPage] = useState<number>(1);
-  const [totalCount, setTotalCount] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [isLeftActive, setIsLeftActive] = useState<boolean>(false);
-  const [isRightActive, setIsRightActive] = useState<boolean>(false);
-  const [dashBoardDatas, setDashBoardDatas] =
-    useState<null | DashBoardStateType>(null);
-
+  const dispatch = useAppDispatch();
   const LOGO_IMAGE = '/assets/images/logoImg.svg';
   const LOGO_TITLE = '/assets/images/logoTitle.svg';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
-  console.log(dashBoardDatas?.dashboards.reverse());
-  const handleLeftButtonClick = () => {
-    // 좌측 버튼을 클릭했을 때의 동작 구현
-    if (isLeftActive) {
-      setPage(page - 1);
-    }
+
+  const dashboardDatas = useAppSelector(dashBoardData);
+  const getDashboardData = (page: number) => {
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(page));
   };
 
-  const handleRightButtonClick = () => {
-    // 우측 버튼을 클릭했을 때의 동작 구현
-    if (isRightActive) {
-      setPage(page + 1);
-    }
-  };
-
-  // 대시보드 버튼의 페이지 네이션
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchDashboards(page, 8);
-        setDashBoardDatas(data);
-      } catch (error) {
-        console.error('Error fetching dashboards:', error);
-      }
-    };
+    getDashboardData(1);
+  }, [dispatch]);
 
-    fetchData();
-  }, [page]);
-
-  // 전체 대시보드 수와 전체 페이지 지정
-  useEffect(() => {
-    if (dashBoardDatas) {
-      setTotalCount(dashBoardDatas?.totalCount);
-
-      setTotalPages(Math.ceil(totalCount / 8));
-    }
-  }, [dashBoardDatas, totalCount]);
-
-  // 화살표 버튼 활성화 기능
-  useEffect(() => {
-    if (page === 1 && totalPages === 1) {
-      setIsLeftActive(false);
-      setIsRightActive(false);
-    } else if (page === 1 && totalPages > page) {
-      setIsLeftActive(false);
-      setIsRightActive(true);
-    } else if (page > 1 && page < totalPages) {
-      setIsLeftActive(true);
-      setIsRightActive(true);
-    } else if (page === totalPages) {
-      setIsLeftActive(true);
-      setIsRightActive(false);
-    }
-  }, [page, totalPages]);
-
+  console.log(dashboardDatas);
   return (
     <div className={styles.container}>
       <div className={styles.logoFrame}>
@@ -119,10 +69,11 @@ const SideMenu = () => {
       </div>
 
       <div className={styles.listWrapper}>
-        {dashBoardDatas?.dashboards.map((item) => {
+        {dashboardDatas?.dashboards.map((item) => {
           return (
+            // ${selectedDashboardId === item.id ? styles.selected : ''}
             <Link
-              className={`${styles.dashList} ${selectedDashboardId === item.id ? styles.selected : ''}`}
+              className={`${styles.dashList} `}
               href={`/dashboard/${item.id}`}
               key={item.id}
             >
@@ -145,12 +96,12 @@ const SideMenu = () => {
       </div>
       <div>
         <div className={styles.paginationFrame}>
-          <ArrowButton
+          {/* <ArrowButton
             isLeftActive={isLeftActive}
             isRightActive={isRightActive}
             onLeftButtonClick={handleLeftButtonClick}
             onRightButtonClick={handleRightButtonClick}
-          />
+          /> */}
         </div>
       </div>
     </div>

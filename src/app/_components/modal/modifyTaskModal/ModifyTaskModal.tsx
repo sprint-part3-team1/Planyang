@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
+import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import InputModal from '@/app/_components/modal/inputModal/InputModal';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
@@ -25,6 +26,7 @@ const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
   const viewportType = useGetViewportSize();
 
   const ref = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
 
   const downArrowButtonHandler = () => {
@@ -55,9 +57,16 @@ const ModifyTaskModal = ({ setOpenModalType }: ModalPropsType) => {
     };
   }, []);
 
+  const handleOutsideClick = () => {};
+  const handleClickInsideModal = (e) => {
+    e.stopPropagation();
+  };
+
+  useOutsideClick(modalRef, handleOutsideClick);
+
   return (
-    <ModalContainer title="할 일 수정">
-      <div className={styles.container}>
+    <ModalContainer title="할 일 수정" ref={modalRef}>
+      <div className={styles.container} onClick={handleClickInsideModal}>
         <div className={styles.twoRowDiv}>
           <StatusDropDown title="상태" />
           <ManagerDropDown title="담당자" />
