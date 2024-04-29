@@ -19,7 +19,7 @@ const UserIcon = ({ nickname, profileImageUrl }: UserIconProps) => {
 
   return (
     <div className={styles.iconWrapper} style={customImage()}>
-      {profileImageUrl == null ? nickname.at(0) : null}
+      {profileImageUrl == null ? nickname.at(0)?.toUpperCase() : null}
     </div>
   );
 };
