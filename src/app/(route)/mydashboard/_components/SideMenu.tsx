@@ -16,8 +16,8 @@ import DashBoardColorCircle from './DashBoardColorCircle';
 const SideMenu = () => {
   const [openModalType, setOpenModalType] = useState('');
   const dispatch = useAppDispatch();
-  const LOGO_IMAGE = '/assets/images/logoImg.svg';
-  const LOGO_TITLE = '/assets/images/logoTitle.svg';
+  const LOGO_IMAGE = '/assets/images/planyang_image.png';
+  const LOGO_TITLE = '/assets/images/planyang_text.PNG';
   const VECTOR_ICON_SRC = '/assets/icons/vector.svg';
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
 
@@ -76,15 +76,9 @@ const SideMenu = () => {
     <div className={styles.container}>
       <div className={styles.logoFrame}>
         <a href="/mydashboard">
-          <Image
-            width={28.815}
-            height={33.069}
-            src={LOGO_IMAGE}
-            alt="logoImg"
-          />
-          <Image
-            width={80}
-            height={22}
+          <img height={33} src={LOGO_IMAGE} alt="logoImg" />
+          <img
+            height={29}
             id={styles.logoTitle}
             src={LOGO_TITLE}
             alt="logoTitle"

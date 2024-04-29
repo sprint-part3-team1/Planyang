@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
 import { useEffect, useState, Dispatch, SetStateAction } from 'react';
@@ -45,6 +46,9 @@ interface Props {
   >;
   totalCount: Record<number, number> | undefined;
   setTotalCount: Dispatch<SetStateAction<Record<number, number> | undefined>>;
+  onDrop: () => void;
+  isUpdated: boolean;
+  setIsUpdated: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const Column = ({
@@ -54,6 +58,8 @@ const Column = ({
   totalCount,
   setTotalCount,
   onDrop,
+  isUpdated,
+  setIsUpdated,
 }: Props) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'item',
@@ -96,7 +102,7 @@ const Column = ({
 
   useEffect(() => {
     viewCards(columnData.id);
-  }, [pages]);
+  }, [pages, isUpdated, setIsUpdated]);
 
   useEffect(() => {
     if (inView && !loading) {
