@@ -76,7 +76,7 @@ const Column = ({
   const ELLIPSE_ICON = '/assets/icons/profileEllipse.svg';
   const SETTING_ICON = '/assets/icons/setting.svg';
 
-  const GET_CARDS = 6;
+  const GET_CARDS = 8;
 
   const [pages, setPages] = useState<number>(GET_CARDS);
   const [openModalType, setOpenModalType] = useState('');
