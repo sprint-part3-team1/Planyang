@@ -19,6 +19,8 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const dispatch = useAppDispatch();
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
+  const calendarRef = useRef<HTMLInputElement>(null);
+  const tagRef = useRef<HTMLInputElement>(null);
 
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
     null,
@@ -151,11 +153,15 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           focusoutFunc={handleContentInput}
         />
         <Input
+          inputId="calendar input"
+          inputRef={calendarRef}
           inputName="마감일"
           inputType="calendar"
           inputWidth={INPUT_WIDTH[viewportType]}
         />
         <Input
+          inputId="tag input"
+          inputRef={tagRef}
           inputName="태그"
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
