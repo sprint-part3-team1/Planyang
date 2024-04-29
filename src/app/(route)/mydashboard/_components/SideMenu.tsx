@@ -32,29 +32,42 @@ const SideMenu = () => {
 
   useEffect(() => {
     getDashboardData(page);
-    if (page === 1 && dashboardDatas?.totalCount === 1) {
+    if (page === 1 && Math.ceil(dashboardDatas?.totalCount / 7) === 1) {
       setIsLeftActive(false);
       setIsRightActive(false);
-    } else if (page === 1) {
+    } else if (page === 1 && Math.ceil(dashboardDatas?.totalCount / 7) > page) {
       setIsLeftActive(false);
       setIsRightActive(true);
-    } else if (page * 7 === dashboardDatas?.totalCount) {
+    } else if (page > 1 && page < Math.ceil(dashboardDatas?.totalCount / 7)) {
+      setIsLeftActive(true);
+      setIsRightActive(true);
+    } else if (page === Math.ceil(dashboardDatas?.totalCount / 7)) {
       setIsLeftActive(true);
       setIsRightActive(false);
     }
   }, [page, dispatch]);
 
-  const onRightButtonClick = () => {
-    if (page * 7 < dashboardDatas?.totalCount) {
-      setPage((prev) => prev + 1);
+  useEffect(() => {
+    if (Math.ceil(dashboardDatas?.totalCount / 7) === 1) {
+      setIsLeftActive(false);
+      setIsRightActive(false);
+    } else {
+      setIsLeftActive(false);
       setIsRightActive(true);
+    }
+  }, []);
+
+  const onRightButtonClick = () => {
+    if (page < Math.ceil(dashboardDatas?.totalCount / 7)) {
+      setPage((prev) => prev + 1);
+      // setIsRightActive(true);
     }
   };
 
   const onLeftButtonClick = () => {
     if (page !== 1) {
       setPage((prev) => prev - 1);
-      setIsLeftActive(true);
+      // setIsLeftActive(true);
     }
   };
 
@@ -104,7 +117,7 @@ const SideMenu = () => {
             <Link
               className={`${styles.dashList} `}
               href={`/dashboard/${item.id}`}
-              key={item.createAt}
+              key={item.id}
             >
               <div>
                 <DashBoardColorCircle color={item.color} />
