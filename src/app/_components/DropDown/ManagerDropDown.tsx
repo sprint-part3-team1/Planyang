@@ -10,12 +10,18 @@ import CheckIcon from '../../../../public/assets/icons/checkIcon';
 import CloseIcon from '../../../../public/assets/icons/close';
 import UserIcon from '../UserIcon';
 
-const ManagerDropDown = ({ title, setClickedMember }: DropDownPropsType) => {
+const ManagerDropDown = ({
+  title,
+  clickedMemberIndex,
+  setClickedMember,
+}: DropDownPropsType) => {
   const dispatch = useAppDispatch();
   const memberDataList = useAppSelector(memberData);
 
   const [isDropDown, setIsDropDown] = useState(false);
-  const [selectedDivIndex, setSelectedDivIndex] = useState(-1);
+  const [selectedDivIndex, setSelectedDivIndex] = useState(
+    clickedMemberIndex !== undefined ? clickedMemberIndex : -1,
+  );
   const MANAGERS: string[] = [];
   const [managerNames, setManagerNames] = useState(MANAGERS);
   const [managerNamesearch, setManagerNameSearch] = useState('');

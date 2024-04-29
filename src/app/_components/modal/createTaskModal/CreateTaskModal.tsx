@@ -25,7 +25,9 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   );
   const [titleInputValue, setTitleInputValue] = useState('');
   const [descriptionInputValue, setdescriptionInputValue] = useState('');
-  const [selectedImagePath, setSelectedImagePath] = useState('');
+  const [dueDateValue, setDueDateValue] = useState('');
+  const [tagInputValue, setTagInputValue] = useState<string[]>([]);
+  const [selectedImagePath, setSelectedImagePath] = useState<string>('');
 
   const imageInputProps = {
     columnId: requestId,
@@ -37,9 +39,9 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     assigneeUserId: number,
     title: string,
     description: string,
-    dueDate: string,
-    tags: [string],
-    imageUrl: string,
+    dueDate: string | undefined,
+    tags: string[] | undefined,
+    imageUrl: string | undefined,
   ) => {
     try {
       await dispatch(
@@ -60,27 +62,18 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   };
 
   const createTaskButtonHandler = () => {
-    if (manager && selectedImagePath) {
+    if (manager && titleInputValue && descriptionInputValue) {
       createCard(
-        manager.userId,
+        manager?.userId,
         titleInputValue,
         descriptionInputValue,
-        '2024-04-17 18:27',
-        ['test'],
-        selectedImagePath,
+        dueDateValue || undefined,
+        tagInputValue || undefined,
+        selectedImagePath || undefined,
       );
-
       setOpenModalType('');
-    } else if (manager) {
-      createCard(
-        manager.userId,
-        titleInputValue,
-        descriptionInputValue,
-        '2024-04-17 18:27',
-        ['test'],
-      );
-
-      setOpenModalType('');
+    } else {
+      alert('필수 입력값이 누락되었습니다.');
     }
   };
 
