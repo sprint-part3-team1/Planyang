@@ -23,6 +23,7 @@ const Input = ({
   onChange,
   dueDateValue,
   setDueDateValue,
+  setTagInputValue,
 }: InputProps) => {
   const INVISIBLE_ICON_SRC = '/assets/icons/invisible.svg';
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
@@ -76,6 +77,7 @@ const Input = ({
       newTags.add(value);
       e.currentTarget.value = '';
       setTags(newTags);
+      setTagInputValue(newTags);
     }
   };
 
@@ -89,6 +91,7 @@ const Input = ({
     const newTags = new Set(tags);
     newTags.delete(value);
     setTags(newTags);
+    setTagInputValue(newTags);
   };
 
   const setInputType = () => {

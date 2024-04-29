@@ -70,7 +70,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         titleInputValue,
         descriptionInputValue,
         dueDateValue ? `${dueDateValue} 00:00` : undefined,
-        tagInputValue || undefined,
+        [...tagInputValue] || undefined,
         selectedImagePath || undefined,
       );
       setOpenModalType('');
@@ -166,6 +166,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
           inputRef={tagRef}
+          setTagInputValue={setTagInputValue}
         />
         <InputModal
           title="이미지"
