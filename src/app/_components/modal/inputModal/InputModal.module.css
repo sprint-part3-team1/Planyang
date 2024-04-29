@@ -142,3 +142,41 @@
     border: 1px solid var(--violet_5534DA);
   }
 }
+
+.deleteImageButton {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0rem;
+  left: 8rem;
+  font-size: 1.5rem;
+  color: red;
+  cursor: pointer;
+  border: 0.1rem solid red;
+  border-radius: 99rem;
+  transition: background-color 0.3s ease-in-out;
+  z-index: 10;
+
+  @media (max-width: 767px) {
+    font-size: 1rem;
+    border: 0.1rem solid red;
+  }
+}
+.deleteImageButton:hover {
+  width: 10rem;
+  font-size: 1rem;
+}
+.deleteImageButton::before {
+  content: 'x';
+}
+
+.deleteImageButton:hover::before {
+  content: '';
+}
+
+.deleteImageButton:hover::after {
+  content: '이미지 지우기';
+}

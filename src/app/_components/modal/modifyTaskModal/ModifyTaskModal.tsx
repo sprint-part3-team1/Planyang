@@ -10,6 +10,7 @@ import { cardActions, cardData } from '@/app/_slice/cardSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { MemberInfoType } from '@/app/_types/dropdownProps';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
+import MODAL_TYPES from '@/app/constants/modalTypes';
 import Input from '../../Input';
 import styles from './ModifyTaskModal.module.css';
 import ModalContainer from '../modalContainer/ModalContainer';
@@ -38,6 +39,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
+  const calendarRef = useRef<HTMLInputElement>(null);
+  const tagRef = useRef<HTMLInputElement>(null);
 
   // TODO:  마감일, 태그 수정할 수 있도록 수정 필요
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
@@ -100,6 +103,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       tagInputValue || undefined,
       selectedImagePath || undefined,
     );
+    setOpenModalType(MODAL_TYPES.taskCard);
   };
 
   const downArrowButtonHandler = () => {
@@ -195,71 +199,77 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   useOutsideClick(modalRef, handleOutsideClick);
 
   return (
-    <ModalContainer title="할 일 수정" ref={modalRef}>
-      <div className={styles.container} onClick={handleClickInsideModal}>
-        <div className={styles.twoRowDiv}>
-          <StatusDropDown
-            title="상태"
-            setStatusColumnId={setStatusColumnId}
-            columnId={cardInfo?.columnId}
+    <div onClick={handleClickInsideModal}>
+      <ModalContainer title="할 일 수정" ref={modalRef}>
+        <div className={styles.container} onClick={handleClickInsideModal}>
+          <div className={styles.twoRowDiv}>
+            <StatusDropDown
+              title="상태"
+              setStatusColumnId={setStatusColumnId}
+              columnId={cardInfo?.columnId}
+            />
+            <ManagerDropDown
+              title="담당자"
+              clickedMemberIndex={managerIndex}
+              setClickedMember={setManager}
+            />
+          </div>
+          <InputModal
+            title="제목"
+            required
+            type="text"
+            inputRef={titleRef}
+            focusoutFunc={handleTitleInput}
           />
-          <ManagerDropDown
-            title="담당자"
-            clickedMemberIndex={managerIndex}
-            setClickedMember={setManager}
+          <InputModal
+            title="설명"
+            required
+            type="multiLine"
+            inputRef={descriptionRef}
+            focusoutFunc={handleDescriptionInput}
           />
+          <Input
+            inputId="calendar input"
+            inputRef={calendarRef}
+            inputName="마감일"
+            inputType="calendar"
+            inputWidth={INPUT_WIDTH[viewportType]}
+          />
+          <Input
+            inputId="tag input"
+            inputRef={tagRef}
+            inputName="태그"
+            inputType="tag"
+            inputWidth={INPUT_WIDTH[viewportType]}
+          />
+          <InputModal
+            title="이미지"
+            type="image"
+            ref={ref}
+            imageInputProps={imageInputProps}
+          />
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="Scroll down"
+            className={`${styles.downArrowDiv} ${isDownArrowClicked ? styles.clicked : styles.moving}`}
+            onClick={downArrowButtonHandler}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                downArrowButtonHandler();
+              }
+            }}
+          >
+            <ArrowDown />
+          </div>
         </div>
-        <InputModal
-          title="제목"
-          required
-          type="text"
-          inputRef={titleRef}
-          focusoutFunc={handleTitleInput}
+        <CheckCancleButton
+          checkText="수정"
+          setOpenModalType={setOpenModalType}
+          checkButtonHandler={modifyButtonHandler}
         />
-        <InputModal
-          title="설명"
-          required
-          type="multiLine"
-          inputRef={descriptionRef}
-          focusoutFunc={handleDescriptionInput}
-        />
-        <Input
-          inputName="마감일"
-          inputType="calendar"
-          inputWidth={INPUT_WIDTH[viewportType]}
-        />
-        <Input
-          inputName="태그"
-          inputType="tag"
-          inputWidth={INPUT_WIDTH[viewportType]}
-        />
-        <InputModal
-          title="이미지"
-          type="image"
-          ref={ref}
-          imageInputProps={imageInputProps}
-        />
-        <div
-          role="button"
-          tabIndex={0}
-          aria-label="Scroll down"
-          className={`${styles.downArrowDiv} ${isDownArrowClicked ? styles.clicked : styles.moving}`}
-          onClick={downArrowButtonHandler}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              downArrowButtonHandler();
-            }
-          }}
-        >
-          <ArrowDown />
-        </div>
-      </div>
-      <CheckCancleButton
-        checkText="수정"
-        setOpenModalType={setOpenModalType}
-        checkButtonHandler={modifyButtonHandler}
-      />
-    </ModalContainer>
+      </ModalContainer>
+    </div>
   );
 };
 
