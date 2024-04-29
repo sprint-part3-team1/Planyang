@@ -1,6 +1,6 @@
 import React from 'react';
 import UserIcon from '@/app/_components/UserIcon';
-import styles from './MypageHeader.module.css';
+import styles from './MypageHeader.module.scss';
 
 const MypageHeader = ({
   nickName,
