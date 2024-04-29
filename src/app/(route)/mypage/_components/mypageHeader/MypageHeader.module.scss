@@ -42,6 +42,7 @@
 .userNameDiv {
   display: flex;
   flex-direction: row;
+  width: fit-content;
   align-items: center;
   gap: 1.2rem;
 
@@ -51,6 +52,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  white-space: nowrap;
 
   & > #useName {
     @media (max-width: 767px) {
