@@ -50,9 +50,10 @@ const TableMember = () => {
   };
 
   useEffect(() => {
-    if (dashBoardDetailDatas?.id) {
-      getMember(dashBoardDetailDatas.id, page);
-    }
+    // if (dashBoardDetailDatas?.id) {
+
+    // }
+    getMember(dashBoardDetailDatas?.id, page);
   }, [dashBoardDetailDatas?.id, page]);
 
   return (
