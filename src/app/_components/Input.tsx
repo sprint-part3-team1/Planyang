@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { InputProps } from '@/app/_types/InputProps';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
@@ -76,7 +76,7 @@ const Input = ({
 
   const getDateValue = (value: DateDto) => {
     setDateValue(changeDateFormat(value));
-    setToday(new Date(value.year, value.month - 1, value.day));
+    setToday(new Date(value.year, value.month - 1, value.day, 0, 0, 0));
     setCalendarVisibility(false);
   };
 
@@ -98,6 +98,12 @@ const Input = ({
   useOutsideClick(calendarRef, () => {
     setCalendarVisibility(false);
   });
+
+  useEffect(() => {
+    if(inputRef !== null && inputRef.current.id === 'calendar') {
+      inputRef.current.value = dateValue;
+    }
+  }, [today]);
 
   return (
     <div className={styles.entireWrapper}>
@@ -129,11 +135,10 @@ const Input = ({
         ) : inputType === 'calendar' ? (
           <>
             <input
-              id={inputId}
+              id='calendar'
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type="text"
               placeholder={placeholder}
-              defaultValue={dateValue}
               disabled
               ref={inputRef}
             />
