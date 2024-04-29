@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
-import styles from '../DashboardTypeNavBar.module.css';
+import styles from '../DashboardTypeNavBar.module.scss';
 
 const DashboardNavBar = ({
   createdByMe,

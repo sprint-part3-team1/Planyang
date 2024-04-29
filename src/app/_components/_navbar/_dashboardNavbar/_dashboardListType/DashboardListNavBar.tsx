@@ -9,7 +9,7 @@ import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import { userResponse, registerActions } from '@/app/_slice/registerSlice';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import styles from '../DashboardTypeNavBar.module.css';
+import styles from '../DashboardTypeNavBar.module.scss';
 
 const DashboardListNavBar = () => {
   const onClickButton = () => {};
