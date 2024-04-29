@@ -109,9 +109,9 @@ const asyncFetchPutCard = createAsyncThunk(
     cardId: number;
     title: string;
     description: string;
-    dueDate: string | null;
-    tags: string[] | null;
-    imageUrl: string | null;
+    dueDate: string;
+    tags: string[];
+    imageUrl: string;
   }) => {
     const {
       columnId,
