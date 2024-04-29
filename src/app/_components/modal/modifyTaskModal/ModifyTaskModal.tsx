@@ -98,7 +98,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       Number(requestId),
       titleInputValue,
       descriptionInputValue,
-      dueDateValue,
+      dueDateValue.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
       tagInputValue,
       selectedImagePath,
     );
