@@ -6,10 +6,10 @@ import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import axios from 'axios';
 import { CardResponseType } from '@/app/_slice/cardSlice';
+import { useInView } from 'react-intersection-observer';
+import { useDrop } from 'react-dnd';
 import styles from './Column.module.css';
 import Card from './Card';
-
-import { useDrop } from 'react-dnd';
 
 const axiosInstance = axios.create({
   baseURL: `https://sp-taskify-api.vercel.app/4-1/`,
@@ -71,12 +71,17 @@ const Column = ({
   const ELLIPSE_ICON = '/assets/icons/profileEllipse.svg';
   const SETTING_ICON = '/assets/icons/setting.svg';
 
-  const GET_CARDS = 100;
+  const GET_CARDS = 6;
 
   const [pages, setPages] = useState<number>(GET_CARDS);
   const [openModalType, setOpenModalType] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { ref, inView } = useInView({
+    threshold: 1,
+  });
 
   const viewCards = async (columId: number) => {
+    setLoading(true);
     await axiosInstance
       .get(`cards?size=${pages}&columnId=${columId}`)
       .then((res) => {
@@ -90,6 +95,7 @@ const Column = ({
         }));
       })
       .catch((error) => console.log(`카드 목록 조회 실패(${error})`));
+    setLoading(false);
   };
 
   const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
@@ -97,6 +103,14 @@ const Column = ({
   useEffect(() => {
     viewCards(columnData.id);
   }, [pages, isUpdated, setIsUpdated]);
+
+  useEffect(() => {
+    if (inView && !loading) {
+      setTimeout(() => {
+        setPages((prev) => prev + GET_CARDS);
+      }, 500);
+    }
+  }, [inView]);
 
   return (
     <div
@@ -149,6 +163,7 @@ const Column = ({
         inputInitialValue={columnData.title}
         requestId={columnData.id}
       />
+      {totalCount && totalCount[columnData.id] >= pages && <div ref={ref} />}
     </div>
   );
 };

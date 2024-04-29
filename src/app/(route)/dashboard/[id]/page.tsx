@@ -10,13 +10,11 @@ import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnB
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import { useDispatch } from 'react-redux';
-
 import { useParams } from 'next/navigation';
 import { cardActions } from '@/app/_slice/cardSlice';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import axios from 'axios';
 
 const DashBoard = () => {

@@ -1,21 +1,55 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DropDownPropsType } from '@/app/_types/dropdownProps';
+import { columnActions, columnData } from '@/app/_slice/columnSlice';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'next/navigation';
 import styles from './StatusDropDown.module.css';
 import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
 import CheckIcon from '../../../../public/assets/icons/checkIcon';
 import StatusTag from './StatusTag';
 
-const StatusDropDown = ({ title, status, setStatus }: DropDownPropsType) => {
+const StatusDropDown = ({
+  title,
+  setStatusColumnId,
+  columnId,
+}: DropDownPropsType) => {
+  const dispatch = useDispatch();
+  const columnDataList = useAppSelector(columnData);
+
+  const initialStatus = columnDataList?.data?.findIndex(
+    (column) => Number(column.id) === Number(columnId),
+  );
+
+  const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
-  const [selectedDivIndex, setSelectedDivIndex] = useState(0);
-  const STATUS = ['To Do', 'On Progress', 'Done'];
+  const [selectedDivIndex, setSelectedDivIndex] = useState(initialStatus);
+  const STATUS = columnDataList?.data.map((column) => column.title);
 
   const handleDivClick = (index: number) => {
+    let statusColumnId = -1;
+    columnDataList?.data?.forEach((column) => {
+      if (column.title === STATUS[index]) statusColumnId = column.id;
+    });
     setSelectedDivIndex(index);
-    setStatus(STATUS[index]);
+    setStatusColumnId(statusColumnId);
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const fetchColumns = async () => {
+    try {
+      await dispatch(
+        columnActions.asyncFetchGetColumn({ dashboardId: Number(params.id) }),
+      );
+    } catch (error) {
+      console.error('Error fetching columns:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchColumns();
+  }, [params.id, dispatch]);
 
   useEffect(() => {
     const handleClickOutSide = (e: MouseEvent) => {
@@ -52,26 +86,27 @@ const StatusDropDown = ({ title, status, setStatus }: DropDownPropsType) => {
       <div
         className={`${styles.dropDownDiv} ${isDropDown ? styles.open : styles.close}`}
       >
-        {STATUS.map((status, index) => {
-          return (
-            <button
-              onClick={() => handleDivClick(index)}
-              type="button"
-              key={status}
-              className={styles.choiceButton}
-            >
-              <div className={styles.choiceDiv}>
-                {' '}
-                {selectedDivIndex === index ? (
-                  <CheckIcon fill="#787486" />
-                ) : (
-                  <CheckIcon fill="none" />
-                )}
-                <StatusTag status={status} />
-              </div>
-            </button>
-          );
-        })}
+        {STATUS &&
+          STATUS.map((status, index) => {
+            return (
+              <button
+                onClick={() => handleDivClick(index)}
+                type="button"
+                key={status}
+                className={styles.choiceButton}
+              >
+                <div className={styles.choiceDiv}>
+                  {' '}
+                  {selectedDivIndex === index ? (
+                    <CheckIcon fill="#787486" />
+                  ) : (
+                    <CheckIcon fill="none" />
+                  )}
+                  <StatusTag status={status} />
+                </div>
+              </button>
+            );
+          })}
       </div>
     </div>
   );

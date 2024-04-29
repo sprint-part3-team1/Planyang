@@ -277,7 +277,7 @@ const TestPage = () => {
   // 카드를 수정합니다
   const updateCard = (
     columnId: number,
-    id: number, // assigneeUserId
+    assigneeUserId: number,
     cardId: number,
     title: string,
     description: string,
@@ -288,8 +288,8 @@ const TestPage = () => {
     dispatch(
       cardActions.asyncFetchPutCard({
         columnId,
-        assignee: { id },
-        id: cardId,
+        assigneeUserId,
+        cardId,
         title,
         description,
         dueDate,
@@ -526,7 +526,7 @@ const TestPage = () => {
         <button type="button" onClick={() => createColumn('test2', 5936)}>
           칼럼 생성
         </button>
-        <button type="button" onClick={() => getColumn(5936)}>
+        <button type="button" onClick={() => getColumn(6380)}>
           칼럼 조회
         </button>
         <button type="button" onClick={() => updateColumn(21083, '수정수정')}>
@@ -565,12 +565,14 @@ const TestPage = () => {
         >
           카드 생성
         </button>
-        <button type="button" onClick={() => getCardList(19964)}>
+        <button type="button" onClick={() => getCardList(21490)}>
           카드 목록 조회
         </button>
         <button
           type="button"
-          onClick={() => updateCard(19964, 1673, 4988, '수정수정', '설명 수정')}
+          onClick={() =>
+            updateCard(21490, 1673, 5522, '또ㅋ수정수정', '설명 수정')
+          }
         >
           카드 수정
         </button>

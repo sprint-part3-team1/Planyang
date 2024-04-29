@@ -26,10 +26,20 @@ const Input = ({
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
   const calendarRef = useRef<HTMLDivElement>(null);
 
+  const [tags, setTags] = useState(new Set<string>());
+  const [visibilityIcon, setVisibilityIcon] = useState(true);
+  const [calendarVisibility, setCalendarVisibility] = useState(false);
+  const [today, setToday] = useState(new Date());
+  const [dateValue, setDateValue] = useState(
+    changeDateFormat(
+      new DateDto(today.getFullYear(), today.getMonth() + 1, today.getDay()),
+    ),
+  );
+
   const customWidth =
     inputWidth !== '100%'
       ? {
-          width: inputWidth + 'rem',
+          width: `${inputWidth}rem`,
         }
       : {
           width: '100%',
@@ -84,16 +94,6 @@ const Input = ({
     }
     return 'text';
   };
-
-  const [visibilityIcon, setVisibilityIcon] = useState(true);
-  const [calendarVisibility, setCalendarVisibility] = useState(false);
-  const [today, setToday] = useState(new Date());
-  const [dateValue, setDateValue] = useState(
-    changeDateFormat(
-      new DateDto(today.getFullYear(), today.getMonth() + 1, today.getDay()),
-    ),
-  );
-  const [tags, setTags] = useState(new Set<string>());
 
   useOutsideClick(calendarRef, () => {
     setCalendarVisibility(false);
