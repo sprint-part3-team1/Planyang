@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import styles from '@/app/(route)/dashboard/[id]/page.module.css';
+import Column from '../_components/Column';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import { useDispatch } from 'react-redux';
 
 import { useParams } from 'next/navigation';
-import Column from '../_components/Column';
 import { cardActions } from '@/app/_slice/cardSlice';
 
 import { DndProvider } from 'react-dnd';
@@ -27,6 +27,28 @@ const DashBoard = () => {
   const [openModalType, setOpenModalType] = useState('');
   const [cardInfo, setCardInfo] = useState(null);
   const [totalCount, setTotalCount] = useState<Record<number, number>>();
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  const fetchDashboardDetail = async () => {
+    try {
+      await dispatch(
+        dashBoardDetailActions.asyncFetchGetDashBoardDetail({
+          dashBoardId: Number(params.id),
+        }),
+      );
+    } catch (error) {
+      console.error('Error fetching dashboard detail:', error);
+    }
+  };
+  const fetchColumns = async () => {
+    try {
+      await dispatch(
+        columnActions.asyncFetchGetColumn({ dashboardId: Number(params.id) }),
+      );
+    } catch (error) {
+      console.error('Error fetching columns:', error);
+    }
+  };
 
   const handleDrop = async (item, droppedColumnId) => {
     try {
@@ -50,31 +72,10 @@ const DashBoard = () => {
           },
         },
       );
-
+      setIsUpdated(true);
       return response.data;
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const fetchDashboardDetail = async () => {
-    try {
-      await dispatch(
-        dashBoardDetailActions.asyncFetchGetDashBoardDetail({
-          dashBoardId: Number(params.id),
-        }),
-      );
-    } catch (error) {
-      console.error('Error fetching dashboard detail:', error);
-    }
-  };
-  const fetchColumns = async () => {
-    try {
-      await dispatch(
-        columnActions.asyncFetchGetColumn({ dashboardId: Number(params.id) }),
-      );
-    } catch (error) {
-      console.error('Error fetching columns:', error);
     }
   };
 
@@ -98,6 +99,8 @@ const DashBoard = () => {
                   totalCount={totalCount}
                   setTotalCount={setTotalCount}
                   onDrop={(itemId) => handleDrop(itemId, item.id)}
+                  isUpdated={isUpdated}
+                  setIsUpdated={setIsUpdated}
                 />
               );
             })}

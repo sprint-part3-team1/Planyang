@@ -54,6 +54,8 @@ const Column = ({
   totalCount,
   setTotalCount,
   onDrop,
+  isUpdated,
+  setIsUpdated,
 }: Props) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'item',
@@ -88,9 +90,10 @@ const Column = ({
 
   const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
 
+  setIsUpdated(false);
   useEffect(() => {
     viewCards(columnData.id);
-  }, [pages]);
+  }, [pages, isUpdated]);
 
   return (
     <div
