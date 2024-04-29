@@ -3,8 +3,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-
-import { DashBoardInformationType } from '@/app/_slice/dashBoardSlice';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import {
+  DashBoardInformationType,
+  dashBoardActions,
+  dashBoardData,
+} from '@/app/_slice/dashBoardSlice';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
@@ -26,8 +30,9 @@ interface DashBoardStateType {
 
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
-  const [openModalType, setOpenModalType] = useState('');
+  const dashboardDatas = useAppSelector(dashBoardData);
 
+  const [openModalType, setOpenModalType] = useState('');
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -69,7 +74,7 @@ export default function MyDashBoard() {
     };
 
     fetchData();
-  }, [page, dispatch]);
+  }, [page, dispatch, dashboardDatas]);
 
   // 전체 대시보드 수와 전체 페이지 지정
   useEffect(() => {
