@@ -7,6 +7,7 @@ import { cardActions, cardData } from '@/app/_slice/cardSlice';
 import { commentActions, commentData } from '@/app/_slice/commentSlice';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import { useParams } from 'next/navigation';
+import MODAL_TYPES from '@/app/constants/modalTypes';
 import ManagerInfoBox from './ManagerInfoBox';
 import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
@@ -17,7 +18,6 @@ import MoreIcon from '../../../../../public/assets/icons/more';
 import PopupDropDown from '../../DropDown/PopupDropDown';
 import OtherComment from '../../OtherComment';
 import TagIcon from '../../TagIcon';
-import MODAL_TYPES from '@/app/constants/modalTypes';
 
 const TaskCardModal = ({
   setOpenModalType,
@@ -155,7 +155,6 @@ const TaskCardModal = ({
   };
 
   const handleCloseClick = () => {
-    console.log(isClickEditMode);
     if (isClickEditMode) {
       setIsClickedClose(false);
     } else {
@@ -172,15 +171,11 @@ const TaskCardModal = ({
   };
 
   const deleteOptionClickHandler = () => {
-    /** 옵션 삭제하기 버튼을 눌렀을 때 */
-    // TODO: 삭제는 되지만 실시간 반영 X
     handleCloseClick();
     deleteCard(cardInfo?.id);
   };
 
   const editOptionclickHandler = () => {
-    /** 옵션 수정하기 버튼을 눌렀을 때  */
-    // TODO: 수정하는 모달창으로 넘어가야 함
     setIsClickEditMode(true);
   };
 
@@ -220,7 +215,7 @@ const TaskCardModal = ({
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log(cardInfo);
+
   return (
     <ModalContainer title={cardInfo?.title} ref={ref}>
       {isMobile && (

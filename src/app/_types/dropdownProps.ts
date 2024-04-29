@@ -13,7 +13,10 @@ export type MemberInfoType = {
 
 export type DropDownPropsType = {
   title: string;
+  setStatusColumnId?: number | null;
+  columnId?: number | null;
   clickedMember?: MemberInfoType | null;
+  clickedMemberIndex?: number | null;
   setClickedMember?:
     | React.Dispatch<SetStateAction<MemberInfoType | null | undefined>>
     | undefined;
