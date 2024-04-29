@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
-import styles from '../DashboardTypeNavBar.module.css';
+import styles from '../DashboardTypeNavBar.module.scss';
 
 const DashboardNavBar = ({
   createdByMe,
@@ -57,10 +57,12 @@ const DashboardNavBar = ({
       </div>
       <div className={styles.sideMenuWrapper}>
         <div className={styles.sideMenuButtonWrapper}>
-
           {createdByMe && (
             <Link href={`/dashboard/${boardId}/edit`}>
-              <ImageTextButton text="관리" imageUrl="/assets/icons/gear.svg" />
+              <ImageTextButton
+                text="관리"
+                imageUrl="/assets/icons/setting.svg"
+              />
             </Link>
           )}
 
