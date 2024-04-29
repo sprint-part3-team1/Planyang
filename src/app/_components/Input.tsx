@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { InputProps } from '@/app/_types/InputProps';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
@@ -21,6 +21,7 @@ const Input = ({
   errorState,
   placeholder = undefined,
   onChange,
+  setDueDateValue,
 }: InputProps) => {
   const INVISIBLE_ICON_SRC = '/assets/icons/invisible.svg';
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
@@ -100,8 +101,9 @@ const Input = ({
   });
 
   useEffect(() => {
-    if(inputRef !== null && inputRef.current.id === 'calendar') {
+    if (inputRef !== null && inputRef.current.id === 'calendar') {
       inputRef.current.value = dateValue;
+      setDueDateValue(dateValue);
     }
   }, [today]);
 
@@ -135,7 +137,7 @@ const Input = ({
         ) : inputType === 'calendar' ? (
           <>
             <input
-              id='calendar'
+              id="calendar"
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type="text"
               placeholder={placeholder}

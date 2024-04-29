@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler} from "react";
+import React, { ChangeEventHandler, SetStateAction } from 'react';
 
 export interface InputProps {
   readonly inputId: string;
@@ -11,4 +11,5 @@ export interface InputProps {
 
   errorState?: boolean;
   placeholder?: string;
+  setDueDateValue?: React.Dispatch<SetStateAction<string>>;
 }

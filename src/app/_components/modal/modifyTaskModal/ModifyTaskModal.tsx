@@ -38,6 +38,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
+  const dueDateRef = useRef<HTMLInputElement>(null);
+  const tagRef = useRef<HTMLInputElement>(null);
 
   // TODO:  마감일, 태그 수정할 수 있도록 수정 필요
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
@@ -224,14 +226,18 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           focusoutFunc={handleDescriptionInput}
         />
         <Input
+          inputId="calendar"
           inputName="마감일"
           inputType="calendar"
           inputWidth={INPUT_WIDTH[viewportType]}
+          inputRef={dueDateRef}
         />
         <Input
+          inputId="tag"
           inputName="태그"
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
+          inputRef={tagRef}
         />
         <InputModal
           title="이미지"
