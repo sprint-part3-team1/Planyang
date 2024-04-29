@@ -51,7 +51,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     cardInfo?.description,
   );
   const [dueDateValue, setDueDateValue] = useState(cardInfo?.dueDate);
-  const [tagInputValue, setTagInputValue] = useState<string[]>([]);
+  const [tagInputValue, setTagInputValue] = useState<string[]>(cardInfo?.tags);
   const [selectedImagePath, setSelectedImagePath] = useState(
     cardInfo?.imageUrl,
   );
@@ -97,7 +97,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       Number(requestId),
       titleInputValue,
       descriptionInputValue,
-      dueDateValue ? `${dueDateValue} 00:00` : undefined,
+      dueDateValue || undefined,
       tagInputValue || undefined,
       selectedImagePath || undefined,
     );
@@ -239,6 +239,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
           inputRef={tagRef}
+          tagInputValue={tagInputValue}
+          setTagInputValue={setTagInputValue}
         />
         <InputModal
           title="이미지"

@@ -12,6 +12,7 @@ export interface InputProps {
   errorState?: boolean;
   placeholder?: string;
   dueDateValue?: string;
+  tagInputValue?: string[];
   setDueDateValue?: React.Dispatch<SetStateAction<string>>;
-  setTagInputValue?: React.Dispatch<SetStateAction<Set<string>>>;
+  setTagInputValue?: React.Dispatch<SetStateAction<string[]>>;
 }

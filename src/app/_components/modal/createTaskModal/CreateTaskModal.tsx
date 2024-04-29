@@ -69,8 +69,8 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         manager?.userId,
         titleInputValue,
         descriptionInputValue,
-        dueDateValue ? `${dueDateValue} 00:00` : undefined,
-        [...tagInputValue] || undefined,
+        dueDateValue || undefined,
+        tagInputValue || undefined,
         selectedImagePath || undefined,
       );
       setOpenModalType('');

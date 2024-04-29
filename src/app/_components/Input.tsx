@@ -22,6 +22,7 @@ const Input = ({
   placeholder = undefined,
   onChange,
   dueDateValue,
+  tagInputValue,
   setDueDateValue,
   setTagInputValue,
 }: InputProps) => {
@@ -29,7 +30,9 @@ const Input = ({
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  const [tags, setTags] = useState(new Set<string>());
+  const initialTagValue = new Set(tagInputValue) || new Set<string>();
+
+  const [tags, setTags] = useState(initialTagValue);
   const [visibilityIcon, setVisibilityIcon] = useState(true);
   const [calendarVisibility, setCalendarVisibility] = useState(false);
   const [today, setToday] = useState(new Date());
@@ -77,7 +80,7 @@ const Input = ({
       newTags.add(value);
       e.currentTarget.value = '';
       setTags(newTags);
-      setTagInputValue(newTags);
+      setTagInputValue([...newTags]);
     }
   };
 
@@ -91,7 +94,7 @@ const Input = ({
     const newTags = new Set(tags);
     newTags.delete(value);
     setTags(newTags);
-    setTagInputValue(newTags);
+    setTagInputValue([...newTags]);
   };
 
   const setInputType = () => {
