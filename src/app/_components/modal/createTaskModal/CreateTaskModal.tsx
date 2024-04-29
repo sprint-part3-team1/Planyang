@@ -69,10 +69,11 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         manager?.userId,
         titleInputValue,
         descriptionInputValue,
-        dueDateValue || undefined,
+        dueDateValue ? `${dueDateValue} 00:00` : undefined,
         tagInputValue || undefined,
         selectedImagePath || undefined,
       );
+
       setOpenModalType('');
     } else {
       alert('필수 입력값이 누락되었습니다.');

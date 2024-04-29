@@ -98,9 +98,9 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       Number(requestId),
       titleInputValue,
       descriptionInputValue,
-      dueDateValue || undefined,
-      tagInputValue || undefined,
-      selectedImagePath || undefined,
+      dueDateValue.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
+      tagInputValue,
+      selectedImagePath,
     );
     setOpenModalType(MODAL_TYPES.taskCard);
   };
