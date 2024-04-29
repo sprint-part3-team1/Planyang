@@ -51,6 +51,7 @@ const DashBoard = () => {
   };
 
   const handleDrop = async (item, droppedColumnId) => {
+    setIsUpdated(false);
     try {
       const updatedItem = {
         columnId: droppedColumnId,

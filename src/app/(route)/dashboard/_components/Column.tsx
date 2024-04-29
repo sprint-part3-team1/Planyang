@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
 import { useEffect, useState, Dispatch, SetStateAction } from 'react';
@@ -45,6 +46,9 @@ interface Props {
   >;
   totalCount: Record<number, number> | undefined;
   setTotalCount: Dispatch<SetStateAction<Record<number, number> | undefined>>;
+  onDrop: () => void;
+  isUpdated: boolean;
+  setIsUpdated: React.Dispatch<SetStateAction<boolean>>;
 }
 
 const Column = ({
@@ -90,10 +94,9 @@ const Column = ({
 
   const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
 
-  setIsUpdated(false);
   useEffect(() => {
     viewCards(columnData.id);
-  }, [pages, isUpdated]);
+  }, [pages, isUpdated, setIsUpdated]);
 
   return (
     <div
