@@ -66,7 +66,7 @@ const Input = ({
 
   const getDateValue = (value: DateDto) => {
     setDateValue(changeDateFormat(value));
-    setToday(new Date(value.year, value.month - 1, value.day));
+    setToday(new Date(value.year, value.month - 1, value.day, 0, 0, 0));
     setCalendarVisibility(false);
   };
 
