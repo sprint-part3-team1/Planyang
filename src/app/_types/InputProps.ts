@@ -11,5 +11,6 @@ export interface InputProps {
 
   errorState?: boolean;
   placeholder?: string;
+  dueDateValue?: string;
   setDueDateValue?: React.Dispatch<SetStateAction<string>>;
 }

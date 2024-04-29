@@ -41,7 +41,6 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const dueDateRef = useRef<HTMLInputElement>(null);
   const tagRef = useRef<HTMLInputElement>(null);
 
-  // TODO:  마감일, 태그 수정할 수 있도록 수정 필요
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
   const [statusColumnId, setStatusColumnId] = useState(cardInfo?.columnId);
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
@@ -51,7 +50,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [descriptionInputValue, setdescriptionInputValue] = useState(
     cardInfo?.description,
   );
-  const [dueDateValue, setDueDateValue] = useState('');
+  const [dueDateValue, setDueDateValue] = useState(cardInfo?.dueDate);
   const [tagInputValue, setTagInputValue] = useState<string[]>([]);
   const [selectedImagePath, setSelectedImagePath] = useState(
     cardInfo?.imageUrl,
@@ -98,7 +97,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       Number(requestId),
       titleInputValue,
       descriptionInputValue,
-      dueDateValue || undefined,
+      dueDateValue ? `${dueDateValue} 00:00` : undefined,
       tagInputValue || undefined,
       selectedImagePath || undefined,
     );
@@ -231,6 +230,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputType="calendar"
           inputWidth={INPUT_WIDTH[viewportType]}
           inputRef={dueDateRef}
+          dueDateValue={dueDateValue}
+          setDueDateValue={setDueDateValue}
         />
         <Input
           inputId="tag"

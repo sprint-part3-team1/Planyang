@@ -21,6 +21,7 @@ const Input = ({
   errorState,
   placeholder = undefined,
   onChange,
+  dueDateValue,
   setDueDateValue,
 }: InputProps) => {
   const INVISIBLE_ICON_SRC = '/assets/icons/invisible.svg';
@@ -31,11 +32,14 @@ const Input = ({
   const [visibilityIcon, setVisibilityIcon] = useState(true);
   const [calendarVisibility, setCalendarVisibility] = useState(false);
   const [today, setToday] = useState(new Date());
-  const [dateValue, setDateValue] = useState(
+
+  const initialDateValue =
+    dueDateValue ||
     changeDateFormat(
       new DateDto(today.getFullYear(), today.getMonth() + 1, today.getDay()),
-    ),
-  );
+    );
+
+  const [dateValue, setDateValue] = useState(initialDateValue);
 
   const customWidth =
     inputWidth !== '100%'
