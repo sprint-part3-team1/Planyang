@@ -1,13 +1,10 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/app/_components/Header.module.css';
 import { HeaderProps } from '../_types/HeaderProps';
 
 const Header = ({ isWhite }: HeaderProps) => {
-  const LOGO_IMG = '/assets/images/logoImg.svg';
-  const LOGO_TITLE = '/assets/images/logoTitle.svg';
-  const LOGO_IMG_WHITE = '/assets/images/logoImgWhite.svg';
-  const LOGO_TITLE_WHITE = '/assets/images/logoTitleWhite.svg';
+  const LOGO_IMG = '/assets/images/planyang_image.png';
+  const LOGO_TITLE = '/assets/images/planyang_text.PNG';
 
   return (
     <div
@@ -15,23 +12,17 @@ const Header = ({ isWhite }: HeaderProps) => {
     >
       <div className={styles.headerContainer}>
         <Link href="/" className={styles.logoBox}>
-          <Image
-            src={isWhite ? LOGO_IMG : LOGO_IMG_WHITE}
-            alt="logoImage"
-            width={28}
-            height={33}
-          />
-          <Image
+          <img src={LOGO_IMG} alt="logoImage" height={33} />
+          <img
             className={styles.logoTitle}
-            src={isWhite ? LOGO_TITLE : LOGO_TITLE_WHITE}
+            src={LOGO_TITLE}
             alt="logoTitle"
-            width={80}
-            height={22}
+            height={29}
           />
         </Link>
         <div className={`${styles.signBox} ${isWhite ? styles.backWhite : ''}`}>
-          <Link href="/">로그인</Link>
-          <Link href="/">회원가입</Link>
+          <Link href="/login">로그인</Link>
+          <Link href="/signup">회원가입</Link>
         </div>
       </div>
     </div>

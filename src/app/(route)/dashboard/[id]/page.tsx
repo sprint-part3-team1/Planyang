@@ -12,7 +12,6 @@ import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { cardActions } from '@/app/_slice/cardSlice';
-
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import axios from 'axios';
