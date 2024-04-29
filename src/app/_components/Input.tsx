@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { InputProps } from '@/app/_types/InputProps';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
@@ -99,6 +99,12 @@ const Input = ({
     setCalendarVisibility(false);
   });
 
+  useEffect(() => {
+    if(inputRef !== null && inputRef.current.id === 'calendar') {
+      inputRef.current.value = dateValue;
+    }
+  }, [today]);
+
   return (
     <div className={styles.entireWrapper}>
       <label className={styles.inputLabel} htmlFor={inputId}>
@@ -129,11 +135,10 @@ const Input = ({
         ) : inputType === 'calendar' ? (
           <>
             <input
-              id={inputId}
+              id='calendar'
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type="text"
               placeholder={placeholder}
-              defaultValue={dateValue}
               disabled
               ref={inputRef}
             />
