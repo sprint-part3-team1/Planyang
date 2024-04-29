@@ -5,6 +5,7 @@ import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import SideMenu from '../mydashboard/_components/SideMenu';
+import styles from './layout.module.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -19,8 +20,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [dispatch]);
   return (
     <div style={{ display: 'flex' }}>
-      <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
-      {children}
+      <div style={{ height: '100vh' }}>
+        <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
+      </div>
+      <div className={styles.childrenWrapper}>
+        {children}
+      </div>
     </div>
   );
 }
+
+  <SideMenu />
+
+
