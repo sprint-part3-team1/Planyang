@@ -5,8 +5,6 @@
 .navbarWrapper {
   width: calc(100vw - #{calc-navbar-width(30)}px);
   height: 7rem;
-  top: 0;
-  left: 0;
   box-sizing: border-box;
 
   background-color: var(--white_FFFFFF);

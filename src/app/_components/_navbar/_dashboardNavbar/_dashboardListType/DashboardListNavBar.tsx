@@ -35,10 +35,12 @@ const DashboardListNavBar = () => {
         <Contour />
 
         <div className={styles.sideMenuUserWrapper}>
-          <UserIcon
-            nickname={userData.data ? userData.data.nickname : ''}
-            profileImageUrl={userData.data?.profileImageUrl}
-          />
+          <Link href="/mypage">
+            <UserIcon
+              nickname={userData.data ? userData.data.nickname : ''}
+              profileImageUrl={userData.data?.profileImageUrl}
+            />
+          </Link>
           <Link href="/mypage">
             <div className={styles.usernameWrapper}>
               {userData.data ? userData.data.nickname : ''}
