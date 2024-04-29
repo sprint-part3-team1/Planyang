@@ -66,6 +66,16 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
       }
     };
 
+    const onDeleteImageButtonClickHandler = (
+      e: React.MouseEvent<HTMLButtonElement>,
+    ) => {
+      const { columnId, selectedImagePath, setSelectedImagePath } =
+        imageInputProps;
+      e?.preventDefault();
+      setShowImageUrl(null);
+      setSelectedImagePath(null);
+    };
+
     switch (type) {
       case 'multiLine':
         return (
@@ -116,13 +126,22 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
                   className={styles.fileInput}
                 />
                 {showImageUrl ? (
-                  <div className={styles.imageDiv}>
-                    <img
-                      src={showImageUrl}
-                      alt="대시보드 이미지"
-                      className={styles.image}
-                    />
-                    <ImageEditIcon className={styles.editIcon} />
+                  <div>
+                    <div className={styles.imageDiv}>
+                      <img
+                        src={showImageUrl}
+                        alt="대시보드 이미지"
+                        className={styles.image}
+                      />
+                      <ImageEditIcon className={styles.editIcon} />
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.deleteImageButton}
+                      onClick={onDeleteImageButtonClickHandler}
+                    >
+                      {' '}
+                    </button>
                   </div>
                 ) : (
                   <PlusIcon />
