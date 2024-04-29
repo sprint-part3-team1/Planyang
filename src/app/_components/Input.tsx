@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { InputProps } from '@/app/_types/InputProps';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
@@ -21,20 +21,29 @@ const Input = ({
   errorState,
   placeholder = undefined,
   onChange,
+  dueDateValue,
+  tagInputValue,
+  setDueDateValue,
+  setTagInputValue,
 }: InputProps) => {
   const INVISIBLE_ICON_SRC = '/assets/icons/invisible.svg';
   const VISIBLE_ICON_SRC = '/assets/icons/visible.svg';
   const calendarRef = useRef<HTMLDivElement>(null);
 
-  const [tags, setTags] = useState(new Set<string>());
+  const initialTagValue = new Set(tagInputValue) || new Set<string>();
+
+  const [tags, setTags] = useState(initialTagValue);
   const [visibilityIcon, setVisibilityIcon] = useState(true);
   const [calendarVisibility, setCalendarVisibility] = useState(false);
   const [today, setToday] = useState(new Date());
-  const [dateValue, setDateValue] = useState(
+
+  const initialDateValue =
+    dueDateValue ||
     changeDateFormat(
       new DateDto(today.getFullYear(), today.getMonth() + 1, today.getDay()),
-    ),
-  );
+    );
+
+  const [dateValue, setDateValue] = useState(initialDateValue);
 
   const customWidth =
     inputWidth !== '100%'
@@ -71,6 +80,7 @@ const Input = ({
       newTags.add(value);
       e.currentTarget.value = '';
       setTags(newTags);
+      setTagInputValue([...newTags]);
     }
   };
 
@@ -84,6 +94,7 @@ const Input = ({
     const newTags = new Set(tags);
     newTags.delete(value);
     setTags(newTags);
+    setTagInputValue([...newTags]);
   };
 
   const setInputType = () => {
@@ -100,8 +111,9 @@ const Input = ({
   });
 
   useEffect(() => {
-    if(inputRef !== null && inputRef.current.id === 'calendar') {
+    if (inputRef !== null && inputRef.current.id === 'calendar') {
       inputRef.current.value = dateValue;
+      setDueDateValue(dateValue);
     }
   }, [today]);
 
@@ -135,7 +147,7 @@ const Input = ({
         ) : inputType === 'calendar' ? (
           <>
             <input
-              id='calendar'
+              id="calendar"
               className={`${styles.input} ${errorState ? styles.error : undefined}`}
               type="text"
               placeholder={placeholder}

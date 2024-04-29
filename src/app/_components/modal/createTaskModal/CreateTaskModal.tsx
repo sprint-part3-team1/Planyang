@@ -158,6 +158,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputName="마감일"
           inputType="calendar"
           inputWidth={INPUT_WIDTH[viewportType]}
+          setDueDateValue={setDueDateValue}
         />
         <Input
           inputId="tag input"
@@ -165,6 +166,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputName="태그"
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
+          setTagInputValue={setTagInputValue}
         />
         <InputModal
           title="이미지"
