@@ -11,6 +11,7 @@ import DashboardColors from '../../DashboardColors';
 
 function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
   const [inputValue, setInputValue] = useState('');
+  const [inputError, setInputError] = useState('');
   const inputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
   const [dashboardColor, setDashboardColor] = useState<string>('green');
@@ -33,7 +34,13 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
 
   const handleInputChange = () => {
     if (inputRef.current) {
-      setInputValue(inputRef.current.value);
+      const input = inputRef.current.value;
+      if (input.length <= 10) {
+        setInputValue(input);
+        setInputError('');
+      } else {
+        setInputError('10자 이하로 글자를 입력해주세요.');
+      }
     }
   };
 
@@ -58,8 +65,13 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
       default:
         color = '';
     }
-    createDashBoard(inputValue, color);
-    setOpenModalType('');
+
+    if (!inputError && inputValue !== '') {
+      createDashBoard(inputValue, color);
+      setOpenModalType('');
+    } else if (inputValue === '') {
+      setInputError('글자를 입력해주세요.');
+    }
   };
 
   return (
@@ -71,6 +83,9 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
         inputType="text"
         inputWidth={INPUT_WIDTH[viewportType]}
       />
+      <p style={{ color: 'red', fontWeight: 'bold', fontSize: '14px' }}>
+        {inputError}
+      </p>
 
       <DashboardColors
         dashboardColor={dashboardColor}

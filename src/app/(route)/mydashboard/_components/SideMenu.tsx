@@ -27,51 +27,43 @@ const SideMenu = () => {
   };
 
   const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [isLeftActive, setIsLeftActive] = useState(false);
   const [isRightActive, setIsRightActive] = useState(false);
 
   useEffect(() => {
     getDashboardData(page);
-    if (page === 1 && Math.ceil(dashboardDatas?.totalCount / 7) === 1) {
+    if (page === 1 && Math.ceil(totalCount / 7) === 1) {
       setIsLeftActive(false);
       setIsRightActive(false);
-    } else if (page === 1 && Math.ceil(dashboardDatas?.totalCount / 7) > page) {
+    } else if (page === 1 && Math.ceil(totalCount / 7) > page) {
       setIsLeftActive(false);
       setIsRightActive(true);
-    } else if (page > 1 && page < Math.ceil(dashboardDatas?.totalCount / 7)) {
+    } else if (page > 1 && page < Math.ceil(totalCount / 7)) {
       setIsLeftActive(true);
       setIsRightActive(true);
-    } else if (page === Math.ceil(dashboardDatas?.totalCount / 7)) {
+    } else if (page === Math.ceil(totalCount / 7)) {
       setIsLeftActive(true);
       setIsRightActive(false);
     }
-  }, [page, dispatch]);
+  }, [page, totalCount]);
 
   useEffect(() => {
-    if (Math.ceil(dashboardDatas?.totalCount / 7) === 1) {
-      setIsLeftActive(false);
-      setIsRightActive(false);
-    } else {
-      setIsLeftActive(false);
-      setIsRightActive(true);
-    }
-  }, []);
+    setTotalCount(dashboardDatas?.totalCount);
+  }, [dashboardDatas]);
 
   const onRightButtonClick = () => {
-    if (page < Math.ceil(dashboardDatas?.totalCount / 7)) {
+    if (page < Math.ceil(totalCount / 7)) {
       setPage((prev) => prev + 1);
-      // setIsRightActive(true);
     }
   };
 
   const onLeftButtonClick = () => {
     if (page !== 1) {
       setPage((prev) => prev - 1);
-      // setIsLeftActive(true);
     }
   };
 
-  console.log(dashboardDatas);
   return (
     <div className={styles.container}>
       <div className={styles.logoFrame}>

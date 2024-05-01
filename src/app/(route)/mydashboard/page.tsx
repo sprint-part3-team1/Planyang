@@ -80,8 +80,6 @@ export default function MyDashBoard() {
   useEffect(() => {
     if (dashBoardDatas) {
       setTotalCount(dashBoardDatas?.totalCount);
-      console.log(dashBoardDatas);
-      console.log(totalCount);
       setTotalPages(Math.ceil(totalCount / 5));
     }
   }, [dashBoardDatas, totalCount]);
