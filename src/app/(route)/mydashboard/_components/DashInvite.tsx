@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';

@@ -32,6 +32,7 @@ const Page = () => {
     localStorage.removeItem('accessToken');
     router.push('/');
   };
+
   const logout = () => {
     console.log('로그아웃');
   };
