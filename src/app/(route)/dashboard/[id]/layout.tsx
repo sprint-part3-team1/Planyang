@@ -74,8 +74,6 @@ const DashBoardDetailLayout = ({
     fetchMemberInfo();
   }, [params.id, dispatch]);
 
-  console.log(dashboardDetailDatas);
-  console.log(userInfo);
   return (
     <div style={{ width: '100%' }}>
       <DashboardNavBar

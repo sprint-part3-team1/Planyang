@@ -192,12 +192,7 @@ const cardSlice = createSlice({
     builder.addCase(
       asyncFetchCreateCard.fulfilled,
       (state, action: PayloadAction<GetCardsResponseType['data']>) => {
-        if (state.data && state.data.cards) {
-          state.data?.cards?.unshift(action.payload);
-          if (state.data.totalCount !== null) {
-            state.data.totalCount++;
-          }
-        }
+        state.data?.cards.unshift(action.payload);
       },
     );
     builder.addCase(

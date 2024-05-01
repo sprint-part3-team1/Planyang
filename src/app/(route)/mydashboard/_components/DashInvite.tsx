@@ -9,6 +9,7 @@ import Image from 'next/image';
 import AcceptButton from '@/app/_components/Button/AcceptButton/AcceptButton';
 import RejectButton from '@/app/_components/Button/RejectButton/RejectButton';
 import useAppSelector from '@/app/_hooks/useAppSelector';
+import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import styles from './DashInvite.module.css';
 
 const DashInvite = ({ setPageOne }) => {
@@ -83,6 +84,8 @@ const DashInvite = ({ setPageOne }) => {
         isAccept: true,
       }),
     );
+
+    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
   };
 
   const rejectInvite = (invitationId: number) => {
