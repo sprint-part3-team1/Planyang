@@ -5,24 +5,22 @@ import { useEffect, useState } from 'react';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import styles from '@/app/(route)/dashboard/[id]/page.module.css';
-import Column from '../_components/Column';
 import AddColumnButton from '@/app/_components/Button/AddColumnButton/AddColumnButton';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'next/navigation';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import axios from 'axios';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import Column from '../_components/Column';
 
 const DashBoard = () => {
   const columnDataList = useAppSelector(columnData);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const params = useParams();
 
   const [openModalType, setOpenModalType] = useState('');
-  const [cardInfo, setCardInfo] = useState(null);
-  const [totalCount, setTotalCount] = useState<Record<number, number>>();
   const [isUpdated, setIsUpdated] = useState(false);
 
   const fetchDashboardDetail = async () => {
@@ -91,10 +89,6 @@ const DashBoard = () => {
                 <Column
                   key={item.id}
                   columnData={item}
-                  cardInfo={cardInfo}
-                  setCardInfo={setCardInfo}
-                  totalCount={totalCount}
-                  setTotalCount={setTotalCount}
                   onDrop={(itemId) => handleDrop(itemId, item.id)}
                   isUpdated={isUpdated}
                   setIsUpdated={setIsUpdated}

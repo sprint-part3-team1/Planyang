@@ -7,6 +7,8 @@ import { cardActions } from '@/app/_slice/cardSlice';
 import { MemberInfoType } from '@/app/_types/dropdownProps';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { useParams } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setChangeCard } from '@/app/_slice/changedCardSlice';
 import ModalContainer from '../modalContainer/ModalContainer';
 import ManagerDropDown from '../../DropDown/ManagerDropDown';
 import Input from '../../Input';
@@ -21,6 +23,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const descriptionRef = useRef<HTMLInputElement>(null);
   const calendarRef = useRef<HTMLInputElement>(null);
   const tagRef = useRef<HTMLInputElement>(null);
+  const cardDispatch = useDispatch();
 
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
     null,
@@ -37,6 +40,14 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     setSelectedImagePath,
   };
 
+  const changeCards = () => {
+    cardDispatch(setChangeCard(true));
+  };
+
+  const unchangeCards = () => {
+    cardDispatch(setChangeCard(false));
+  };
+
   const createCard = async (
     assigneeUserId: number,
     title: string,
@@ -46,6 +57,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     imageUrl: string | undefined,
   ) => {
     try {
+      changeCards();
       await dispatch(
         cardActions.asyncFetchCreateCard({
           assigneeUserId,
@@ -60,6 +72,8 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       );
     } catch (error) {
       console.error('Error create card:', error);
+    } finally {
+      unchangeCards();
     }
   };
 
