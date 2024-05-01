@@ -60,6 +60,7 @@ const Card = ({
           height={160}
           src={image}
           alt="image"
+          style={{objectFit: 'cover', objectPosition: 'center'}}
         />
       ) : null}
 

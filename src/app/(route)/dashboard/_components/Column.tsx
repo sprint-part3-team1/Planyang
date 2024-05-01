@@ -5,9 +5,15 @@ import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton'
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import axios from 'axios';
-import { CardResponseType } from '@/app/_slice/cardSlice';
+import {
+  CardResponseType,
+  cardActions,
+  cardData,
+} from '@/app/_slice/cardSlice';
 import { useInView } from 'react-intersection-observer';
 import { useDrop } from 'react-dnd';
+import useAppSelector from '@/app/_hooks/useAppSelector';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import styles from './Column.module.css';
 import Card from './Card';
 
@@ -71,7 +77,7 @@ const Column = ({
   const ELLIPSE_ICON = '/assets/icons/profileEllipse.svg';
   const SETTING_ICON = '/assets/icons/setting.svg';
 
-  const GET_CARDS = 6;
+  const GET_CARDS = 8;
 
   const [pages, setPages] = useState<number>(GET_CARDS);
   const [openModalType, setOpenModalType] = useState('');
@@ -79,6 +85,17 @@ const Column = ({
   const { ref, inView } = useInView({
     threshold: 1,
   });
+
+  const dispatch = useAppDispatch();
+  const cardDatas = useAppSelector(cardData);
+
+  const fetchCardList = async (columnId: number) => {
+    try {
+      await dispatch(cardActions.asyncFetchGetCards({ columnId }));
+    } catch (error) {
+      console.error('Error fetching cards:', error);
+    }
+  };
 
   const viewCards = async (columId: number) => {
     setLoading(true);
@@ -101,8 +118,13 @@ const Column = ({
   const cardDataList = (cardInfo && cardInfo[columnData.id]) || [];
 
   useEffect(() => {
+    fetchCardList(columnData.id);
+  }, []);
+
+  // TODO: cardDatas 형식 수정 필요
+  useEffect(() => {
     viewCards(columnData.id);
-  }, [pages, isUpdated, setIsUpdated]);
+  }, [pages, isUpdated, setIsUpdated, cardDatas]);
 
   useEffect(() => {
     if (inView && !loading) {

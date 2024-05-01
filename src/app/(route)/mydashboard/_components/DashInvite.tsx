@@ -24,7 +24,7 @@ const DashInvite = ({ setPageOne }) => {
   const dispatch = useAppDispatch();
 
   const [cursor, setCursor] = useState<number | null>(null);
-  const [inputValue, setInputValue] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState<string | null>('');
   const { ref, inView } = useInView({
     threshold: 0.5,
   });

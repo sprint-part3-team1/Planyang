@@ -69,10 +69,11 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         manager?.userId,
         titleInputValue,
         descriptionInputValue,
-        dueDateValue || undefined,
+        dueDateValue ? `${dueDateValue} 00:00` : undefined,
         tagInputValue || undefined,
         selectedImagePath || undefined,
       );
+
       setOpenModalType('');
     } else {
       alert('필수 입력값이 누락되었습니다.');
@@ -158,6 +159,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputName="마감일"
           inputType="calendar"
           inputWidth={INPUT_WIDTH[viewportType]}
+          setDueDateValue={setDueDateValue}
         />
         <Input
           inputId="tag input"
@@ -165,6 +167,7 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           inputName="태그"
           inputType="tag"
           inputWidth={INPUT_WIDTH[viewportType]}
+          setTagInputValue={setTagInputValue}
         />
         <InputModal
           title="이미지"

@@ -9,8 +9,8 @@
 }
 
 .mainCardDiv {
-  width: 72.2rem;
-  min-height: 42.2rem;
+  width: 76.1rem;
+  min-height: 53.5rem;
   border-radius: 8px;
   margin-top: 9.4rem;
   margin-bottom: 4.8rem;
@@ -89,7 +89,7 @@
 @media (max-width: 1023px) {
   .mainCardDiv {
     width: 53.7rem;
-    min-height: 31.5rem;
+    min-height: 37.75rem;
   }
 
   .headlineDiv {
@@ -118,7 +118,7 @@
 @media (max-width: 767px) {
   .mainCardDiv {
     width: 28.7rem;
-    min-height: 16.8rem;
+    min-height: 20.17rem;
   }
 
   .headlineDiv {

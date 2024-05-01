@@ -42,7 +42,6 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const calendarRef = useRef<HTMLInputElement>(null);
   const tagRef = useRef<HTMLInputElement>(null);
 
-  // TODO:  마감일, 태그 수정할 수 있도록 수정 필요
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
   const [statusColumnId, setStatusColumnId] = useState(cardInfo?.columnId);
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
@@ -52,8 +51,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [descriptionInputValue, setdescriptionInputValue] = useState(
     cardInfo?.description,
   );
-  const [dueDateValue, setDueDateValue] = useState('');
-  const [tagInputValue, setTagInputValue] = useState<string[]>([]);
+  const [dueDateValue, setDueDateValue] = useState(cardInfo?.dueDate);
+  const [tagInputValue, setTagInputValue] = useState<string[]>(cardInfo?.tags);
   const [selectedImagePath, setSelectedImagePath] = useState(
     cardInfo?.imageUrl,
   );
@@ -99,9 +98,9 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       Number(requestId),
       titleInputValue,
       descriptionInputValue,
-      dueDateValue || undefined,
-      tagInputValue || undefined,
-      selectedImagePath || undefined,
+      dueDateValue.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
+      tagInputValue,
+      selectedImagePath,
     );
     setOpenModalType(MODAL_TYPES.taskCard);
   };
@@ -230,17 +229,21 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
           />
           <Input
             inputId="calendar input"
-            inputRef={calendarRef}
             inputName="마감일"
             inputType="calendar"
             inputWidth={INPUT_WIDTH[viewportType]}
+            inputRef={calendarRef}
+            dueDateValue={dueDateValue}
+            setDueDateValue={setDueDateValue}
           />
           <Input
             inputId="tag input"
-            inputRef={tagRef}
             inputName="태그"
             inputType="tag"
             inputWidth={INPUT_WIDTH[viewportType]}
+            inputRef={tagRef}
+            tagInputValue={tagInputValue}
+            setTagInputValue={setTagInputValue}
           />
           <InputModal
             title="이미지"

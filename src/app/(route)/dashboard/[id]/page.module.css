@@ -3,11 +3,13 @@
   height: 100vh;
   overflow: auto;
   background: var(--gray_FAFAFA);
+  position: relative;
 }
 
 .columnsContainer {
   display: flex;
   flex-direction: row;
+  position: absolute;
 
   @media (max-width: 1023px) {
     flex-direction: column;
@@ -15,7 +17,7 @@
 }
 
 .buttonContainer {
-  padding-top: 7rem;
+  padding: 7rem 2rem 0 2rem;
 
   @media (max-width: 1023px) {
     padding: 2.2rem 0 2.2rem 2rem;
