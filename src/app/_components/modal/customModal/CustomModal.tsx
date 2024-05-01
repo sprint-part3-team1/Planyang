@@ -6,11 +6,14 @@ import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 const CustomModal = ({
   modalText,
   setOpenModalType,
+  checkButtonHandler = () => {},
 }: {
   modalText: string | undefined | null;
   setOpenModalType: React.Dispatch<SetStateAction<string>>;
+  checkButtonHandler?: () => void; //default Props 정의 시 오류가 발생해서 그대로 두었습니다.
 }) => {
-  const checkButtonHandler = () => {
+  const checkButtonFunc = () => {
+    checkButtonHandler?.();
     setOpenModalType('');
   };
   return (
@@ -20,7 +23,7 @@ const CustomModal = ({
         checkText="확인"
         cancelText=""
         setOpenModalType={setOpenModalType}
-        checkButtonHandler={checkButtonHandler}
+        checkButtonHandler={checkButtonFunc}
       />
     </ModalContainer>
   );

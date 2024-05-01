@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
 import { userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions } from '@/app/_slice/registerSlice';
+import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import MODAL_TYPES from '@/app/constants/modalTypes';
 import MypageHeader from './_components/mypageHeader/MypageHeader';
 import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv';
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
@@ -16,6 +18,17 @@ import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
 const Page = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userResponse).data;
+
+  const logoutModalText = `정말 로그아웃 하시겠습니까?`;
+  const [openModalType, setOpenModalType] = useState('');
+
+  const logoutButtonHandler = () => {
+    setOpenModalType(MODAL_TYPES.custom);
+  };
+
+  const logout = () => {
+    console.log('로그아웃');
+  };
 
   useEffect(() => {
     dispatch(registerActions.asynchFetchgetUserInfo());
@@ -58,9 +71,22 @@ const Page = () => {
               userData={userData}
             />
             <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
+            <button
+              type="button"
+              className={styles.logoutButton}
+              onClick={logoutButtonHandler}
+            >
+              로그아웃
+            </button>
           </div>
         </div>
       )}
+      <ModalPortal
+        openModalType={openModalType}
+        setOpenModalType={setOpenModalType}
+        modalText={logoutModalText}
+        checkButtonHandler={logout}
+      />
     </div>
   );
 };

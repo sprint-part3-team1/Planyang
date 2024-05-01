@@ -22,3 +22,21 @@
   font-weight: 500;
   line-height: normal;
 }
+
+.logoutButton {
+  border: none;
+  padding: 0.8rem 3rem;
+  border-radius: 4px;
+  background: var(--violet_5534DA);
+  margin-left: auto;
+  cursor: pointer;
+  margin: 1.2rem;
+
+  color: var(--white_FFFFFF);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

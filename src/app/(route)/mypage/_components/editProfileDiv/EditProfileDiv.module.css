@@ -1,5 +1,5 @@
 .container {
-  width: 62rem;
+  max-width: max-content;
   height: auto;
   border-radius: 8px;
   background: var(--white_FFFFFF);

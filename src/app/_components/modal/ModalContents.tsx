@@ -21,6 +21,7 @@ const ModalContents = ({
   inputInitialValue,
   modalText,
   requestId,
+  checkButtonHandler,
 }: ModalContentFuncPropsType): React.ReactNode => {
   let modalContent: React.ReactNode = null;
   switch (openModalType) {
@@ -132,6 +133,7 @@ const ModalContents = ({
         <CustomModal
           modalText={modalText}
           setOpenModalType={setOpenModalType}
+          checkButtonHandler={checkButtonHandler}
         />
       );
       break;
