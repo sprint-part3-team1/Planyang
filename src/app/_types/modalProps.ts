@@ -19,6 +19,7 @@ export type ModalPortalPropsType = {
   inputInitialValue?: string;
   modalText?: string | null;
   requestId?: number;
+  checkButtonHandler?: () => void;
 };
 
 export type CheckCancelButtonPropType = {
@@ -37,6 +38,7 @@ export type ModalContentFuncPropsType = {
   inputInitialValue?: string;
   modalText?: string | null;
   requestId?: number;
+  checkButtonHandler?: () => void;
 };
 export type TaskCardModalPropsType = {
   openModalType?: string;

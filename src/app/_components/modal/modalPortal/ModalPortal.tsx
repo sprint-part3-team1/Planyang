@@ -10,6 +10,7 @@ const ModalPortal = ({
   inputInitialValue,
   modalText,
   requestId,
+  checkButtonHandler,
 }: ModalPortalPropsType) => {
   if (openModalType === '') return null;
 
@@ -20,6 +21,7 @@ const ModalPortal = ({
     inputInitialValue,
     modalText,
     requestId,
+    checkButtonHandler,
   });
 
   return createPortal(
