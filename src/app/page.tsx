@@ -13,7 +13,7 @@ import Footer from './(route)/(Home)/_components/Footer';
 import { dashBoardActions, dashBoardData } from './_slice/dashBoardSlice';
 import useAppDispatch from './_hooks/useAppDispatch';
 import useAppSelector from './_hooks/useAppSelector';
-import { userResponse } from './_slice/registerSlice';
+import { registerActions, userResponse } from './_slice/registerSlice';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -29,10 +29,16 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (userData.data) {
+    dispatch(registerActions.asynchFetchgetUserInfo());
+  }, []);
+
+  console.log(userData);
+
+  useEffect(() => {
+    if (userData.data !== null) {
       router.push('/mydashboard');
     }
-  }, [userData.data]);
+  }, [userData]);
 
   return (
     <div className={styles.container}>
