@@ -55,18 +55,15 @@ const SideMenu = () => {
   const onRightButtonClick = () => {
     if (page < Math.ceil(totalCount / 7)) {
       setPage((prev) => prev + 1);
-      // setIsRightActive(true);
     }
   };
 
   const onLeftButtonClick = () => {
     if (page !== 1) {
       setPage((prev) => prev - 1);
-      // setIsLeftActive(true);
     }
   };
 
-  // console.log(dashboardDatas);
   return (
     <div className={styles.container}>
       <div className={styles.logoFrame}>
