@@ -10,6 +10,8 @@ import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { loginActions } from '@/app/_slice/loginSlice';
 import MypageHeader from './_components/mypageHeader/MypageHeader';
 import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv';
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
@@ -27,12 +29,12 @@ const Page = () => {
     setOpenModalType(MODAL_TYPES.custom);
   };
 
-  const logoutTestButtonHandler = () => {
-    dispatch(registerActions.resetData());
+  const logoutTestButtonHandler = async () => {
+    await dispatch(registerActions.resetData());
+    await dispatch(loginActions.resetData());
     localStorage.removeItem('accessToken');
-    router.push('/');
+    router.push('/'); // 바로 메인 페이지로 이동
   };
-
   const logout = () => {
     console.log('로그아웃');
   };
@@ -62,40 +64,39 @@ const Page = () => {
 
   return (
     <div>
-      {userData && (
-        <div>
-          <MypageHeader
-            nickName={userData.nickname}
-            profileImage={userData.profileImageUrl}
-          />
-          <div className={styles.container}>
-            <div className={styles.goBackDiv}>
-              <LeftArrow />
-              돌아가기
-            </div>
-            <EditProfileDiv
-              inputWidth={EditProfileinputWidth}
-              userData={userData}
-            />
-            <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
-            <button
-              type="button"
-              className={styles.logoutButton}
-              onClick={logoutButtonHandler}
-            >
-              로그아웃
-            </button>
-
-            <button
-              type="button"
-              className={styles.logoutButton}
-              onClick={() => logoutTestButtonHandler()}
-            >
-              테스트 로그아웃
-            </button>
+      <div>
+        <MypageHeader
+          nickName={userData.nickname}
+          profileImage={userData.profileImageUrl}
+        />
+        <div className={styles.container}>
+          <div className={styles.goBackDiv}>
+            <LeftArrow />
+            돌아가기
           </div>
+          <EditProfileDiv
+            inputWidth={EditProfileinputWidth}
+            userData={userData}
+          />
+          <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
+          <button
+            type="button"
+            className={styles.logoutButton}
+            onClick={logoutButtonHandler}
+          >
+            로그아웃
+          </button>
+
+          <button
+            type="button"
+            className={styles.logoutButton}
+            onClick={() => logoutTestButtonHandler()}
+          >
+            테스트 로그아웃
+          </button>
         </div>
-      )}
+      </div>
+
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}

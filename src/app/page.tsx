@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/app/_components/Header';
 import mainLandingCard from '@/../public/assets/images/landingMainCard.png';
@@ -23,23 +23,28 @@ const Home = () => {
   const getMyDashBoard = () => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
   };
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // getMyDashBoard();
   }, []);
 
   useEffect(() => {
-    dispatch(registerActions.asynchFetchgetUserInfo());
-  }, []);
+    const fetchData = async () => {
+      try {
+        await dispatch(registerActions.asynchFetchgetUserInfo());
+        setIsLoaded(true);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  console.log(userData);
+    fetchData();
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (userData.data !== null) {
-      router.push('/mydashboard');
-    }
-  }, [userData]);
-
+  if (!isLoaded) {
+    return null;
+  }
   return (
     <div className={styles.container}>
       <Header isWhite={false} />

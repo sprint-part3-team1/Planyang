@@ -16,6 +16,7 @@ import DashBoardButton from '@/app/_components/Button/DashBoardButton/DashBoardB
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
+import { userResponse } from '@/app/_slice/registerSlice';
 import fetchDashboards from './_api/dashboardPagination';
 import styles from './page.module.css';
 import DashInvite from './_components/DashInvite';
@@ -31,7 +32,7 @@ interface DashBoardStateType {
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
   const dashboardDatas = useAppSelector(dashBoardData);
-
+  const userData = useAppSelector(userResponse);
   const [openModalType, setOpenModalType] = useState('');
   const [page, setPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
