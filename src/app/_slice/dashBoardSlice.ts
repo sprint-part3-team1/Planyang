@@ -126,7 +126,10 @@ const dashBoardSlice = createSlice({
     );
 
     builder.addCase(asynchFetchCreateDashBoard.fulfilled, (state, action) => {
-      state.data?.dashboards.unshift(action.payload);
+      if (state.data) {
+        state.data.dashboards.unshift(action.payload);
+        state.data.totalCount += 1; // 새로운 대시보드가 추가되면 totalCount 증가
+      }
     });
 
     builder.addCase(asyncFetchUpdateDashBoard.fulfilled, (state, action) => {

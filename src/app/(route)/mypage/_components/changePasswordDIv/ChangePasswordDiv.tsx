@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Input from '@/app/_components/Input';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
@@ -9,11 +10,13 @@ import styles from './ChangePasswordDiv.module.css';
 
 const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const errorMessage = useAppSelector(userResponse).error;
 
   const currentPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordCheckRef = useRef<HTMLInputElement>(null);
+  const [changeSuccess, setChangeSuccess] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -51,17 +54,22 @@ const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
   useEffect(() => {
     if (errorMessage) {
       setOpenModalType(MODAL_TYPES.custom);
-    } else {
+    } else if (changeSuccess) {
       setOpenModalType('');
+      console.log('비밀번호 변경 성공');
     }
-  }, [errorMessage]);
+  }, [errorMessage, changeSuccess]);
 
   const changePassword = () => {
     dispatch(
-      registerActions.asynchFetchChangePassword({
-        password: currentPassword,
-        newPassword,
-      }),
+      registerActions
+        .asynchFetchChangePassword({
+          password: currentPassword,
+          newPassword,
+        })
+        .then(() => {
+          setChangeSuccess(true);
+        }),
     );
   };
 
