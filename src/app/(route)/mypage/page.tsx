@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
-import { userResponse } from '@/app/_slice/registerSlice';
+import { userResponse, registerActions } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import { registerActions } from '@/app/_slice/registerSlice';
+
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
+import { useRouter } from 'next/navigation';
 import MypageHeader from './_components/mypageHeader/MypageHeader';
 import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv';
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
@@ -21,11 +22,16 @@ const Page = () => {
 
   const logoutModalText = `정말 로그아웃 하시겠습니까?`;
   const [openModalType, setOpenModalType] = useState('');
-
+  const router = useRouter();
   const logoutButtonHandler = () => {
     setOpenModalType(MODAL_TYPES.custom);
   };
 
+  const logoutTestButtonHandler = () => {
+    dispatch(registerActions.resetData());
+    localStorage.removeItem('accessToken');
+    router.push('/');
+  };
   const logout = () => {
     console.log('로그아웃');
   };
@@ -77,6 +83,14 @@ const Page = () => {
               onClick={logoutButtonHandler}
             >
               로그아웃
+            </button>
+
+            <button
+              type="button"
+              className={styles.logoutButton}
+              onClick={() => logoutTestButtonHandler()}
+            >
+              테스트 로그아웃
             </button>
           </div>
         </div>
