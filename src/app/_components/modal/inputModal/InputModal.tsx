@@ -1,5 +1,4 @@
 import React, { useState, useRef, ChangeEvent, forwardRef } from 'react';
-import Image from 'next/image';
 import axios from 'axios';
 import styles from './InputModal.module.css';
 import ImageEditIcon from '../../../../../public/assets/icons/imageEditIcon.svg';

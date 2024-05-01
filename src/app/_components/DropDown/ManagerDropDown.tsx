@@ -22,22 +22,32 @@ const ManagerDropDown = ({
   const [selectedDivIndex, setSelectedDivIndex] = useState(
     clickedMemberIndex !== undefined ? clickedMemberIndex : -1,
   );
-  const MANAGERS: string[] = [];
+  const MANAGERS: ManagerInfo[] = [];
   const [managerNames, setManagerNames] = useState(MANAGERS);
   const [managerNamesearch, setManagerNameSearch] = useState('');
 
   const params = useParams();
 
-  let filteredMangers: string[] = [];
+  type ManagerInfo = {
+    nickname: string;
+    profileImageUrl: string | null;
+  };
+
+  let filteredMangers: ManagerInfo[] = [];
   memberDataList?.members.forEach((member) => {
-    MANAGERS.push(member.nickname);
+    MANAGERS.push({
+      nickname: member.nickname,
+      profileImageUrl: member.profileImageUrl,
+    });
   });
 
   const handleDivClick = (index: number) => {
     setSelectedDivIndex(index);
+    console.log(index);
 
     if (setClickedMember && memberDataList && memberDataList.members[index]) {
-      setClickedMember(memberDataList.members[index]);
+      const clickMemberInfo = memberDataList.members[index];
+      setClickedMember(clickMemberInfo.nickname);
     }
   };
 
@@ -45,7 +55,7 @@ const ManagerDropDown = ({
     const { value } = e.currentTarget;
     setManagerNameSearch(value);
     filteredMangers = MANAGERS.filter((manager) =>
-      manager.includes(managerNamesearch),
+      manager.nickname.includes(managerNamesearch),
     );
     setIsDropDown(true);
     setManagerNames(filteredMangers);
@@ -92,9 +102,10 @@ const ManagerDropDown = ({
   }, [isDropDown]);
 
   useEffect(() => {
-    const filteredMangers = MANAGERS.filter((manager) =>
-      manager.includes(managerNamesearch),
+    filteredMangers = MANAGERS.filter((manager) =>
+      manager.nickname.includes(managerNamesearch),
     );
+
     setManagerNames(filteredMangers);
   }, [managerNamesearch]);
 
@@ -113,8 +124,11 @@ const ManagerDropDown = ({
           />
         ) : (
           <div className={styles.ManagerNameDiv}>
-            <UserIcon nickname={MANAGERS[selectedDivIndex]} />
-            {MANAGERS[selectedDivIndex]}
+            <UserIcon
+              nickname={MANAGERS[selectedDivIndex || 0].nickname}
+              profileImageUrl={MANAGERS[selectedDivIndex || 0].profileImageUrl}
+            />
+            {MANAGERS[selectedDivIndex || 0].nickname}
             <CloseIcon handleCloseClick={resetInput} />
           </div>
         )}
@@ -132,12 +146,12 @@ const ManagerDropDown = ({
       <div
         className={`${styles.dropDownDiv} ${isDropDown ? styles.open : styles.close}`}
       >
-        {managerNames.map((name, index) => {
+        {managerNames.map((info, index) => {
           return (
             <button
               onClick={() => handleDivClick(index)}
               type="button"
-              key={name}
+              key={info.nickname}
               className={styles.choiceButton}
             >
               <div className={styles.choiceDiv}>
@@ -147,8 +161,11 @@ const ManagerDropDown = ({
                 ) : (
                   <CheckIcon fill="none" />
                 )}
-                <UserIcon nickname={name} />
-                {name}
+                <UserIcon
+                  nickname={info.nickname}
+                  profileImageUrl={info.profileImageUrl}
+                />
+                {info.nickname}
               </div>
             </button>
           );
