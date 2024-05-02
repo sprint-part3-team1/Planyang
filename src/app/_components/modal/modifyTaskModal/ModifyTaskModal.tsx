@@ -52,14 +52,16 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
   const [statusColumnId, setStatusColumnId] = useState(cardInfo?.columnId);
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
-    managerIndex ? memberDataList?.members[managerIndex]: null
+    managerIndex ? memberDataList?.members[managerIndex] : null,
   );
   const [titleInputValue, setTitleInputValue] = useState(cardInfo?.title);
   const [descriptionInputValue, setdescriptionInputValue] = useState(
     cardInfo?.description,
   );
   const [dueDateValue, setDueDateValue] = useState(cardInfo?.dueDate);
-  const [tagInputValue, setTagInputValue] = useState<string[] | undefined | null>(cardInfo?.tags);
+  const [tagInputValue, setTagInputValue] = useState<
+    string[] | undefined | null
+  >(cardInfo?.tags);
   const [selectedImagePath, setSelectedImagePath] = useState(
     cardInfo?.imageUrl,
   );
@@ -110,14 +112,14 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   };
 
   const modifyButtonHandler = () => {
-    if(titleInputValue && descriptionInputValue) {
+    if (titleInputValue && descriptionInputValue) {
       updateCard(
         Number(statusColumnId),
         Number(manager?.userId),
         Number(requestId),
         titleInputValue,
         descriptionInputValue,
-        dueDateValue?.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
+        dueDateValue || undefined,
         tagInputValue || [],
         selectedImagePath || undefined,
       );
@@ -211,7 +213,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   }, []);
 
   const handleOutsideClick = () => {};
-  const handleClickInsideModal = (e:any) => {
+  const handleClickInsideModal = (e: any) => {
     e.stopPropagation();
   };
 
