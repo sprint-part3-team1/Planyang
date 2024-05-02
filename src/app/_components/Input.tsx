@@ -37,11 +37,9 @@ const Input = ({
   const [calendarVisibility, setCalendarVisibility] = useState(false);
   const [today, setToday] = useState(new Date());
 
-  const initialDateValue =
-    dueDateValue ||
-    changeDateFormat(
-      new DateDto(today.getFullYear(), today.getMonth() + 1, today.getDay()),
-    );
+  const initialDateValue = dueDateValue || (() => {
+    return `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} 00:00:00`
+  })
 
   const [dateValue, setDateValue] = useState(initialDateValue);
 
@@ -84,10 +82,18 @@ const Input = ({
     }
   };
 
-  const getDateValue = (value: DateDto) => {
-    setDateValue(changeDateFormat(value));
-    setToday(new Date(value.year, value.month - 1, value.day, 0, 0, 0));
-    setCalendarVisibility(false);
+  const getDateValue = (value: string) => {
+    let date = value.split(' ').at(0);
+
+    if(date !== undefined) {
+      let [year, month, day] = date.split('-').map((x) => parseInt(x));
+
+      console.log(date);
+
+      setDateValue(value);
+      setToday(new Date(year, month-1, day, 0, 0, 0));
+      setCalendarVisibility(false);
+    }
   };
 
   const getDeleteOrder = (value: string) => {
@@ -113,7 +119,7 @@ const Input = ({
   useEffect(() => {
     if (inputRef !== null && inputRef.current.id === 'calendar') {
       inputRef.current.value = dateValue;
-      setDueDateValue(dateValue);
+      setDueDateValue?.(dateValue);
     }
   }, [today]);
 
