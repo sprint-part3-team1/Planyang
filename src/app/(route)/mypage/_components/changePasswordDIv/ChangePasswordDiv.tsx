@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, SetStateAction } from 'react';
 import Input from '@/app/_components/Input';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
@@ -7,10 +7,17 @@ import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import styles from './ChangePasswordDiv.module.css';
 
-const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
+const ChangePasswordDiv = ({
+  inputWidth,
+  tryChangePassword,
+  setTryChangePassword,
+}: {
+  inputWidth: number;
+  tryChangePassword: boolean;
+  setTryChangePassword: SetStateAction<boolean>;
+}) => {
   const dispatch = useAppDispatch();
   const errorMessage = useAppSelector(userResponse).error;
-  const errorStatus = useAppSelector(userResponse).status;
 
   const currentPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
@@ -53,9 +60,11 @@ const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
     if (errorMessage) {
       setOpenModalType(MODAL_TYPES.custom);
     }
-  }, [errorMessage]);
+    setTryChangePassword(false);
+  }, [tryChangePassword]);
 
   const changePassword = () => {
+    setTryChangePassword(true);
     dispatch(
       registerActions.asynchFetchChangePassword({
         password: currentPassword,

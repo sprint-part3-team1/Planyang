@@ -21,11 +21,12 @@ import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
 const Page = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userResponse).data;
-  const [IsClickedChangeButton, setIsClicedChangeButton] = useState(false);
+  const [tryChangePassword, setTryChangePassword] = useState(false);
 
   const logoutModalText = `정말 로그아웃 하시겠습니까?`;
   const [openModalType, setOpenModalType] = useState('');
   const router = useRouter();
+
   const logoutButtonHandler = () => {
     setOpenModalType(MODAL_TYPES.custom);
   };
@@ -36,14 +37,13 @@ const Page = () => {
     localStorage.removeItem('accessToken');
     router.push('/'); // 바로 메인 페이지로 이동
   };
-  const logout = () => {
+  const logout = async () => {
     console.log('로그아웃');
   };
 
-  useEffect(() => {
-    dispatch(registerActions.asynchFetchgetUserInfo());
-    setIsClicedChangeButton(false);
-  }, [dispatch, IsClickedChangeButton]);
+  // useEffect(() => {
+  //   dispatch(registerActions.asynchFetchgetUserInfo());
+  // }, [dispatch, tryChangePassword]);
 
   const viewportSize: string = useGetViewportSize();
 
@@ -80,7 +80,11 @@ const Page = () => {
             inputWidth={EditProfileinputWidth}
             userData={userData}
           />
-          <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
+          <ChangePasswordDiv
+            inputWidth={changePasswordInputWidth}
+            tryChangePassword={tryChangePassword}
+            setTryChangePassword={setTryChangePassword}
+          />
           <button
             type="button"
             className={styles.logoutButton}
@@ -89,13 +93,13 @@ const Page = () => {
             로그아웃
           </button>
 
-          <button
+          {/* <button
             type="button"
             className={styles.logoutButton}
             onClick={() => logoutTestButtonHandler()}
           >
             테스트 로그아웃
-          </button>
+          </button> */}
         </div>
       </div>
 
