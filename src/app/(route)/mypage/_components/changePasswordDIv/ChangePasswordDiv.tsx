@@ -67,14 +67,6 @@ const ChangePasswordDiv = ({
     setTryChangePassword(false);
   }, [errorStatus, tryChangePassword]);
 
-  // useEffect(() => {
-  //   console.log(errorMessage, errorStatus);
-  //   if (tryChangePassword && errorStatus === 200) {
-  //     alert('비밀번호가 변경되었습니다.');
-  //   }
-  //   setTryChangePassword(false);
-  // }, [tryChangePassword]);
-
   const changePassword = () => {
     dispatch(
       registerActions.asynchFetchChangePassword({

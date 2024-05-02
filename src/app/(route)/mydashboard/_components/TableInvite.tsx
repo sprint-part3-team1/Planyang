@@ -45,8 +45,11 @@ const TableInvite = () => {
   }, [dashBoardDatas, dispatch, invitationDatas.page]);
 
   const onRightButtonClick = async () => {
-    if (invitationDatas.page * 5 < invitationDatas.data?.totalCount)
-      dispatch(invitationActions.incrementPage());
+    if (invitationDatas.data?.totalCount !== undefined) {
+      if (invitationDatas.page * 5 < invitationDatas.data.totalCount) {
+        dispatch(invitationActions.incrementPage());
+      }
+    }
   };
 
   const onLeftButtonClick = async () => {
@@ -74,6 +77,9 @@ const TableInvite = () => {
     }
   };
 
+  const [isLeftActive, setIsLeftActive] = useState(false);
+  const [isRightActive, setIsRightActive] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -81,6 +87,8 @@ const TableInvite = () => {
         <div className={styles.pagination}>
           <span>1 페이지 중 {invitationDatas.page}</span>{' '}
           <ArrowButton
+            isLeftActive={isLeftActive}
+            isRightActive={isRightActive}
             onRightButtonClick={onRightButtonClick}
             onLeftButtonClick={onLeftButtonClick}
           />

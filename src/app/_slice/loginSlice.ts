@@ -8,6 +8,7 @@ import { LoginStateType } from '../_types/_redux/_state/reduxState';
 const initialState: LoginStateType = {
   data: null,
   status: null,
+  error: null,
 };
 const resetData = (state: LoginStateType) => {
   state.data = null;
@@ -45,7 +46,7 @@ const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       asynchFetchSignIn.fulfilled,
-      (state: LoginStateType, action: PayloadAction<LoginStateType>) => {
+      (state: LoginStateType, action) => {
         return {
           ...state,
           data: action.payload.data,

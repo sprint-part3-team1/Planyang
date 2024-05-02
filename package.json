@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.2.0",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "crypto-js": "^4.2.0",

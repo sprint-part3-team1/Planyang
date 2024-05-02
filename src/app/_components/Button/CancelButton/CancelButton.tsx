@@ -1,8 +1,12 @@
 import styles from './CancelButton.module.css';
 
-const CancelButton = ({ boardId, invitationId, handleDeleteAndNavigate }) => {
+const CancelButton = ({ boardId, invitationId, handleDeleteAndNavigate } : {
+  boardId: string;
+  invitationId: number;
+  handleDeleteAndNavigate: any
+}) => {
   
-  const handleCancleButton = (boardId, invitationId) => {
+  const handleCancleButton = (boardId: string, invitationId: number) => {
     handleDeleteAndNavigate(boardId, invitationId);
   };
   return (

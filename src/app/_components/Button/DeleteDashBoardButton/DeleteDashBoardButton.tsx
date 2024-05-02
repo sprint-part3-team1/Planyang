@@ -19,16 +19,20 @@ const DeleteDashBoardButton = () => {
   };
 
   return (
-    <button
-      type="button"
-      className={styles.container}
-      onClick={() => {
-        handleDeleteDashBoard(boardId?.id);
-        router.push('/mydashboard');
-      }}
-    >
-      대시보드 삭제하기
-    </button>
+    <>
+    { boardId && (
+      <button
+        type="button"
+        className={styles.container}
+        onClick={() => {
+          handleDeleteDashBoard(boardId.id);
+          router.push('/mydashboard');
+        }}
+      >
+        대시보드 삭제하기
+      </button>
+    )}
+    </>
   );
 };
 

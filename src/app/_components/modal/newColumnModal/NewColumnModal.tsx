@@ -36,7 +36,9 @@ const NewColumnModal = ({ setOpenModalType }: ModalPropsType) => {
   const produceButtonHandler = () => {
     if (titleRef.current?.value === '') return;
 
-    createColumn(titleRef.current?.value, Number(params.id));
+    if(titleRef.current?.value) {
+      createColumn(titleRef.current?.value, Number(params.id));
+    }
     setOpenModalType('');
   };
 
@@ -45,6 +47,7 @@ const NewColumnModal = ({ setOpenModalType }: ModalPropsType) => {
   return (
     <ModalContainer title="새 컬럼 생성">
       <Input
+      inputId='이름 input'
         inputName="이름"
         inputType="text"
         inputWidth={INPUT_WIDTH[viewPortType]}

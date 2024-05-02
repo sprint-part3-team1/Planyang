@@ -109,19 +109,23 @@ const TaskCardModal = ({
     fetchComment();
   }, [dispatch]);
   const postComment = async () => {
-    try {
-      await dispatch(
-        commentActions.asyncFetchLeaveComment({
-          content: myCommentInputValue,
-          cardId: Number(requestId),
-          columnId: cardInfo?.columnId,
-          dashboardId: cardInfo?.dashboardId,
-        }),
-      );
-      await fetchComment();
-      commentRef.current.value = '';
-    } catch (error) {
-      console.error('Error post comment:', error);
+    if(cardInfo) {
+      try {
+        await dispatch(
+          commentActions.asyncFetchLeaveComment({
+            content: myCommentInputValue,
+            cardId: Number(requestId),
+            columnId: cardInfo.columnId,
+            dashboardId: cardInfo.dashboardId,
+          }),
+        );
+        await fetchComment();
+        if(commentRef.current) {
+          commentRef.current.value = '';
+        }
+      } catch (error) {
+        console.error('Error post comment:', error);
+      }
     }
   };
 
@@ -230,6 +234,14 @@ const TaskCardModal = ({
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, handleCloseClick);
 
+  const commentKeyboardHandler = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
+    if (e.key === 'Enter') {
+      postComment();
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -276,6 +288,7 @@ const TaskCardModal = ({
                 className={styles.myCommentTextarea}
                 onChange={commentInputChangeHandler}
                 ref={commentRef}
+                onKeyDown={commentKeyboardHandler}
               />
               {myCommentInputValue && (
                 <button

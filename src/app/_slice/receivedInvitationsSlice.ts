@@ -139,12 +139,14 @@ const receivedInvitationsSlice = createSlice({
 
     builder.addCase(
       asyncGetReceivedInvitationsByCursorId.fulfilled,
-      (state, action: PayloadAction<ReceivedInvitationsType['data']>) => {
-        state.data.invitations = [
-          ...state.data.invitations,
-          ...action.payload.invitations,
-        ];
-        state.data.cursorId = action.payload?.cursorId;
+      (state, action) => {
+        if (state.data) {
+          state.data.invitations = [
+            ...state.data.invitations,
+            ...action.payload.invitations,
+          ];
+          state.data.cursorId = action.payload?.cursorId;
+        }
       },
     );
 

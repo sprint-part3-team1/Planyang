@@ -11,11 +11,11 @@ import ImageInput from './ImageInput';
 type EditProfileTypeProps = {
   inputWidth: number;
   userData: {
-    createdAt: string;
-    email: string;
     id: number;
+    email: string;
     nickname: string;
     profileImageUrl: string | null;
+    createdAt: string;
     updatedAt: string;
   };
 };

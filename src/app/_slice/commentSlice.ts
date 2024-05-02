@@ -135,12 +135,14 @@ const commentSlice = createSlice({
     });
 
     builder.addCase(asyncFetchUpdateComment.fulfilled, (state, action) => {
-      const updateComment = action.payload;
-      const index = state.data?.comments?.findIndex(
-        (item) => item.id === updateComment.id,
-      );
-      if (state.data && index !== -1) {
-        state.data.comments[index] = updateComment;
+      if (state.data && state.data.comments) {
+        const updateComment = action.payload;
+        const index = state.data.comments.findIndex(
+          (item) => item.id === updateComment.id,
+        );
+        if (index !== -1) {
+          state.data.comments[index] = updateComment;
+        }
       }
     });
 
