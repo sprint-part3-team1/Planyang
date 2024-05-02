@@ -27,7 +27,6 @@ const Card = ({
     }),
   });
 
-  console.log(cardInfo);
   const CALENDAR_ICON = '/assets/icons/calendar.svg';
 
   const [isMobile, setIsMobile] = useState(false);

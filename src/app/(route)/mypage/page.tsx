@@ -31,14 +31,11 @@ const Page = () => {
     setOpenModalType(MODAL_TYPES.custom);
   };
 
-  const logoutTestButtonHandler = async () => {
-    await dispatch(registerActions.resetData());
-    await dispatch(loginActions.resetData());
+  const logout = () => {
+    router.push('/');
+    dispatch(registerActions.resetData());
+    dispatch(loginActions.resetData());
     localStorage.removeItem('accessToken');
-    router.push('/'); // 바로 메인 페이지로 이동
-  };
-  const logout = async () => {
-    console.log('로그아웃');
   };
 
   // useEffect(() => {
@@ -92,14 +89,6 @@ const Page = () => {
           >
             로그아웃
           </button>
-
-          {/* <button
-            type="button"
-            className={styles.logoutButton}
-            onClick={() => logoutTestButtonHandler()}
-          >
-            테스트 로그아웃
-          </button> */}
         </div>
       </div>
 

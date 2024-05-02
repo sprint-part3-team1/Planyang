@@ -20,9 +20,15 @@ const EditDashName = () => {
   const [dashboardColor, setDashboardColor] = useState<string>('green');
 
   const [editDashBoardName, setEditDashBoardName] = useState('');
+  const [inputError, setInputError] = useState('');
   const dispatch = useAppDispatch();
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditDashBoardName(e.target.value);
+    if (e.target.value.length <= 10) {
+      setEditDashBoardName(e.target.value);
+      setInputError('');
+    } else {
+      setInputError('10자 이하로 글자를 입력해주세요.');
+    }
   };
 
   const editDashboard = (dashBoardId: number, title: string, color: string) => {
@@ -56,7 +62,11 @@ const EditDashName = () => {
       default:
         color = '';
     }
-    editDashboard(dashBoardDatas?.id, editDashBoardName, color);
+    if (!inputError && editDashBoardName !== '') {
+      editDashboard(dashBoardDatas?.id, editDashBoardName, color);
+    } else if (editDashBoardName === '') {
+      setInputError('글자를 입력해주세요.');
+    }
   };
 
   return (
@@ -79,6 +89,9 @@ const EditDashName = () => {
           handleChangeInput(e);
         }}
       />
+      <p style={{ color: 'red', fontWeight: 'bold', fontSize: '14px' }}>
+        {inputError}
+      </p>
       <div className={styles.editBtn}>
         <EditButton editButtonHandler={editButtonHandler} />
       </div>

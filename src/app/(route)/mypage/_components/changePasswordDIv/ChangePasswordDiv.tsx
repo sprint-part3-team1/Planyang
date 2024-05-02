@@ -14,10 +14,11 @@ const ChangePasswordDiv = ({
 }: {
   inputWidth: number;
   tryChangePassword: boolean;
-  setTryChangePassword: SetStateAction<boolean>;
+  setTryChangePassword: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const dispatch = useAppDispatch();
   const errorMessage = useAppSelector(userResponse).error;
+  const errorStatus = useAppSelector(userResponse).status;
 
   const currentPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
@@ -57,20 +58,32 @@ const ChangePasswordDiv = ({
   };
 
   useEffect(() => {
-    if (errorMessage) {
+    if (errorMessage && errorStatus !== 204 && tryChangePassword) {
       setOpenModalType(MODAL_TYPES.custom);
+    } else if (errorStatus === 204 && tryChangePassword) {
+      setOpenModalType('');
+      alert('비밀번호가 변경되었습니다.');
     }
     setTryChangePassword(false);
-  }, [tryChangePassword]);
+  }, [errorStatus, tryChangePassword]);
+
+  // useEffect(() => {
+  //   console.log(errorMessage, errorStatus);
+  //   if (tryChangePassword && errorStatus === 200) {
+  //     alert('비밀번호가 변경되었습니다.');
+  //   }
+  //   setTryChangePassword(false);
+  // }, [tryChangePassword]);
 
   const changePassword = () => {
-    setTryChangePassword(true);
     dispatch(
       registerActions.asynchFetchChangePassword({
         password: currentPassword,
         newPassword,
       }),
-    );
+    ).then(() => {
+      setTryChangePassword(true);
+    });
   };
 
   const changeButtonHandler = () => {
