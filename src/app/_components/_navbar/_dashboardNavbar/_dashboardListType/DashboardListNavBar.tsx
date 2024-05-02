@@ -9,6 +9,8 @@ import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import { userResponse, registerActions } from '@/app/_slice/registerSlice';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { useRouter } from 'next/navigation';
+
 import styles from '../DashboardTypeNavBar.module.scss';
 
 const DashboardListNavBar = () => {
@@ -25,13 +27,14 @@ const DashboardListNavBar = () => {
     getUserInformation();
   }, [dispatch]);
 
+  const router = useRouter();
+
   return (
     <div className={styles.navbarWrapper}>
       <div className={styles.navBarTitleWrapper}>
         {/* {dashBoardDetailDatas?.title} */}내 대시보드
       </div>
       <div className={styles.sideMenuWrapper}>
-
         <Contour />
 
         <div className={styles.sideMenuUserWrapper}>

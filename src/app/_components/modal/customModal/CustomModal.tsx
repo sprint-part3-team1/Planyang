@@ -1,5 +1,6 @@
 import React, { SetStateAction } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from './CustomModal.module.css';
 import ModalContainer from '../modalContainer/ModalContainer';
 import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
@@ -13,10 +14,12 @@ const CustomModal = ({
   setOpenModalType: React.Dispatch<SetStateAction<string>>;
   checkButtonHandler?: () => void; // default Props 정의 시 오류가 발생해서 그대로 두었습니다.
 }) => {
+  const router = useRouter();
   const checkButtonFunc = () => {
     checkButtonHandler?.();
     setOpenModalType('');
   };
+
   return (
     <ModalContainer title="">
       <p className={styles.contentText}>{modalText}</p>

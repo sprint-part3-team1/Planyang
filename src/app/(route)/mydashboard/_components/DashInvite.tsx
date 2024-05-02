@@ -28,7 +28,7 @@ const DashInvite = ({ setPageOne }) => {
   const [cursor, setCursor] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState<string | null>('');
   const { ref, inView } = useInView({
-    threshold: 0.5,
+    threshold: 0.1,
   });
   const [isFirstGetInvite, setIsFirstGetInvite] = useState(false);
   const getInvitation = async (searchQuery: string | null) => {

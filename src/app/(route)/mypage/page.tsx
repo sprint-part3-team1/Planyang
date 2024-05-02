@@ -31,10 +31,9 @@ const Page = () => {
   };
 
   const logout = () => {
-    router.push('/');
+    router.push('/logout');
     dispatch(registerActions.resetData());
     dispatch(loginActions.resetData());
-
     localStorage.removeItem('accessToken');
   };
 
