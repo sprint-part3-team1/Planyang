@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import ArrowButton from '@/app/_components/Button/ArrowButton/ArrowButton';
-
+import { receivedInvitationData } from '@/app/_slice/receivedInvitationsSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
@@ -22,6 +22,7 @@ const SideMenu = () => {
   const CROWN_ICON_SRC = '/assets/icons/crown.svg';
 
   const dashboardDatas = useAppSelector(dashBoardData);
+  const inviteInformation = useAppSelector(receivedInvitationData);
   const getDashboardData = (page: number) => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard(page));
   };
@@ -51,6 +52,10 @@ const SideMenu = () => {
   useEffect(() => {
     setTotalCount(dashboardDatas?.totalCount);
   }, [dashboardDatas]);
+
+  useEffect(() => {
+    getDashboardData(page);
+  }, [inviteInformation]);
 
   const onRightButtonClick = () => {
     if (page < Math.ceil(totalCount / 7)) {

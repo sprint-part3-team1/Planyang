@@ -49,7 +49,7 @@ const DashBoard = () => {
     try {
       const updatedItem = {
         columnId: droppedColumnId,
-        assigneeUserId: item.assignee.id,
+        assigneeUserId: item.assignee?.id,
         title: item.title,
         description: item.description,
         dueDate: item.dueDate,

@@ -9,6 +9,7 @@ import {
   dashBoardActions,
   dashBoardData,
 } from '@/app/_slice/dashBoardSlice';
+import { receivedInvitationData } from '@/app/_slice/receivedInvitationsSlice';
 import { dashBoardDetailActions } from '@/app/_slice/dashBoardDetail';
 import DashboardListNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardListType/DashboardListNavBar';
 import AddDashBoardButton from '@/app/_components/Button/AddDashBoardButton/AddDashBoardButton';
@@ -32,6 +33,8 @@ interface DashBoardStateType {
 export default function MyDashBoard() {
   const dispatch = useAppDispatch();
   const dashboardDatas = useAppSelector(dashBoardData);
+
+  const inviteInformation = useAppSelector(receivedInvitationData);
   const userData = useAppSelector(userResponse);
   const [openModalType, setOpenModalType] = useState('');
   const [page, setPage] = useState<number>(1);
@@ -45,7 +48,6 @@ export default function MyDashBoard() {
   const handleLeftButtonClick = () => {
     // 좌측 버튼을 클릭했을 때의 동작 구현
     if (isLeftActive) {
-      console.log('페이지 -1');
       setPage(page - 1);
     }
   };
@@ -53,27 +55,21 @@ export default function MyDashBoard() {
   const handleRightButtonClick = () => {
     // 우측 버튼을 클릭했을 때의 동작 구현
     if (isRightActive) {
-      console.log('페이지 +1');
       setPage(page + 1);
     }
   };
 
-  // 페이지 1로 바뀌게 하는 함수
-  const setPageOne = () => {
-    setPage(1);
+  const fetchData = async () => {
+    try {
+      const data = await fetchDashboards(page, 5);
+      setDashBoardDatas(data);
+    } catch (error) {
+      console.error('Error fetching dashboards:', error);
+    }
   };
 
   // 대시보드 버튼의 페이지 네이션
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchDashboards(page, 5);
-        setDashBoardDatas(data);
-      } catch (error) {
-        console.error('Error fetching dashboards:', error);
-      }
-    };
-
     fetchData();
   }, [page, dispatch, dashboardDatas]);
 
@@ -101,6 +97,11 @@ export default function MyDashBoard() {
       setIsRightActive(false);
     }
   }, [page, totalPages]);
+
+  // 초대받은 내역 데이터가 바뀌면 재랜더링
+  useEffect(() => {
+    fetchData();
+  }, [inviteInformation]);
 
   return (
     <div style={{ width: '100%' }}>
@@ -147,7 +148,7 @@ export default function MyDashBoard() {
             onRightButtonClick={handleRightButtonClick}
           />
         </div>
-        <DashInvite setPageOne={setPageOne} />
+        <DashInvite />
       </div>
     </div>
   );
