@@ -34,6 +34,7 @@ const Page = () => {
     router.push('/');
     dispatch(registerActions.resetData());
     dispatch(loginActions.resetData());
+
     localStorage.removeItem('accessToken');
   };
 
