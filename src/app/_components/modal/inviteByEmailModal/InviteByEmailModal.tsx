@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
@@ -10,7 +10,6 @@ import {
   invitationData,
   invitationActions,
 } from '@/app/_slice/invitationSlice';
-import { dashBoardData } from '@/app/_slice/dashBoardSlice';
 
 import ModalContainer from '../modalContainer/ModalContainer';
 import Input from '../../Input';
@@ -24,13 +23,20 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
   const invitationDatas = useAppSelector(invitationData);
   const dashBoardDetailDatas = useAppSelector(dashBoardDetailData);
 
+  const isEmailExist = invitationDatas.data?.invitations.some(
+    (item) =>
+      item.invitee.email === inputValue || item.inviter.email === inputValue,
+  );
   const InviteButtonHandler = async () => {
-    await dispatch(
-      invitationActions.asynchFetchinviteUserToDashboard({
-        email: inputValue,
-        dashBoardId: dashBoardDetailDatas?.id,
-      }),
-    );
+    if (!isEmailExist) {
+      await dispatch(
+        invitationActions.asynchFetchinviteUserToDashboard({
+          email: inputValue,
+          dashBoardId: dashBoardDetailDatas?.id,
+        }),
+      );
+    }
+
     await dispatch(
       invitationActions.asynchGetMyInvitation({
         dashBoardId: dashBoardDetailDatas?.id,
@@ -61,6 +67,7 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
     [VIEWPORT_TYPES.tablet]: 48.4,
     [VIEWPORT_TYPES.mobile]: 28.7,
   };
+
   return (
     <ModalContainer title="초대하기">
       <Input
