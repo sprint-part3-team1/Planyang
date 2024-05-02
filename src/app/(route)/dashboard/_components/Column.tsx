@@ -1,72 +1,33 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, useState, SetStateAction } from 'react';
 import Image from 'next/image';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
 
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
-import axios from 'axios';
-import {
-  CardResponseType,
-  cardActions,
-  cardData,
-} from '@/app/_slice/cardSlice';
+import { cardActions } from '@/app/_slice/cardSlice';
 import { useInView } from 'react-intersection-observer';
 import { useDrop } from 'react-dnd';
-import useAppSelector from '@/app/_hooks/useAppSelector';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/_store/store';
 import styles from './Column.module.css';
 import Card from './Card';
 
-const axiosInstance = axios.create({
-  baseURL: `https://sp-taskify-api.vercel.app/4-1/`,
-  timeout: 5000,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
-
 interface Props {
-  columnData: [
-    {
-      createdAt: string;
-      dashboardId: number;
-      id: number;
-      teamId: string;
-      title: string;
-      updatedAt: string;
-    },
-  ];
-  cardInfo: Record<string, CardResponseType[]> | undefined;
-  setCardInfo: Dispatch<
-    SetStateAction<Record<string, CardResponseType[]> | undefined>
-  >;
-  totalCount: Record<number, number> | undefined;
-  setTotalCount: Dispatch<SetStateAction<Record<number, number> | undefined>>;
+  columnData: {
+    createdAt: string;
+    dashboardId: number;
+    id: number;
+    teamId: string;
+    title: string;
+    updatedAt: string;
+  };
   onDrop: () => void;
   isUpdated: boolean;
   setIsUpdated: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const Column = ({
-  columnData,
-  cardInfo,
-  setCardInfo,
-  totalCount,
-  setTotalCount,
-  onDrop,
-  isUpdated,
-  setIsUpdated,
-}: Props) => {
+const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'item',
     drop: (item) => onDrop(item, columnData.id),
@@ -79,39 +40,39 @@ const Column = ({
 
   const GET_CARDS = 8;
 
-  const [pages, setPages] = useState<number>(GET_CARDS);
+  const [cardInfo, setCardInfo] = useState(null);
+  const [sizes, setSizes] = useState<number>(GET_CARDS);
   const [openModalType, setOpenModalType] = useState('');
   const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState<Record<number, number>>();
+
   const { ref, inView } = useInView({
     threshold: 1,
   });
 
   const dispatch = useAppDispatch();
-  const cardDatas = useAppSelector(cardData);
 
+  const { isChange } = useSelector(
+    (state: RootState) => state.changedCardState,
+  );
   const fetchCardList = async (columnId: number) => {
+    setLoading(true);
     try {
-      await dispatch(cardActions.asyncFetchGetCards({ columnId }));
+      await dispatch(cardActions.asyncFetchGetCards({ sizes, columnId })).then(
+        (response: any) => {
+          setCardInfo((prev) => ({
+            ...prev,
+            [columnId]: response.payload.cards,
+          }));
+          setTotalCount((prev) => ({
+            ...prev,
+            [columnId]: response.payload.totalCount,
+          }));
+        },
+      );
     } catch (error) {
       console.error('Error fetching cards:', error);
     }
-  };
-
-  const viewCards = async (columId: number) => {
-    setLoading(true);
-    await axiosInstance
-      .get(`cards?size=${pages}&columnId=${columId}`)
-      .then((res) => {
-        setCardInfo((prev) => ({
-          ...prev,
-          [columId]: res.data.cards,
-        }));
-        setTotalCount((prev) => ({
-          ...prev,
-          [columId]: res.data.totalCount,
-        }));
-      })
-      .catch((error) => console.log(`카드 목록 조회 실패(${error})`));
     setLoading(false);
   };
 
@@ -119,17 +80,12 @@ const Column = ({
 
   useEffect(() => {
     fetchCardList(columnData.id);
-  }, []);
-
-  // TODO: cardDatas 형식 수정 필요
-  useEffect(() => {
-    viewCards(columnData.id);
-  }, [pages, isUpdated, setIsUpdated, cardDatas]);
+  }, [sizes, isUpdated, setIsUpdated, dispatch, isChange]);
 
   useEffect(() => {
     if (inView && !loading) {
       setTimeout(() => {
-        setPages((prev) => prev + GET_CARDS);
+        setSizes((prev) => prev + GET_CARDS);
       }, 500);
     }
   }, [inView]);
@@ -166,18 +122,19 @@ const Column = ({
         <div onClick={() => setOpenModalType(MODAL_TYPES.createTask)}>
           <AddTodoButton />
         </div>
-        {cardDataList.map((card) => (
-          <Card
-            key={card.id}
-            nickname={card.assignee.nickname}
-            profileImageUrl={card.assignee.profileImageUrl}
-            title={card.title}
-            tagNameArr={card.tags}
-            date={card.dueDate}
-            image={card.imageUrl}
-            cardInfo={card}
-          />
-        ))}
+        {cardDataList &&
+          cardDataList.map((card) => (
+            <Card
+              key={card.id}
+              nickname={card.assignee.nickname}
+              profileImageUrl={card.assignee.profileImageUrl}
+              title={card.title}
+              tagNameArr={card.tags}
+              date={card.dueDate}
+              image={card.imageUrl}
+              cardInfo={card}
+            />
+          ))}
       </div>
       <ModalPortal
         openModalType={openModalType}
@@ -185,7 +142,7 @@ const Column = ({
         inputInitialValue={columnData.title}
         requestId={columnData.id}
       />
-      {totalCount && totalCount[columnData.id] >= pages && <div ref={ref} />}
+      {totalCount && totalCount[columnData.id] >= sizes && <div ref={ref} />}
     </div>
   );
 };
