@@ -6,11 +6,17 @@ import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
 import ArrowDown from '@/../public/assets/icons/arrowDown.svg';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import { cardActions, cardData } from '@/app/_slice/cardSlice';
+import { cardActions } from '@/app/_slice/cardSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { MemberInfoType } from '@/app/_types/dropdownProps';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
 import MODAL_TYPES from '@/app/constants/modalTypes';
+import {
+  cardDetailActions,
+  cardDetailData,
+} from '@/app/_slice/cardDetailSlice';
+import { useDispatch } from 'react-redux';
+import { setChangeCard } from '@/app/_slice/changedCardSlice';
 import Input from '../../Input';
 import styles from './ModifyTaskModal.module.css';
 import ModalContainer from '../modalContainer/ModalContainer';
@@ -26,8 +32,9 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   };
 
   const dispatch = useAppDispatch();
-  const cardInfo = useAppSelector(cardData);
+  const cardInfo = useAppSelector(cardDetailData);
   const memberDataList = useAppSelector(memberData);
+  const cardDispatch = useDispatch();
 
   const managerIndex = memberDataList?.members.findIndex(
     (member) => member.userId === cardInfo?.assignee.id,
@@ -63,6 +70,14 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     setSelectedImagePath,
   };
 
+  const changeCards = () => {
+    cardDispatch(setChangeCard(true));
+  };
+
+  const unchangeCards = () => {
+    cardDispatch(setChangeCard(false));
+  };
+
   const updateCard = async (
     columnId: number,
     assigneeUserId: number,
@@ -74,6 +89,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     imageUrl: string | undefined,
   ) => {
     try {
+      changeCards();
       await dispatch(
         cardActions.asyncFetchPutCard({
           columnId,
@@ -88,6 +104,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
       );
     } catch (error) {
       console.error('Error create card:', error);
+    } finally {
+      unchangeCards();
     }
   };
 
@@ -138,7 +156,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     const fetchCardDetail = async () => {
       try {
         await dispatch(
-          cardActions.asyncFetchGetCard({
+          cardDetailActions.asyncFetchGetCard({
             cardId: Number(requestId),
           }),
         );

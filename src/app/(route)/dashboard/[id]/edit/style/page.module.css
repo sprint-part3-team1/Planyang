@@ -12,15 +12,14 @@
 }
 
 .custom-button {
-  background-color: #5534da; /* 배경색 */
-  color: white; /* 글자색 */
-  padding: 10px 20px; /* 내부 여백 */
-  border: none; /* 테두리 없음 */
-  border-radius: 5px; /* 모서리 둥글게 */
-  cursor: pointer; /* 커서를 포인터로 변경 */
+  background-color: #5534da;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-/* 버튼 호버 효과 */
 .custom-button:hover {
-  opacity: 0.8; /* 호버 시 투명도 감소 */
+  opacity: 0.8;
 }

@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import styles from '@/app/_components/Header.module.css';
+import { useRouter } from 'next/navigation';
 import { HeaderProps } from '../_types/HeaderProps';
 
 const Header = ({ isWhite }: HeaderProps) => {
   const LOGO_IMG = '/assets/images/planyang_image.png';
   const LOGO_TITLE = '/assets/images/planyang_text.PNG';
-
+  const router = useRouter();
   return (
     <div
       className={`${styles.headerWrapper} ${isWhite ? styles.backWhite : ''}`}
@@ -21,7 +22,15 @@ const Header = ({ isWhite }: HeaderProps) => {
           />
         </Link>
         <div className={`${styles.signBox} ${isWhite ? styles.backWhite : ''}`}>
-          <Link href="/login">로그인</Link>
+          <Link
+            href="/login"
+            onClick={() => {
+              router.push('/login');
+            }}
+          >
+            로그인
+          </Link>
+
           <Link href="/signup">회원가입</Link>
         </div>
       </div>

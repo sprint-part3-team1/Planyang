@@ -3,11 +3,17 @@ import { TaskCardModalPropsType } from '@/app/_types/modalProps';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import useAppSelector from '@/app/_hooks/useAppSelector';
-import { cardActions, cardData } from '@/app/_slice/cardSlice';
+import { cardActions } from '@/app/_slice/cardSlice';
 import { commentActions, commentData } from '@/app/_slice/commentSlice';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import { useParams } from 'next/navigation';
 import MODAL_TYPES from '@/app/constants/modalTypes';
+import {
+  cardDetailActions,
+  cardDetailData,
+} from '@/app/_slice/cardDetailSlice';
+import { setChangeCard } from '@/app/_slice/changedCardSlice';
+import { useDispatch } from 'react-redux';
 import ManagerInfoBox from './ManagerInfoBox';
 import ModalContainer from '../modalContainer/ModalContainer';
 import StatusTag from '../../DropDown/StatusTag';
@@ -24,11 +30,12 @@ const TaskCardModal = ({
   requestId,
 }: TaskCardModalPropsType) => {
   const dispatch = useAppDispatch();
-  const cardInfo = useAppSelector(cardData);
+  const cardInfo = useAppSelector(cardDetailData);
   const commentDataList = useAppSelector(commentData);
   const columnDataList = useAppSelector(columnData);
   const params = useParams();
   const commentRef = useRef<HTMLTextAreaElement>(null);
+  const cardDispatch = useDispatch();
 
   const [myCommentInputValue, setMyCommentInputValue] = useState('');
   const [isPressedMoreIcon, setIsPressedMoreIcon] = useState(false);
@@ -38,6 +45,14 @@ const TaskCardModal = ({
   const [isClickEditMode, setIsClickEditMode] = useState(false);
 
   let status = '';
+
+  const changeCards = () => {
+    cardDispatch(setChangeCard(true));
+  };
+
+  const unchangeCards = () => {
+    cardDispatch(setChangeCard(false));
+  };
 
   useEffect(() => {
     if (isClickedClose) {
@@ -54,7 +69,7 @@ const TaskCardModal = ({
     const fetchCardDetail = async () => {
       try {
         await dispatch(
-          cardActions.asyncFetchGetCard({
+          cardDetailActions.asyncFetchGetCard({
             cardId: Number(requestId),
           }),
         );
@@ -148,9 +163,12 @@ const TaskCardModal = ({
 
   const deleteCard = async (cardId: number) => {
     try {
+      changeCards();
       await dispatch(cardActions.asyncFetchDeleteCard({ cardId }));
     } catch (error) {
       console.error('Error delete card:', error);
+    } finally {
+      unchangeCards();
     }
   };
 
