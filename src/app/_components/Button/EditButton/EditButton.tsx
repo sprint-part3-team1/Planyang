@@ -5,6 +5,7 @@ const EditButton = ({ editButtonHandler }) => {
     <button
       type="button"
       className={styles.editBtn}
+      style={{ cursor: 'pointer' }}
       onClick={() => {
         editButtonHandler();
       }}

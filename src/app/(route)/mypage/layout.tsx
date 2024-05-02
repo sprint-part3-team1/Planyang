@@ -1,6 +1,6 @@
 'use client';
 
-import { registerActions } from '@/app/_slice/registerSlice';
+import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 
 import React, { useEffect, useState } from 'react';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
@@ -9,11 +9,14 @@ import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import Link from 'next/link';
 import SideMenu from '../mydashboard/_components/SideMenu';
 import styles from './layout.module.css';
+import AccessError from '../mydashboard/_components/AccessError';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
 
   const dashBoardDatas = useAppSelector(dashBoardData);
+
+  const userData = useAppSelector(userResponse);
 
   useEffect(() => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
@@ -47,17 +50,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
-  return (
-    <>
-      <div style={{ fontSize: '100px' }}>로그인이 필요합니다</div>
-      <div>
-        <Link href="/login">
-          <button>로그인 하러가기</button>
-        </Link>
-        <Link href="/">
-          <button>메인 페이지로</button>
-        </Link>
-      </div>
-    </>
-  );
+  return <AccessError />;
 }
