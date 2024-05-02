@@ -31,7 +31,6 @@ const DashboardListNavBar = () => {
         {/* {dashBoardDetailDatas?.title} */}내 대시보드
       </div>
       <div className={styles.sideMenuWrapper}>
-
         <Contour />
 
         <div className={styles.sideMenuUserWrapper}>

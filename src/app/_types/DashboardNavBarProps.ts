@@ -1,7 +1,7 @@
 import { MemberListDto } from '@/app/_types/_dto/MemberListDto';
 
 export interface DashboardNavBarProps {
-  membersInfo: MemberListDto;
+  membersInfo?: MemberListDto;
 
   createdByMe: boolean;
   dashboardTitle: string;
