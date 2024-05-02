@@ -18,6 +18,7 @@ import EditProfileDiv from './_components/editProfileDiv/EditProfileDiv';
 const Page = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userResponse).data;
+  const [IsClickedChangeButton, setIsClicedChangeButton] = useState(false);
 
   const logoutModalText = `정말 로그아웃 하시겠습니까?`;
   const [openModalType, setOpenModalType] = useState('');
@@ -32,7 +33,8 @@ const Page = () => {
 
   useEffect(() => {
     dispatch(registerActions.asynchFetchgetUserInfo());
-  }, [dispatch]);
+    setIsClicedChangeButton(false);
+  }, [dispatch, IsClickedChangeButton]);
 
   const viewportSize: string = useGetViewportSize();
 
