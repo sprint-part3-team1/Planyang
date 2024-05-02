@@ -74,7 +74,6 @@ const DashBoardDetailLayout = ({
     fetchColumns();
     fetchUserInfo();
     fetchMemberInfo();
-    console.log(111111);
   }, [params.id, dispatch, dashboardDatas]);
 
   return (
