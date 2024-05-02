@@ -14,7 +14,7 @@ import useAppSelector from '@/app/_hooks/useAppSelector';
 import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import styles from './DashInvite.module.css';
 
-const DashInvite = ({ setPageOne }) => {
+const DashInvite = () => {
   const SEARCH_ICON = '/assets/icons/search.svg';
   const UNSUBSCRIBE_IMAGE = '/assets/images/unsubscribe.svg';
 
@@ -87,7 +87,7 @@ const DashInvite = ({ setPageOne }) => {
       }),
     );
 
-    dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
+    // dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
   };
 
   const rejectInvite = (invitationId: number) => {
