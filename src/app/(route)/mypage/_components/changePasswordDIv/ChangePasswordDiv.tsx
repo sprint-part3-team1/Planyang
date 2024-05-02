@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, SetStateAction } from 'react';
 import Input from '@/app/_components/Input';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
@@ -7,7 +7,15 @@ import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import styles from './ChangePasswordDiv.module.css';
 
-const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
+const ChangePasswordDiv = ({
+  inputWidth,
+  tryChangePassword,
+  setTryChangePassword,
+}: {
+  inputWidth: number;
+  tryChangePassword: boolean;
+  setTryChangePassword: React.Dispatch<SetStateAction<boolean>>;
+}) => {
   const dispatch = useAppDispatch();
   const errorMessage = useAppSelector(userResponse).error;
   const errorStatus = useAppSelector(userResponse).status;
@@ -50,10 +58,14 @@ const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
   };
 
   useEffect(() => {
-    if (errorMessage) {
+    if (errorMessage && errorStatus !== 204 && tryChangePassword) {
       setOpenModalType(MODAL_TYPES.custom);
+    } else if (errorStatus === 204 && tryChangePassword) {
+      setOpenModalType('');
+      alert('비밀번호가 변경되었습니다.');
     }
-  }, [errorMessage]);
+    setTryChangePassword(false);
+  }, [errorStatus, tryChangePassword]);
 
   const changePassword = () => {
     dispatch(
@@ -61,7 +73,9 @@ const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
         password: currentPassword,
         newPassword,
       }),
-    );
+    ).then(() => {
+      setTryChangePassword(true);
+    });
   };
 
   const changeButtonHandler = () => {

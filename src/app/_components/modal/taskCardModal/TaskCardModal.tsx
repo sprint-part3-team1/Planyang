@@ -230,6 +230,14 @@ const TaskCardModal = ({
   const ref = useRef<HTMLDivElement>(null);
   useOutsideClick(ref, handleCloseClick);
 
+  const commentKeyboardHandler = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
+    if (e.key === 'Enter') {
+      postComment();
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -276,6 +284,7 @@ const TaskCardModal = ({
                 className={styles.myCommentTextarea}
                 onChange={commentInputChangeHandler}
                 ref={commentRef}
+                onKeyDown={commentKeyboardHandler}
               />
               {myCommentInputValue && (
                 <button
