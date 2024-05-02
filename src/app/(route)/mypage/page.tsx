@@ -34,6 +34,7 @@ const Page = () => {
     router.push('/');
     dispatch(registerActions.resetData());
     dispatch(loginActions.resetData());
+
     localStorage.removeItem('accessToken');
   };
 
@@ -69,10 +70,12 @@ const Page = () => {
           profileImage={userData.profileImageUrl}
         />
         <div className={styles.container}>
-          <div className={styles.goBackDiv}>
-            <LeftArrow />
-            돌아가기
-          </div>
+          <Link href="/mydashboard">
+            <div className={styles.goBackDiv}>
+              <LeftArrow />
+              돌아가기
+            </div>
+          </Link>
           <EditProfileDiv
             inputWidth={EditProfileinputWidth}
             userData={userData}

@@ -1,6 +1,6 @@
 'use client';
 
-import { registerActions, userResponse } from '@/app/_slice/registerSlice';
+import { registerActions } from '@/app/_slice/registerSlice';
 
 import React, { useEffect, useState } from 'react';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
@@ -14,8 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
 
   const dashBoardDatas = useAppSelector(dashBoardData);
-
-  const userData = useAppSelector(userResponse);
 
   useEffect(() => {
     dispatch(dashBoardActions.asynchFetchGetDashBoard(1));
