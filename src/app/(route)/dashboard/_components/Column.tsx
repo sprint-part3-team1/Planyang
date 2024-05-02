@@ -126,8 +126,8 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
           cardDataList.map((card) => (
             <Card
               key={card.id}
-              nickname={card.assignee.nickname}
-              profileImageUrl={card.assignee.profileImageUrl}
+              nickname={card?.assignee?.nickname}
+              profileImageUrl={card?.assignee?.profileImageUrl}
               title={card.title}
               tagNameArr={card.tags}
               date={card.dueDate}
