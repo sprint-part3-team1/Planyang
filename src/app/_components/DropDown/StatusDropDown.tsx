@@ -8,13 +8,14 @@ import styles from './StatusDropDown.module.css';
 import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
 import CheckIcon from '../../../../public/assets/icons/checkIcon';
 import StatusTag from './StatusTag';
+import useAppDispatch from './../../_hooks/useAppDispatch';
 
 const StatusDropDown = ({
   title,
   setStatusColumnId,
   columnId,
 }: DropDownPropsType) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
   const columnDataList = useAppSelector(columnData);
 
   const initialStatus = columnDataList?.data?.findIndex(
@@ -24,7 +25,7 @@ const StatusDropDown = ({
   const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
   const [selectedDivIndex, setSelectedDivIndex] = useState(initialStatus);
-  const STATUS = columnDataList?.data.map((column) => column.title);
+  const STATUS = columnDataList?.data ? columnDataList?.data.map((column) => column.title) : [];
 
   const handleDivClick = (index: number) => {
     let statusColumnId = -1;
@@ -32,7 +33,7 @@ const StatusDropDown = ({
       if (column.title === STATUS[index]) statusColumnId = column.id;
     });
     setSelectedDivIndex(index);
-    setStatusColumnId(statusColumnId);
+    setStatusColumnId && setStatusColumnId(statusColumnId);
   };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -73,7 +74,11 @@ const StatusDropDown = ({
       <div
         className={`${styles.drowDownInput} ${isDropDown && styles.pressed}`}
       >
-        <StatusTag status={STATUS[selectedDivIndex]} />
+        {
+          selectedDivIndex && (
+            <StatusTag status={STATUS[selectedDivIndex]} />
+          )
+        }
         <button
           type="button"
           className={styles.drowDownButton}

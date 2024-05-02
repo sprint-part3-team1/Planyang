@@ -13,7 +13,7 @@ export type MemberInfoType = {
 
 export type DropDownPropsType = {
   title: string;
-  setStatusColumnId?: number | null;
+  setStatusColumnId?: React.Dispatch<React.SetStateAction<number | undefined>>
   columnId?: number | null;
   clickedMember?: MemberInfoType | null;
   clickedMemberIndex?: number | null;

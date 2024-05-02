@@ -40,7 +40,10 @@ const ColumnManageModal = ({
   const produceButtonHandler = () => {
     if (inputRef.current?.value === '') return;
 
-    updateColumnTitle(requestId, inputRef.current?.value);
+    if(requestId && inputRef.current?.value) {
+      updateColumnTitle(requestId, inputRef.current?.value);
+    }
+
     setOpenModalType('');
   };
 

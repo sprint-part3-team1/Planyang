@@ -11,8 +11,7 @@ import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { columnActions } from '@/app/_slice/columnSlice';
 import DashboardNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardType/DashboardNavBar';
 import useAppSelector from '@/app/_hooks/useAppSelector';
-import { loginActions, loginData } from '@/app/_slice/loginSlice';
-import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
+import { dashBoardData } from '@/app/_slice/dashBoardSlice';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
 
@@ -63,7 +62,10 @@ const DashBoardDetailLayout = ({
     const fetchMemberInfo = async () => {
       try {
         await dispatch(
-          memberActions.asyncGetMembers({ dashboardId: params.id, page: 1 }),
+          memberActions.asyncGetMembers({
+            dashboardId: Number(params.id),
+            page: 1,
+          }),
         );
       } catch (error) {
         console.error('Error fetching memberData', error);

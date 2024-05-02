@@ -62,8 +62,8 @@ const EditDashName = () => {
       default:
         color = '';
     }
-    if (!inputError && editDashBoardName !== '') {
-      editDashboard(dashBoardDatas?.id, editDashBoardName, color);
+    if (!inputError && editDashBoardName !== '' && dashBoardDatas?.id) {
+      editDashboard(dashBoardDatas.id, editDashBoardName, color);
     } else if (editDashBoardName === '') {
       setInputError('글자를 입력해주세요.');
     }

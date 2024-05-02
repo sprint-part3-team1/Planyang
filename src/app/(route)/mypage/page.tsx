@@ -64,36 +64,38 @@ const Page = () => {
 
   return (
     <div>
-      <div>
-        <MypageHeader
-          nickName={userData.nickname}
-          profileImage={userData.profileImageUrl}
-        />
-        <div className={styles.container}>
-          <Link href="/mydashboard">
-            <div className={styles.goBackDiv}>
-              <LeftArrow />
-              돌아가기
-            </div>
-          </Link>
-          <EditProfileDiv
-            inputWidth={EditProfileinputWidth}
-            userData={userData}
+      {userData && (
+        <div>
+          <MypageHeader
+            nickName={userData.nickname}
+            profileImage={userData.profileImageUrl}
           />
-          <ChangePasswordDiv
-            inputWidth={changePasswordInputWidth}
-            tryChangePassword={tryChangePassword}
-            setTryChangePassword={setTryChangePassword}
-          />
-          <button
-            type="button"
-            className={styles.logoutButton}
-            onClick={logoutButtonHandler}
-          >
-            로그아웃
-          </button>
+          <div className={styles.container}>
+            <Link href="/mydashboard">
+              <div className={styles.goBackDiv}>
+                <LeftArrow />
+                돌아가기
+              </div>
+            </Link>
+            <EditProfileDiv
+              inputWidth={EditProfileinputWidth}
+              userData={userData}
+            />
+            <ChangePasswordDiv
+              inputWidth={changePasswordInputWidth}
+              tryChangePassword={tryChangePassword}
+              setTryChangePassword={setTryChangePassword}
+            />
+            <button
+              type="button"
+              className={styles.logoutButton}
+              onClick={logoutButtonHandler}
+            >
+              로그아웃
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <ModalPortal
         openModalType={openModalType}

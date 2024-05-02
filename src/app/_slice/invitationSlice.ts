@@ -124,7 +124,9 @@ const invitationSlice = createSlice({
       state.page = action.payload;
     },
     setMaxPage(state) {
-      state.page = Math.ceil(state.data?.totalCount / 5);
+      if (state.data) {
+        state.page = Math.ceil(state.data.totalCount / 5);
+      }
     },
   },
   extraReducers: (builder) => {

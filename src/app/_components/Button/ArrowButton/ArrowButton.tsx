@@ -3,8 +3,8 @@ import { dashBoardDetailData } from '@/app/_slice/dashBoardDetail';
 import styles from './ArrowButton.module.css';
 
 interface ArrowButtonProps {
-  isLeftActive: boolean;
-  isRightActive: boolean;
+  isLeftActive?: boolean;
+  isRightActive?: boolean;
   onLeftButtonClick: () => void;
   onRightButtonClick: () => void;
 }

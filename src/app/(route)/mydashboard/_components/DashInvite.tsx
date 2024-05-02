@@ -106,7 +106,7 @@ const DashInvite = () => {
     }
   }, [inView]);
 
-  const onChangeInput = async (e) => {
+  const onChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
@@ -142,7 +142,7 @@ const DashInvite = () => {
           <input
             id={styles.input}
             placeholder="검색"
-            value={inputValue}
+            value={inputValue || ''}
             onChange={onChangeInput}
           />
         </div>

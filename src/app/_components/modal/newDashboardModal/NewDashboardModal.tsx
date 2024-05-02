@@ -77,6 +77,7 @@ function NewDashboardModal({ setOpenModalType }: ModalPropsType) {
   return (
     <ModalContainer title="새로운 대시보드">
       <Input
+      inputId=''
         inputRef={inputRef}
         onChange={handleInputChange}
         inputName="대시보드 이름"

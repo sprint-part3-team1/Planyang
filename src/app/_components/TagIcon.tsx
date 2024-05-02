@@ -19,7 +19,7 @@ const TagIcon = ({
   };
 
   const sendDeleteOrder = (e: React.MouseEvent<HTMLImageElement>) => {
-    onValueChange(e.currentTarget.id);
+    onValueChange && onValueChange(e.currentTarget.id);
   };
 
   return (

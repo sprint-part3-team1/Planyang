@@ -13,9 +13,9 @@ type InputModalProps = {
   inputRef?: React.MutableRefObject<any> | null;
   focusoutFunc?: () => void;
   imageInputProps?: {
-    columnId: number;
-    selectedImagePath: any;
-    setSelectedImagePath: React.Dispatch<React.SetStateAction<any>>;
+    columnId: number | undefined;
+    selectedImagePath: string | null | undefined;
+    setSelectedImagePath: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   };
 };
 
@@ -26,7 +26,7 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
   ) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const formData = new FormData();
-    const [showImageUrl, setShowImageUrl] = useState<string | null>(
+    const [showImageUrl, setShowImageUrl] = useState<string | null | undefined>(
       imageInputProps?.selectedImagePath,
     );
 
@@ -68,11 +68,13 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
     const onDeleteImageButtonClickHandler = (
       e: React.MouseEvent<HTMLButtonElement>,
     ) => {
-      const { columnId, selectedImagePath, setSelectedImagePath } =
-        imageInputProps;
-      e?.preventDefault();
-      setShowImageUrl(null);
-      setSelectedImagePath(null);
+      if(imageInputProps) {
+        const { columnId, selectedImagePath, setSelectedImagePath } =
+          imageInputProps;
+        e?.preventDefault();
+        setShowImageUrl(null);
+        setSelectedImagePath(null);
+      }
     };
 
     switch (type) {

@@ -109,19 +109,23 @@ const TaskCardModal = ({
     fetchComment();
   }, [dispatch]);
   const postComment = async () => {
-    try {
-      await dispatch(
-        commentActions.asyncFetchLeaveComment({
-          content: myCommentInputValue,
-          cardId: Number(requestId),
-          columnId: cardInfo?.columnId,
-          dashboardId: cardInfo?.dashboardId,
-        }),
-      );
-      await fetchComment();
-      commentRef.current.value = '';
-    } catch (error) {
-      console.error('Error post comment:', error);
+    if(cardInfo) {
+      try {
+        await dispatch(
+          commentActions.asyncFetchLeaveComment({
+            content: myCommentInputValue,
+            cardId: Number(requestId),
+            columnId: cardInfo.columnId,
+            dashboardId: cardInfo.dashboardId,
+          }),
+        );
+        await fetchComment();
+        if(commentRef.current) {
+          commentRef.current.value = '';
+        }
+      } catch (error) {
+        console.error('Error post comment:', error);
+      }
     }
   };
 

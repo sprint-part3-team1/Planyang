@@ -9,9 +9,9 @@ interface CardPayload {
   columnId: number;
   title: string;
   description: string;
-  dueDate: string | null;
-  tags: string[] | null;
-  imageUrl: string | null;
+  dueDate: string | null | undefined;
+  tags: string[] | null | undefined;
+  imageUrl: string | null | undefined;
 }
 
 export interface CardResponseType {
@@ -109,9 +109,9 @@ const asyncFetchPutCard = createAsyncThunk(
     cardId: number;
     title: string;
     description: string;
-    dueDate: string;
-    tags: string[];
-    imageUrl: string;
+    dueDate: string | undefined;
+    tags: string[] | undefined;
+    imageUrl: string | undefined;
   }) => {
     const {
       columnId,
@@ -172,9 +172,9 @@ const cardSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       asyncFetchCreateCard.fulfilled,
-      (state, action: PayloadAction<GetCardsResponseType['data']>) => {
+      (state, action) => {
         if (state.data && state.data.cards) {
-          state.data?.cards?.unshift(action.payload?.cards);
+          state.data.cards.unshift(action.payload?.cards);
           if (state.data.totalCount !== null) {
             state.data.totalCount++;
           }
@@ -200,12 +200,14 @@ const cardSlice = createSlice({
     });
     builder.addCase(asyncFetchDeleteCard.fulfilled, (state, action) => {
       const cardId = action.payload;
-      const updatedCards = state.data?.cards?.filter(
-        (item) => item.id !== cardId,
-      );
-      state.data.cards = updatedCards;
-      if (state.data && state.data.totalCount !== null) {
-        state.data.totalCount--;
+      if (state.data && state.data.cards) {
+        const updatedCards = state.data.cards.filter(
+          (item) => item.id !== cardId,
+        );
+        state.data.cards = updatedCards;
+        if (state.data.totalCount !== null) {
+          state.data.totalCount--;
+        }
       }
     });
   },
