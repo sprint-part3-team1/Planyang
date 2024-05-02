@@ -66,6 +66,7 @@ const ChangePasswordDiv = ({ inputWidth }: { inputWidth: number }) => {
 
   const changeButtonHandler = () => {
     changePassword();
+    dispatch(registerActions.asynchFetchgetUserInfo());
   };
 
   const condition =

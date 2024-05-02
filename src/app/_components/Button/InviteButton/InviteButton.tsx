@@ -18,6 +18,7 @@ const InviteButton = () => {
         setOpenModalType={setOpenModalType}
       />
       <button
+        style={{ cursor: 'pointer' }}
         type="button"
         className={styles.inviteBtn}
         onClick={handleInviteButton}
