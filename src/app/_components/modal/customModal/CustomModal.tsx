@@ -1,6 +1,6 @@
-import React, { SetStateAction } from 'react';
-import Link from 'next/link';
+import React, { SetStateAction, useRef } from 'react';
 import styles from './CustomModal.module.css';
+import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import ModalContainer from '../modalContainer/ModalContainer';
 import CheckCancleButton from '../checkCancleButton/CheckCancleButton';
 
@@ -17,8 +17,15 @@ const CustomModal = ({
     checkButtonHandler?.();
     setOpenModalType('');
   };
+  const modalContainerRef = useRef<HTMLDivElement>(null);
+
+  const clickOutsideHandler = () => {
+    setOpenModalType('');
+  };
+
+  useOutsideClick(modalContainerRef, clickOutsideHandler);
   return (
-    <ModalContainer title="">
+    <ModalContainer title="" ref={modalContainerRef}>
       <p className={styles.contentText}>{modalText}</p>
 
       <CheckCancleButton
