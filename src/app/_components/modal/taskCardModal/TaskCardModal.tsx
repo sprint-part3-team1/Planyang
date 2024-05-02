@@ -109,7 +109,7 @@ const TaskCardModal = ({
     fetchComment();
   }, [dispatch]);
   const postComment = async () => {
-    if(cardInfo) {
+    if (cardInfo) {
       try {
         await dispatch(
           commentActions.asyncFetchLeaveComment({
@@ -120,7 +120,7 @@ const TaskCardModal = ({
           }),
         );
         await fetchComment();
-        if(commentRef.current) {
+        if (commentRef.current) {
           commentRef.current.value = '';
         }
       } catch (error) {
@@ -193,10 +193,12 @@ const TaskCardModal = ({
   };
 
   const deleteOptionClickHandler = () => {
-    handleCloseClick();
-    deleteCard(cardInfo?.id);
+    if (cardInfo?.id) {
+      // cardInfo?.id가 undefined가 아닌 경우에만 작업을 수행
+      handleCloseClick();
+      deleteCard(cardInfo.id); // cardInfo?.id 대신 cardInfo.id로 수정
+    }
   };
-
   const editOptionclickHandler = () => {
     setIsClickEditMode(true);
   };
@@ -247,14 +249,16 @@ const TaskCardModal = ({
   }
 
   return (
-    <ModalContainer title={cardInfo?.title} ref={ref}>
+    <ModalContainer title={cardInfo?.title || ''} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
           managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
           managerProfileImageUrl={
-            cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
+            cardInfo?.assignee && cardInfo.assignee.profileImageUrl
+              ? cardInfo.assignee.profileImageUrl
+              : ''
           }
-          deadline={cardInfo?.dueDate}
+          deadline={cardInfo?.dueDate ? cardInfo.dueDate : ''}
         />
       )}
       <div className={styles.rowDiv}>
@@ -263,15 +267,16 @@ const TaskCardModal = ({
             <StatusTag status={status} />
             <Divider />
             <div className={styles.tagDiv}>
-              {cardInfo?.tags.map((tag) => (
-                <TagIcon
-                  key={tag}
-                  tagName={tag}
-                  tagStyleType="smallTag"
-                  deleteOption={false}
-                  onValueChange={() => {}}
-                />
-              ))}
+              {cardInfo?.tags &&
+                cardInfo.tags.map((tag) => (
+                  <TagIcon
+                    key={tag}
+                    tagName={tag}
+                    tagStyleType="smallTag"
+                    deleteOption={false}
+                    onValueChange={() => {}}
+                  />
+                ))}
             </div>
           </div>
           <div className={styles.contentDiv}>{cardInfo?.description}</div>
@@ -305,7 +310,11 @@ const TaskCardModal = ({
             <React.Fragment key={comment.id}>
               <OtherComment
                 writer={comment.author.nickname}
-                writerProfile={comment.author.profileImageUrl}
+                writerProfile={
+                  comment.author.profileImageUrl
+                    ? comment.author.profileImageUrl
+                    : ''
+                }
                 content={comment.content}
                 date={comment.createdAt}
                 deleteComment={deleteComment}
@@ -319,9 +328,11 @@ const TaskCardModal = ({
           <ManagerInfoBox
             managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
             managerProfileImageUrl={
-              cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
+              cardInfo?.assignee && cardInfo.assignee.profileImageUrl
+                ? cardInfo.assignee.profileImageUrl
+                : ''
             }
-            deadline={cardInfo?.dueDate}
+            deadline={cardInfo?.dueDate ? cardInfo.dueDate : ''}
           />
         )}
       </div>

@@ -93,7 +93,7 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
   return (
     <div
       className={styles.container}
-      // ref={drop}
+      ref={drop}
       style={{ filter: isOver ? 'brightness(90%)' : undefined }}
     >
       <div className={styles.title}>

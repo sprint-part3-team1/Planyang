@@ -16,6 +16,9 @@ const TableInvite = () => {
   const dashBoardDatas = useAppSelector(dashBoardDetailData);
   const invitationDatas = useAppSelector(invitationData);
 
+  // dashBoardDatas?.id를 string 타입으로 변환
+  const boardId = dashBoardDatas?.id ? String(dashBoardDatas.id) : '';
+
   const getMyInvitationList = (
     dashBoardId: number | undefined,
     page: number,
@@ -104,7 +107,7 @@ const TableInvite = () => {
         <div key={item.id} className={styles.emailContainer}>
           <span id={styles.emailName}>{item.invitee.email}</span>
           <CancelButton
-            boardId={dashBoardDatas?.id}
+            boardId={boardId}
             invitationId={item.id}
             handleDeleteAndNavigate={handleDeleteAndNavigate}
           />
