@@ -174,7 +174,7 @@ const cardSlice = createSlice({
       asyncFetchCreateCard.fulfilled,
       (state, action: PayloadAction<GetCardsResponseType['data']>) => {
         if (state.data && state.data.cards) {
-          state.data?.cards?.unshift(action.payload);
+          state.data?.cards?.unshift(action.payload?.cards);
           if (state.data.totalCount !== null) {
             state.data.totalCount++;
           }
