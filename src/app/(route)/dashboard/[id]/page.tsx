@@ -44,7 +44,7 @@ const DashBoard = () => {
     }
   };
 
-  const handleDrop = async (item, droppedColumnId) => {
+  const handleDrop = async (item: any, droppedColumnId: any) => {
     setIsUpdated(false);
     try {
       const updatedItem = {
@@ -89,7 +89,7 @@ const DashBoard = () => {
                 <Column
                   key={item.id}
                   columnData={item}
-                  onDrop={(itemId) => handleDrop(itemId, item.id)}
+                  onDrop={(itemId: number) => handleDrop(itemId, item.id)}
                   isUpdated={isUpdated}
                   setIsUpdated={setIsUpdated}
                 />

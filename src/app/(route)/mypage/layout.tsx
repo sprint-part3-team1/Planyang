@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
       <div style={{ display: 'flex' }}>
         <div style={{ height: '100vh' }}>
-          <SideMenu dashBoardData={dashBoardDatas?.dashboards} />
+          <SideMenu />
         </div>
         <div className={styles.childrenWrapper}>{children}</div>
       </div>

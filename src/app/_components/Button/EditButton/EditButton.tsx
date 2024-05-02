@@ -1,6 +1,6 @@
 import styles from './EditButton.module.css';
 
-const EditButton = ({ editButtonHandler }) => {
+const EditButton = ({ editButtonHandler }: {editButtonHandler:()=> void }) => {
   return (
     <button
       type="button"

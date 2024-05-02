@@ -134,27 +134,28 @@ const columnSlice = createSlice({
     builder.addCase(asyncFetchCreateColumn.fulfilled, (state, action) => {
       state.data?.data?.push(action.payload);
     });
-    builder.addCase(
-      asyncFetchGetColumn.fulfilled,
-      (state, action: PayloadAction<ColumnStateType>) => {
-        state.data = action.payload;
-      },
-    );
+    builder.addCase(asyncFetchGetColumn.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
     builder.addCase(asyncFetchPutColumn.fulfilled, (state, action) => {
-      const updateColumn = action.payload;
-      const index = state.data?.data?.findIndex(
-        (item) => item.id === updateColumn?.id,
-      );
-      if (index !== -1) {
-        state.data.data[index] = updateColumn;
+      if (state.data && state.data.data) {
+        const updateColumn = action.payload;
+        const index = state.data.data.findIndex(
+          (item) => item.id === updateColumn?.id,
+        );
+        if (index !== -1) {
+          state.data.data[index] = updateColumn;
+        }
       }
     });
     builder.addCase(asyncFetchDeleteColumn.fulfilled, (state, action) => {
       const columnId = action.payload;
-      const updatedColumns = state.data?.data?.filter(
-        (item) => item.id !== columnId,
-      );
-      state.data.data = updatedColumns;
+      if (state.data && state.data.data) {
+        const updatedColumns = state.data?.data?.filter(
+          (item) => item.id !== columnId,
+        );
+        state.data.data = updatedColumns;
+      }
     });
     builder.addCase(asyncUploadCardImage.fulfilled, (state, action) => {
       state.data?.data?.push(action.payload);

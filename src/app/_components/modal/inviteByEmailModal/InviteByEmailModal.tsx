@@ -28,11 +28,11 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
       item.invitee.email === inputValue || item.inviter.email === inputValue,
   );
   const InviteButtonHandler = async () => {
-    if (!isEmailExist) {
+    if (!isEmailExist && dashBoardDetailDatas) {
       await dispatch(
         invitationActions.asynchFetchinviteUserToDashboard({
           email: inputValue,
-          dashBoardId: dashBoardDetailDatas?.id,
+          dashBoardId: dashBoardDetailDatas.id,
         }),
       );
     }
@@ -71,6 +71,7 @@ const InviteByEmailModal = ({ setOpenModalType }: ModalPropsType) => {
   return (
     <ModalContainer title="초대하기">
       <Input
+      inputId='이메일 input'
         inputName="이메일"
         inputType="text"
         inputRef={inputRef}

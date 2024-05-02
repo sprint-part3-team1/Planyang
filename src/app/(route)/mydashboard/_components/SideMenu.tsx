@@ -50,7 +50,9 @@ const SideMenu = () => {
   }, [page, totalCount]);
 
   useEffect(() => {
-    setTotalCount(dashboardDatas?.totalCount);
+    if (dashboardDatas?.totalCount) {
+      setTotalCount(dashboardDatas.totalCount);
+    }
   }, [dashboardDatas]);
 
   useEffect(() => {

@@ -10,7 +10,6 @@ import { DashboardNavBarProps } from '@/app/_types/DashboardNavBarProps';
 import Link from 'next/link';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
-import { userInfo } from 'os';
 import { useDispatch } from 'react-redux';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';

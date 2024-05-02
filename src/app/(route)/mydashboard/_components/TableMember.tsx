@@ -25,8 +25,10 @@ const TableMember = () => {
   const [page, setPage] = useState(1);
 
   const onRightButtonClick = () => {
-    if (page * 4 < memberDatas?.totalCount) {
-      setPage((prev) => prev + 1);
+    if (memberDatas?.totalCount) {
+      if (page * 4 < memberDatas.totalCount) {
+        setPage((prev) => prev + 1);
+      }
     }
   };
 
@@ -40,7 +42,7 @@ const TableMember = () => {
     await dispatch(memberActions.asyncDeleteMember({ memberId }));
     await dispatch(
       memberActions.asyncGetMembers({
-        dashboardId: dashBoardDetailDatas.id,
+        dashboardId: dashBoardDetailDatas?.id,
         page,
       }),
     );
@@ -48,6 +50,9 @@ const TableMember = () => {
       setPage((prev) => Math.max(prev - 1, 1));
     }
   };
+
+  const [isLeftActive, setIsLeftActive] = useState(false);
+  const [isRightActive, setIsRightActive] = useState(false);
 
   useEffect(() => {
     // if (dashBoardDetailDatas?.id) {
@@ -63,7 +68,8 @@ const TableMember = () => {
         <div className={styles.pagination}>
           <span>1 페이지 중 {page}</span>
           <ArrowButton
-            setPage={setPage}
+            isLeftActive={isLeftActive}
+            isRightActive={isRightActive}
             onRightButtonClick={onRightButtonClick}
             onLeftButtonClick={onLeftButtonClick}
           />

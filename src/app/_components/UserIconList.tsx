@@ -9,7 +9,7 @@ import { dashBoardDetailData } from '../_slice/dashBoardDetail';
 
 const UserIconList = ({ totalCount }: MemberListDto) => {
   const DESKTOP_WIDTH = 1024;
-  const [memberData, setMemberData] = useState(null);
+  const [memberData, setMemberData] = useState<any>(null);
   const dashboardDetailDatas = useAppSelector(dashBoardDetailData);
   const calcWrapperWidth = (count: number) => {
     if (count <= 0) {

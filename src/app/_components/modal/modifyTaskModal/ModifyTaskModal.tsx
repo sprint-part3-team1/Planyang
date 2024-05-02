@@ -52,14 +52,14 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
   const [statusColumnId, setStatusColumnId] = useState(cardInfo?.columnId);
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
-    memberDataList?.members[managerIndex],
+    managerIndex ? memberDataList?.members[managerIndex]: null
   );
   const [titleInputValue, setTitleInputValue] = useState(cardInfo?.title);
   const [descriptionInputValue, setdescriptionInputValue] = useState(
     cardInfo?.description,
   );
   const [dueDateValue, setDueDateValue] = useState(cardInfo?.dueDate);
-  const [tagInputValue, setTagInputValue] = useState<string[]>(cardInfo?.tags);
+  const [tagInputValue, setTagInputValue] = useState<string[] | undefined | null>(cardInfo?.tags);
   const [selectedImagePath, setSelectedImagePath] = useState(
     cardInfo?.imageUrl,
   );
@@ -110,16 +110,18 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   };
 
   const modifyButtonHandler = () => {
-    updateCard(
-      Number(statusColumnId),
-      Number(manager?.userId),
-      Number(requestId),
-      titleInputValue,
-      descriptionInputValue,
-      dueDateValue.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
-      tagInputValue,
-      selectedImagePath,
-    );
+    if(titleInputValue && descriptionInputValue) {
+      updateCard(
+        Number(statusColumnId),
+        Number(manager?.userId),
+        Number(requestId),
+        titleInputValue,
+        descriptionInputValue,
+        dueDateValue?.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
+        tagInputValue || [],
+        selectedImagePath || undefined,
+      );
+    }
     setOpenModalType(MODAL_TYPES.taskCard);
   };
 
@@ -209,7 +211,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   }, []);
 
   const handleOutsideClick = () => {};
-  const handleClickInsideModal = (e) => {
+  const handleClickInsideModal = (e:any) => {
     e.stopPropagation();
   };
 

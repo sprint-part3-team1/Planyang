@@ -23,11 +23,9 @@ import styles from './page.module.css';
 import DashInvite from './_components/DashInvite';
 
 interface DashBoardStateType {
-  data: {
-    dashboards: DashBoardInformationType[];
-    totalCount: number;
-    cursorId: number | null;
-  } | null;
+  dashboards: DashBoardInformationType[];
+  totalCount: number;
+  cursorId: number | null;
 }
 
 export default function MyDashBoard() {

@@ -22,7 +22,7 @@ interface Props {
     title: string;
     updatedAt: string;
   };
-  onDrop: () => void;
+  onDrop: (itemId: number, columnid: number) => void;
   isUpdated: boolean;
   setIsUpdated: React.Dispatch<SetStateAction<boolean>>;
 }
@@ -30,7 +30,7 @@ interface Props {
 const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'item',
-    drop: (item) => onDrop(item, columnData.id),
+    drop: (item: number) => onDrop(item, columnData.id),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
@@ -40,7 +40,7 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
 
   const GET_CARDS = 8;
 
-  const [cardInfo, setCardInfo] = useState(null);
+  const [cardInfo, setCardInfo] = useState<any>(null);
   const [sizes, setSizes] = useState<number>(GET_CARDS);
   const [openModalType, setOpenModalType] = useState('');
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
     try {
       await dispatch(cardActions.asyncFetchGetCards({ sizes, columnId })).then(
         (response: any) => {
-          setCardInfo((prev) => ({
+          setCardInfo((prev: any) => ({
             ...prev,
             [columnId]: response.payload.cards,
           }));
@@ -93,8 +93,8 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
   return (
     <div
       className={styles.container}
-      ref={drop}
-      style={{ filter: isOver && 'brightness(90%)' }}
+      // ref={drop}
+      style={{ filter: isOver ? 'brightness(90%)' : undefined }}
     >
       <div className={styles.title}>
         <div className={styles.columnName}>
@@ -123,7 +123,7 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
           <AddTodoButton />
         </div>
         {cardDataList &&
-          cardDataList.map((card) => (
+          cardDataList.map((card: any) => (
             <Card
               key={card.id}
               nickname={card?.assignee?.nickname}

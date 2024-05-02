@@ -28,7 +28,10 @@ const initialState: MembersResponseType = {
 const asyncGetMembers = createAsyncThunk(
   'memberSlice/asyncGetMembers',
 
-  async (createdDashboard: { dashboardId: number; page: number }) => {
+  async (createdDashboard: {
+    dashboardId: number | undefined;
+    page: number;
+  }) => {
     const { dashboardId, page } = createdDashboard;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(
