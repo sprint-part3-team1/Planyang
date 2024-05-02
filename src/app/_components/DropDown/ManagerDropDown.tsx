@@ -47,7 +47,7 @@ const ManagerDropDown = ({
 
     if (setClickedMember && memberDataList && memberDataList.members[index]) {
       const clickMemberInfo = memberDataList.members[index];
-      setClickedMember(clickMemberInfo.nickname);
+      setClickedMember(clickMemberInfo);
     }
   };
 

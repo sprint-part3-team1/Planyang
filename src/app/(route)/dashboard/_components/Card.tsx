@@ -27,6 +27,7 @@ const Card = ({
     }),
   });
 
+  console.log(cardInfo);
   const CALENDAR_ICON = '/assets/icons/calendar.svg';
 
   const [isMobile, setIsMobile] = useState(false);
@@ -116,7 +117,12 @@ const Card = ({
               />
               <span>{date}</span>
             </div>
-            <UserIcon nickname={nickname} profileImageUrl={profileImageUrl} />
+            <UserIcon
+              nickname={cardInfo.assignee ? cardInfo.assignee.nickname : ''}
+              profileImageUrl={
+                cardInfo.assignee ? cardInfo.assignee.profileImageUrl : ''
+              }
+            />
           </div>
         </>
       )}

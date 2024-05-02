@@ -238,8 +238,10 @@ const TaskCardModal = ({
     <ModalContainer title={cardInfo?.title} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
-          managerName={cardInfo?.assignee.nickname}
-          managerProfileImageUrl={cardInfo?.assignee.profileImageUrl}
+          managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
+          managerProfileImageUrl={
+            cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
+          }
           deadline={cardInfo?.dueDate}
         />
       )}
@@ -302,8 +304,10 @@ const TaskCardModal = ({
         </div>
         {isMobile || (
           <ManagerInfoBox
-            managerName={cardInfo?.assignee.nickname}
-            managerProfileImageUrl={cardInfo?.assignee.profileImageUrl}
+            managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
+            managerProfileImageUrl={
+              cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
+            }
             deadline={cardInfo?.dueDate}
           />
         )}
