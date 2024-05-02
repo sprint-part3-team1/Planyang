@@ -12,6 +12,7 @@ import { columnActions } from '@/app/_slice/columnSlice';
 import DashboardNavBar from '@/app/_components/_navbar/_dashboardNavbar/_dashboardType/DashboardNavBar';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { loginActions, loginData } from '@/app/_slice/loginSlice';
+import { dashBoardActions, dashBoardData } from '@/app/_slice/dashBoardSlice';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
 
@@ -24,6 +25,7 @@ const DashBoardDetailLayout = ({
 }) => {
   const dispatch = useAppDispatch();
   const dashboardDetailDatas = useAppSelector(dashBoardDetailData);
+  const dashboardDatas = useAppSelector(dashBoardData);
   const userInfo = useAppSelector(userResponse);
   const memberInfo = useAppSelector(memberData);
 
@@ -72,7 +74,8 @@ const DashBoardDetailLayout = ({
     fetchColumns();
     fetchUserInfo();
     fetchMemberInfo();
-  }, [params.id, dispatch]);
+    console.log(111111);
+  }, [params.id, dispatch, dashboardDatas]);
 
   return (
     <div style={{ width: '100%' }}>
