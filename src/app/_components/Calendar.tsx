@@ -29,7 +29,7 @@ const Calendar = ({onValueChange, date, reference}: CalendarProps) => {
             const monthValue = currentDate.current.getMonth();
             const dayValue = parseInt(day, 10);
 
-            onValueChange(new DateDto(yearValue, monthValue+1, dayValue));
+            onValueChange(`${yearValue}-${String(monthValue+1).padStart(2, '0')}-${String(dayValue).padStart(2, '0')} 00:00:00`);
         }
     }
 
