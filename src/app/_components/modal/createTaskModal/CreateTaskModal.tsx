@@ -30,9 +30,15 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   );
   const [titleInputValue, setTitleInputValue] = useState('');
   const [descriptionInputValue, setdescriptionInputValue] = useState('');
-  const [dueDateValue, setDueDateValue] = useState('');
-  const [tagInputValue, setTagInputValue] = useState<string[]>([]);
-  const [selectedImagePath, setSelectedImagePath] = useState<string>('');
+  const [dueDateValue, setDueDateValue] = useState<string | null | undefined>(
+    '',
+  );
+  const [tagInputValue, setTagInputValue] = useState<
+    string[] | null | undefined
+  >([]);
+  const [selectedImagePath, setSelectedImagePath] = useState<
+    string | null | undefined
+  >('');
 
   const imageInputProps = {
     columnId: requestId,
