@@ -3,12 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import useGetViewportSize from '@/app/_hooks/useGetViewportSize';
-import { userResponse } from '@/app/_slice/registerSlice';
+import { userResponse, registerActions } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
-import { registerActions } from '@/app/_slice/registerSlice';
+
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { loginActions } from '@/app/_slice/loginSlice';
 import MypageHeader from './_components/mypageHeader/MypageHeader';
 import ChangePasswordDiv from './_components/changePasswordDIv/ChangePasswordDiv';
 import LeftArrow from '../../../../public/assets/icons/leftArrow.svg';
@@ -21,11 +24,17 @@ const Page = () => {
 
   const logoutModalText = `정말 로그아웃 하시겠습니까?`;
   const [openModalType, setOpenModalType] = useState('');
-
+  const router = useRouter();
   const logoutButtonHandler = () => {
     setOpenModalType(MODAL_TYPES.custom);
   };
 
+  const logoutTestButtonHandler = async () => {
+    await dispatch(registerActions.resetData());
+    await dispatch(loginActions.resetData());
+    localStorage.removeItem('accessToken');
+    router.push('/'); // 바로 메인 페이지로 이동
+  };
   const logout = () => {
     console.log('로그아웃');
   };
@@ -55,32 +64,39 @@ const Page = () => {
 
   return (
     <div>
-      {userData && (
-        <div>
-          <MypageHeader
-            nickName={userData.nickname}
-            profileImage={userData.profileImageUrl}
-          />
-          <div className={styles.container}>
-            <div className={styles.goBackDiv}>
-              <LeftArrow />
-              돌아가기
-            </div>
-            <EditProfileDiv
-              inputWidth={EditProfileinputWidth}
-              userData={userData}
-            />
-            <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
-            <button
-              type="button"
-              className={styles.logoutButton}
-              onClick={logoutButtonHandler}
-            >
-              로그아웃
-            </button>
+      <div>
+        <MypageHeader
+          nickName={userData.nickname}
+          profileImage={userData.profileImageUrl}
+        />
+        <div className={styles.container}>
+          <div className={styles.goBackDiv}>
+            <LeftArrow />
+            돌아가기
           </div>
+          <EditProfileDiv
+            inputWidth={EditProfileinputWidth}
+            userData={userData}
+          />
+          <ChangePasswordDiv inputWidth={changePasswordInputWidth} />
+          <button
+            type="button"
+            className={styles.logoutButton}
+            onClick={logoutButtonHandler}
+          >
+            로그아웃
+          </button>
+
+          <button
+            type="button"
+            className={styles.logoutButton}
+            onClick={() => logoutTestButtonHandler()}
+          >
+            테스트 로그아웃
+          </button>
         </div>
-      )}
+      </div>
+
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}

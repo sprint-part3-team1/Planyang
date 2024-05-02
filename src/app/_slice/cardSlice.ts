@@ -84,11 +84,11 @@ const asyncFetchCreateCard = createAsyncThunk(
 const asyncFetchGetCards = createAsyncThunk(
   'cardSlice/asyncFetchGetCards',
 
-  async (cardData: { columnId: number }) => {
-    const { columnId } = cardData;
+  async (cardData: { sizes: number; columnId: number }) => {
+    const { sizes, columnId } = cardData;
     const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/cards?size=20&columnId=${columnId}`,
+      `https://sp-taskify-api.vercel.app/4-1/cards?size=${sizes}&columnId=${columnId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -146,25 +146,6 @@ const asyncFetchPutCard = createAsyncThunk(
   },
 );
 
-const asyncFetchGetCard = createAsyncThunk(
-  'cardSlice/asyncFetchGetCard',
-
-  async (cardData: { cardId: number }) => {
-    const { cardId } = cardData;
-    const accessToken = localStorage.getItem('accessToken');
-    const response = await axios.get(
-      `https://sp-taskify-api.vercel.app/4-1/cards/${cardId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-    console.log(response.data);
-    return response.data;
-  },
-);
-
 const asyncFetchDeleteCard = createAsyncThunk(
   'cardSlice/asyncFetchDeleteCard',
 
@@ -208,19 +189,15 @@ const cardSlice = createSlice({
     );
     builder.addCase(asyncFetchPutCard.fulfilled, (state, action) => {
       const updateCard = action.payload;
-      const index = state.data?.cards?.findIndex(
-        (item) => item.id === updateCard.id,
-      );
-      // if (state.data && index !== -1) {
-      //   state.data.cards[index] = updateCard;
-      // }
+      if (state.data) {
+        const index = state.data.cards.findIndex(
+          (item) => item.id === updateCard.id,
+        );
+        if (index !== -1) {
+          state.data.cards[index] = updateCard;
+        }
+      }
     });
-    builder.addCase(
-      asyncFetchGetCard.fulfilled,
-      (state, action: PayloadAction<GetCardsResponseType['data']>) => {
-        state.data = action.payload;
-      },
-    );
     builder.addCase(asyncFetchDeleteCard.fulfilled, (state, action) => {
       const cardId = action.payload;
       const updatedCards = state.data?.cards?.filter(
@@ -240,7 +217,6 @@ export const cardActions = {
   asyncFetchCreateCard,
   asyncFetchGetCards,
   asyncFetchPutCard,
-  asyncFetchGetCard,
   asyncFetchDeleteCard,
 };
 export const cardData = (state: RootState) => state.cardData.data;

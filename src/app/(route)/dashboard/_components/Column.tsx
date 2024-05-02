@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
+
 import MODAL_TYPES from '@/app/constants/modalTypes';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import axios from 'axios';

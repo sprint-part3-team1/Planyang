@@ -42,7 +42,6 @@ const asyncFetchCreateColumn = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );
@@ -61,7 +60,6 @@ const asyncFetchGetColumn = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );
@@ -84,7 +82,6 @@ const asyncFetchPutColumn = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );
@@ -104,7 +101,6 @@ const asyncFetchDeleteColumn = createAsyncThunk(
         },
       },
     );
-    console.log(columnId);
     return columnId;
   },
 );
@@ -126,7 +122,6 @@ const asyncUploadCardImage = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );

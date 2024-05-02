@@ -9,7 +9,10 @@ const initialState: LoginStateType = {
   data: null,
   status: null,
 };
-
+const resetData = (state: LoginStateType) => {
+  state.data = null;
+  state.status = null;
+};
 const asynchFetchSignIn = createAsyncThunk(
   'userDataSlice/asynchFetchSignIn',
   async (loginData: LoginPayloadType, { rejectWithValue }) => {
@@ -38,7 +41,7 @@ const asynchFetchSignIn = createAsyncThunk(
 const loginSlice = createSlice({
   name: 'loginSlice',
   initialState,
-  reducers: {},
+  reducers: { resetData },
   extraReducers: (builder) => {
     builder.addCase(
       asynchFetchSignIn.fulfilled,
