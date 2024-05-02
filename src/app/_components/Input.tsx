@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { InputProps } from '@/app/_types/InputProps';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
-import { DateDto } from '@/app/_types/_dto/DateDto';
-import { changeDateFormat } from '@/app/_utils/dateUtils';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import TagIcon from '@/app/_components/TagIcon';
 import { isValidName } from '@/app/_utils/validateUtils';
@@ -80,7 +78,9 @@ const Input = ({
       newTags.add(value);
       e.currentTarget.value = '';
       setTags(newTags);
-      setTagInputValue([...newTags]);
+      if (setTagInputValue) {
+        setTagInputValue([...newTags]);
+      }
     }
   };
 
@@ -102,7 +102,9 @@ const Input = ({
     const newTags = new Set(tags);
     newTags.delete(value);
     setTags(newTags);
-    setTagInputValue([...newTags]);
+    if (setTagInputValue) {
+      setTagInputValue([...newTags]);
+    }
   };
 
   const setInputType = () => {
