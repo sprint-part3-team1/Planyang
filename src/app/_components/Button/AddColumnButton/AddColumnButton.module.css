@@ -1,0 +1,58 @@
+.addColumnButton {
+  width: 35.4rem;
+  height: 7rem;
+  border-radius: 0.8rem;
+  border: 0.1rem solid var(--gray_D9D9D9);
+  background: var(--white_FFFFFF);
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  color: var(--black_333236);
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+}
+
+.vectorBox {
+  display: flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0.3rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 0.4rem;
+  background: var(--violet_8);
+}
+
+@media (max-width: 1023px) {
+  .addColumnButton {
+    width: 54.4rem;
+    height: 7rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .addColumnButton {
+    width: auto;
+    padding: 2rem 6rem;
+  }
+  .content {
+    font-size: var(--font16);
+  }
+  .vectorBox {
+    width: 2rem;
+    height: 2rem;
+  }
+  .coloredVector {
+    width: 1.4545rem;
+    height: 1.4545rem;
+  }
+}

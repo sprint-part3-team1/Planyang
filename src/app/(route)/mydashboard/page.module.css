@@ -1,0 +1,57 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 0rem 0rem 4rem;
+  gap: 4rem;
+}
+
+.dashBoardButtons {
+  display: grid;
+  max-width: 102.2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.paginationFrame {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 102.2rem;
+  gap: 1rem;
+}
+#pageFont {
+  font-size: var(--font14);
+}
+
+@media (max-width: 1023px) {
+  .content {
+    padding: 4rem 0rem 0rem 4rem;
+  }
+  .dashBoardButtons {
+    max-width: 50.4rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .paginationFrame {
+    width: 50.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .content {
+    padding: 2.4rem 0rem 2.4rem 2.4rem;
+    gap: 2.4rem;
+  }
+
+  .dashBoardButtons {
+    max-width: 26rem;
+    grid-template-columns: 1fr;
+  }
+
+  .paginationFrame {
+    width: 26rem;
+  }
+  #pageFont {
+    font-size: var(--font12);
+  }
+}

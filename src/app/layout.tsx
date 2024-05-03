@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
+import { Inter } from 'next/font/google';
 import React from 'react';
-import { useEffect } from 'react';
+import Providers from './_store/Providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+        <div id="modal-root" />
+      </body>
     </html>
   );
 }

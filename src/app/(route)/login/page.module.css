@@ -1,0 +1,77 @@
+.entireWrapper {
+    width: 35.1rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 0 auto;
+    gap: 4rem;
+
+    @media(min-width: 767px) {
+        width: 52rem;
+    }
+
+    @media(min-width: 1023px) {
+        width: 52rem;
+    }
+}
+
+.logoWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logoTextBox {
+    color: var(--black_333236);
+    font-size: var(--font12);
+    font-weight: var(--bold);
+
+}
+
+.inputFormWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.entireFormWrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2rem;
+}
+
+.signUpWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: var(--font16);
+    font-weight: var(--regular);
+    gap: 0.7rem;
+}
+
+.signUpLink {
+    color: blue;
+    text-decoration: underline;
+
+
+    &:visited {
+        color: purple;
+    }
+
+    &:hover {
+        color: red;
+    }
+
+    &:active {
+        color: red;
+    }
+}
+

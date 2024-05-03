@@ -1,0 +1,221 @@
+.rowDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 2.4rem;
+  max-height: 70vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.rowDiv::-webkit-scrollbar {
+  display: none;
+}
+
+.rowDivOne {
+  width: 45rem;
+
+  @media (max-width: 1023px) {
+    width: 42rem;
+    height: 60vh;
+  }
+
+  @media (max-width: 767px) {
+    width: 28.7rem;
+    height: 60vh;
+  }
+}
+
+.allTagsDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-bottom: 1.6rem;
+  height: 2rem;
+
+  @media (max-width: 767px) {
+    gap: 1.2rem;
+  }
+}
+
+.tagDiv {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+
+  @media (max-width: 1023px) {
+    width: 70%;
+  }
+
+  @media (max-width: 767px) {
+    width: 65%;
+  }
+}
+
+.tagDiv::-webkit-scrollbar {
+  display: none;
+}
+
+.contentDiv {
+  width: 100%;
+  font-feature-settings:
+    'clig' off,
+    'liga' off;
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.4rem;
+  overflow-y: scroll;
+
+  @media (max-width: 767px) {
+    font-size: var(--font12);
+    line-height: 2.2rem;
+  }
+}
+
+.contentDiv::-webkit-scrollbar {
+  width: 8px;
+}
+.contentDiv::-webkit-scrollbar-thumb {
+  background-color: var(--gray_D9D9D9);
+  border-radius: 4px;
+}
+.contentDiv::-webkit-scrollbar-track {
+  background-color: var(--white_FFFFFF);
+}
+
+.ImageDiv {
+  width: 100%;
+  position: relative;
+  display: flex;
+  felx-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #9dd7ed;
+  margin-top: 1.6rem;
+  margin-bottom: 2.4rem;
+  border-radius: 0.6rem;
+}
+
+.writeCommentDiv {
+  width: 100%;
+  height: 14rem;
+  margin-bottom: 1.5rem;
+
+  & > #title {
+    color: var(--black_333236);
+    font-family: Pretendard;
+    font-size: var(--font16);
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 1rem;
+
+    @media (max-width: 767px) {
+      font-size: var(--font14);
+    }
+  }
+
+  @media (max-width: 767px) {
+    height: 9.5rem;
+  }
+}
+.myCommentDiv {
+  width: 100%;
+  height: 11rem;
+  padding: 1.6rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--gray_D9D9D9);
+  background: var(--white_FFFFFF);
+  position: relative;
+
+  @media (max-width: 767px) {
+    height: 8rem;
+    padding: 1.2rem;
+  }
+}
+
+.myCommentTextarea {
+  border: none;
+  width: 100%;
+  height: auto;
+  resize: none;
+  overflow-y: scroll;
+
+  &:focus {
+    outline: none;
+  }
+  @media (max-width: 767px) {
+    width: 15rem;
+  }
+}
+.myCommentTextarea::placeholder {
+  color: var(--gray_9FA6B2);
+  font-family: Pretendard;
+  font-size: var(--font14);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  @media (max-width: 767px) {
+    font-size: var(--font12);
+  }
+}
+
+.myCommentTextarea::-webkit-scrollbar {
+  width: 8px;
+}
+.myCommentTextarea::-webkit-scrollbar-thumb {
+  background-color: var(--gray_D9D9D9);
+  border-radius: 4px;
+}
+.myCommentTextarea::-webkit-scrollbar-track {
+  background-color: var(--white_FFFFFF);
+}
+
+.inputButton {
+  padding: 0.9rem 3.1rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--gray_D9D9D9);
+  background: var(--white_FFFFFF);
+  margin-left: auto;
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  cursor: pointer;
+
+  color: var(--violet_5534DA);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font12);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  &:hover {
+    background: var(--gray_FAFAFA);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.closeIconDiv {
+  position: absolute;
+  top: 3.4rem;
+  right: 2.8rem;
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+
+  @media (max-width: 767px) {
+    top: 1.2rem;
+    gap: 1.6rem;
+    right: 1.2rem;
+  }
+}

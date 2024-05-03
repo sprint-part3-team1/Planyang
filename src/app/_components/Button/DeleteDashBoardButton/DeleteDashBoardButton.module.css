@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  width: 32rem;
+  height: 6.2rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  border-radius: 0.8rem;
+  border: 0.1rem solid var(--gray_D9D9D9);
+  background: var(--gray_FAFAFA);
+  color: var(--black_333236);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: var(--font18);
+  font-style: normal;
+  font-weight: var(--bold);
+  line-height: normal;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .container {
+    width: 28.4rem;
+    height: 5.2rem;
+    font-size: var(--font16);
+  }
+}

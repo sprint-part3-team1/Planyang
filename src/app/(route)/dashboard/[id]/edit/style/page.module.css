@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+
+  flex: 1;
+  overflow-y: auto;
+
+  padding-bottom: 2rem;
+}
+
+.custom-button {
+  background-color: #5534da;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  opacity: 0.8;
+}
