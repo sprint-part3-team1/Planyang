@@ -10,7 +10,7 @@ import { DashboardNavBarProps } from '@/app/_types/DashboardNavBarProps';
 import Link from 'next/link';
 import ModalPortal from '@/app/_components/modal/modalPortal/ModalPortal';
 import MODAL_TYPES from '@/app/constants/modalTypes';
-import { useDispatch } from 'react-redux';
+import useAppDispatch from '@/app/_hooks/useAppDispatch';
 import { registerActions, userResponse } from '@/app/_slice/registerSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { memberActions, memberData } from '@/app/_slice/memberSlice';
@@ -27,7 +27,7 @@ const DashboardNavBar = ({
     setOpenModalType(MODAL_TYPES.inviteByEmail);
   };
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const userData = useAppSelector(userResponse);
   useEffect(() => {
     const getUserInformation = async () => {
@@ -35,7 +35,9 @@ const DashboardNavBar = ({
     };
 
     const getMemberInformation = async () => {
-      dispatch(memberActions.asyncGetMembers({ boardId, page: 1 }));
+      dispatch(
+        memberActions.asyncGetMembers({ dashboardId: boardId, page: 1 }),
+      );
     };
     getUserInformation();
     getMemberInformation();

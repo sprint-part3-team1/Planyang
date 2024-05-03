@@ -15,7 +15,7 @@ const StatusDropDown = ({
   setStatusColumnId,
   columnId,
 }: DropDownPropsType) => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const columnDataList = useAppSelector(columnData);
 
   const initialStatus = columnDataList?.data?.findIndex(
@@ -25,7 +25,9 @@ const StatusDropDown = ({
   const params = useParams();
   const [isDropDown, setIsDropDown] = useState(false);
   const [selectedDivIndex, setSelectedDivIndex] = useState(initialStatus);
-  const STATUS = columnDataList?.data ? columnDataList?.data.map((column) => column.title) : [];
+  const STATUS = columnDataList?.data
+    ? columnDataList?.data.map((column) => column.title)
+    : [];
 
   const handleDivClick = (index: number) => {
     let statusColumnId = -1;
@@ -74,11 +76,9 @@ const StatusDropDown = ({
       <div
         className={`${styles.drowDownInput} ${isDropDown && styles.pressed}`}
       >
-        {
-          selectedDivIndex && (
-            <StatusTag status={STATUS[selectedDivIndex]} />
-          )
-        }
+        {selectedDivIndex !== -1 && selectedDivIndex !== undefined ? (
+          <StatusTag status={STATUS[selectedDivIndex]} />
+        ) : null}
         <button
           type="button"
           className={styles.drowDownButton}

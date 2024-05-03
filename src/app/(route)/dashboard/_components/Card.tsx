@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDrag } from 'react-dnd';
 import Image from 'next/image';
 import TagIcon from '@/app/_components/TagIcon';
@@ -19,6 +19,13 @@ const Card = ({
   image,
   cardInfo,
 }: CardProps) => {
+  const dragRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (dragRef.current) {
+      drag(dragRef.current);
+    }
+  });
+
   const [{ isDragging }, drag] = useDrag({
     type: 'item',
     item: () => cardInfo,
@@ -51,7 +58,7 @@ const Card = ({
     <div
       className={image ? styles.imageContainer : styles.container}
       onClick={() => setOpenModalType(MODAL_TYPES.taskCard)}
-      ref={drag}
+      ref={dragRef}
     >
       {image ? (
         <img

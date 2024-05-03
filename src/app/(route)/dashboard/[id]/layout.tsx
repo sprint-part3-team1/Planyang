@@ -20,7 +20,7 @@ const DashBoardDetailLayout = ({
   params,
 }: {
   children: ReactNode;
-  params: { id: string };
+  params: { id: number };
 }) => {
   const dispatch = useAppDispatch();
   const dashboardDetailDatas = useAppSelector(dashBoardDetailData);

@@ -30,7 +30,7 @@ const Input = ({
 
   const initialTagValue = new Set(tagInputValue) || new Set<string>();
 
-  const [tags, setTags] = useState(initialTagValue);
+  const [tags, setTags] = useState<any>(initialTagValue);
   const [visibilityIcon, setVisibilityIcon] = useState(true);
   const [calendarVisibility, setCalendarVisibility] = useState(false);
   const [today, setToday] = useState(new Date());
@@ -74,12 +74,12 @@ const Input = ({
         return;
       }
 
-      const newTags = new Set(tags);
-      newTags.add(value);
-      e.currentTarget.value = '';
-      setTags(newTags);
       if (setTagInputValue) {
-        setTagInputValue([...newTags]);
+        const newTags = new Set<string>(tags);
+        newTags.add(value);
+        e.currentTarget.value = '';
+        setTags(newTags);
+        setTagInputValue(Array.from(newTags));
       }
     }
   };
@@ -99,11 +99,11 @@ const Input = ({
   };
 
   const getDeleteOrder = (value: string) => {
-    const newTags = new Set(tags);
-    newTags.delete(value);
-    setTags(newTags);
     if (setTagInputValue) {
-      setTagInputValue([...newTags]);
+      const newTags = new Set<string>(tags);
+      newTags.delete(value);
+      setTags(newTags);
+      setTagInputValue(Array.from(newTags));
     }
   };
 
@@ -193,7 +193,7 @@ const Input = ({
               ref={inputRef}
             />
             <div className={styles.innerTags}>
-              {Array.from(tags).map((value, index) => {
+              {(Array.from(tags || []) as string[]).map((value: string) => {
                 return (
                   <TagIcon
                     key={Math.random()}

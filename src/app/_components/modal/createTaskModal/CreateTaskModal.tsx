@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, SetStateAction } from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import ArrowDown from '@/../public/assets/icons/arrowDown.svg';
@@ -40,7 +40,15 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     string | null | undefined
   >('');
 
-  const imageInputProps = {
+  const imageInputProps:
+    | {
+        columnId: number | undefined;
+        selectedImagePath: string | null | undefined;
+        setSelectedImagePath: React.Dispatch<
+          React.SetStateAction<string | null | undefined>
+        >;
+      }
+    | undefined = {
     columnId: requestId,
     selectedImagePath,
     setSelectedImagePath,

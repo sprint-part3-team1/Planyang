@@ -8,7 +8,7 @@ const ManagerInfoBox = ({
   deadline,
 }: {
   managerName: string;
-  managerProfileImageUrl: string;
+  managerProfileImageUrl: string | null;
   deadline: string;
 }) => {
   return (

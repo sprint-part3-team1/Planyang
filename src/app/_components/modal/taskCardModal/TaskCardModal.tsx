@@ -116,7 +116,7 @@ const TaskCardModal = ({
             content: myCommentInputValue,
             cardId: Number(requestId),
             columnId: cardInfo.columnId,
-            dashboardId: cardInfo.dashboardId,
+            dashboardId: Number(params.id),
           }),
         );
         await fetchComment();
@@ -193,10 +193,9 @@ const TaskCardModal = ({
   };
 
   const deleteOptionClickHandler = () => {
-    if (cardInfo?.id) {
-      // cardInfo?.id가 undefined가 아닌 경우에만 작업을 수행
-      handleCloseClick();
-      deleteCard(cardInfo.id); // cardInfo?.id 대신 cardInfo.id로 수정
+    handleCloseClick();
+    if (cardInfo) {
+      deleteCard(cardInfo?.id);
     }
   };
   const editOptionclickHandler = () => {
@@ -258,7 +257,7 @@ const TaskCardModal = ({
               ? cardInfo.assignee.profileImageUrl
               : ''
           }
-          deadline={cardInfo?.dueDate ? cardInfo.dueDate : ''}
+          deadline={cardInfo?.dueDate || ''}
         />
       )}
       <div className={styles.rowDiv}>
@@ -332,7 +331,7 @@ const TaskCardModal = ({
                 ? cardInfo.assignee.profileImageUrl
                 : ''
             }
-            deadline={cardInfo?.dueDate ? cardInfo.dueDate : ''}
+            deadline={cardInfo?.dueDate || ''}
           />
         )}
       </div>

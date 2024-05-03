@@ -3,20 +3,32 @@ import axios from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../_store/store';
 
+type MemberType = {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImageUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  isOwner: boolean;
+  userId: number;
+};
+
 interface MembersResponseType {
   data: {
-    members: [
-      {
-        id: number;
-        email: string;
-        nickname: string;
-        profileImageUrl: string | null;
-        createdAt: string;
-        updatedAt: string;
-        isOwner: boolean;
-        userId: number;
-      },
-    ];
+    // members: [
+    //   {
+    //     id: number;
+    //     email: string;
+    //     nickname: string;
+    //     profileImageUrl: string | null;
+    //     createdAt: string;
+    //     updatedAt: string;
+    //     isOwner: boolean;
+    //     userId: number;
+    //   },
+    // ];
+    members: MemberType[];
     totalCount: number;
   } | null;
 }
@@ -82,7 +94,7 @@ const memberSlice = createSlice({
       (state, action: PayloadAction<number>) => {
         const memberId = action.payload;
         if (state.data) {
-          state.data.members = state.data?.members?.filter(
+          state.data.members = state.data.members?.filter(
             (item) => item.id !== memberId,
           );
         }
