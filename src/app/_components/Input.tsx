@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { InputProps } from '@/app/_types/InputProps';
 import Image from 'next/image';
 import Calendar from '@/app/_components/Calendar';
-import { DateDto } from '@/app/_types/_dto/DateDto';
-import { changeDateFormat } from '@/app/_utils/dateUtils';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
 import TagIcon from '@/app/_components/TagIcon';
 import { isValidName } from '@/app/_utils/validateUtils';
@@ -40,7 +38,11 @@ const Input = ({
   const initialDateValue =
     dueDateValue ||
     (() => {
+<<<<<<< HEAD
       return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} 00:00:00`;
+=======
+      return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} 00:00`;
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
     });
 
   const [dateValue, setDateValue] = useState(initialDateValue);
@@ -76,12 +78,21 @@ const Input = ({
         return;
       }
 
+<<<<<<< HEAD
       if (setTagInputValue) {
         const newTags = new Set<string>(tags);
         newTags.add(value);
         e.currentTarget.value = '';
         setTags(newTags);
         setTagInputValue(Array.from(newTags));
+=======
+      const newTags = new Set(tags);
+      newTags.add(value);
+      e.currentTarget.value = '';
+      setTags(newTags);
+      if (setTagInputValue) {
+        setTagInputValue([...newTags]);
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
       }
     }
   };
@@ -101,11 +112,19 @@ const Input = ({
   };
 
   const getDeleteOrder = (value: string) => {
+<<<<<<< HEAD
     if (setTagInputValue) {
       const newTags = new Set<string>(tags);
       newTags.delete(value);
       setTags(newTags);
       setTagInputValue(Array.from(newTags));
+=======
+    const newTags = new Set(tags);
+    newTags.delete(value);
+    setTags(newTags);
+    if (setTagInputValue) {
+      setTagInputValue([...newTags]);
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
     }
   };
 

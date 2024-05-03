@@ -7,6 +7,8 @@ import Link from 'next/link';
 import useAppSelector from '@/app/_hooks/useAppSelector';
 import { userResponse, registerActions } from '@/app/_slice/registerSlice';
 import useAppDispatch from '@/app/_hooks/useAppDispatch';
+import { useRouter } from 'next/navigation';
+
 import styles from '../DashboardTypeNavBar.module.scss';
 
 const DashboardListNavBar = () => {
@@ -19,6 +21,8 @@ const DashboardListNavBar = () => {
     };
     getUserInformation();
   }, [dispatch]);
+
+  const router = useRouter();
 
   return (
     <div className={styles.navbarWrapper}>

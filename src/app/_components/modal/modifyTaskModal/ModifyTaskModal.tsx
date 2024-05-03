@@ -37,7 +37,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const cardDispatch = useDispatch();
 
   const managerIndex = memberDataList?.members.findIndex(
-    (member) => member.userId === cardInfo?.assignee.id,
+    (member) => cardInfo?.assignee && member.userId === cardInfo.assignee.id,
   );
 
   const viewportType = useGetViewportSize();
@@ -119,7 +119,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         Number(requestId),
         titleInputValue,
         descriptionInputValue,
-        dueDateValue?.includes(':') ? dueDateValue : `${dueDateValue} 00:00`,
+        dueDateValue || undefined,
         tagInputValue || [],
         selectedImagePath || undefined,
       );
@@ -175,19 +175,21 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        await dispatch(
-          memberActions.asyncGetMembers({
-            dashboardId: Number(cardInfo.dashboarId),
-            page: 1,
-          }),
-        );
+        if (cardInfo) {
+          await dispatch(
+            memberActions.asyncGetMembers({
+              dashboardId: Number(cardInfo.dashboardId),
+              page: 1,
+            }),
+          );
+        }
       } catch (error) {
         console.error('Error fetching members:', error);
       }
     };
 
     fetchMembers();
-  }, []);
+  }, [cardInfo, dispatch]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

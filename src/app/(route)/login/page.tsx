@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './page.module.css';
 import Image from 'next/image';
 import Input from '@/app/_components/Input';
 import { useOutsideClick } from '@/app/_hooks/useOutsideClick';
@@ -14,6 +13,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import ErrorToast from '@/app/_components/_toast/_errorToast/ErrorToast';
 import SuccessToast from '@/app/_components/_toast/_successToast/SuccessToast';
+import styles from './page.module.css';
 
 const LoginPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -23,20 +23,15 @@ const LoginPage = () => {
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [errorToastState, setErrorToastState] = useState(false);
-  // const [successToastState, setSuccessToastState] = useState(localStorage.getItem('signupSuccess') === 'true');
-  const [successToastState, setSuccessToastState] = useState(false);
+  const [successToastState, setSuccessToastState] = useState(
+    localStorage.getItem('signupSuccess') === 'true',
+  );
   const [loginButtonActive, setLoginButtonActive] = useState(true);
   const [toastMessage, setToastMessage] = useState('');
 
   const dispatch = useAppDispatch();
   const login = useSelector(loginData);
   const router = useRouter();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setSuccessToastState(localStorage.getItem('signupSuccess') === 'true');
-    }
-  }, []);
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     formData.current.email = e.currentTarget.value.trimEnd();
@@ -49,8 +44,8 @@ const LoginPage = () => {
   const submitFormData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const email = formData.current.email;
-    const password = formData.current.password;
+    const { email } = formData.current;
+    const { password } = formData.current;
     let check = true;
 
     if (isValidEmail(email)) {
@@ -75,7 +70,7 @@ const LoginPage = () => {
   };
 
   useOutsideClick(emailRef, () => {
-    const email = formData.current.email;
+    const { email } = formData.current;
 
     if (email === '') return;
 
@@ -83,7 +78,7 @@ const LoginPage = () => {
   });
 
   useOutsideClick(passwordRef, () => {
-    const password = formData.current.password;
+    const { password } = formData.current;
     if (password === '') return;
 
     if (password.length >= 8) {

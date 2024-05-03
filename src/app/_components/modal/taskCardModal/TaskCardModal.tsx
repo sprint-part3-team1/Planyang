@@ -193,12 +193,18 @@ const TaskCardModal = ({
   };
 
   const deleteOptionClickHandler = () => {
+<<<<<<< HEAD
     handleCloseClick();
     if (cardInfo) {
       deleteCard(cardInfo?.id);
+=======
+    if (cardInfo?.id) {
+      // cardInfo?.id가 undefined가 아닌 경우에만 작업을 수행
+      handleCloseClick();
+      deleteCard(cardInfo.id); // cardInfo?.id 대신 cardInfo.id로 수정
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
     }
   };
-
   const editOptionclickHandler = () => {
     setIsClickEditMode(true);
   };
@@ -254,9 +260,15 @@ const TaskCardModal = ({
         <ManagerInfoBox
           managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
           managerProfileImageUrl={
-            cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
+            cardInfo?.assignee && cardInfo.assignee.profileImageUrl
+              ? cardInfo.assignee.profileImageUrl
+              : ''
           }
+<<<<<<< HEAD
           deadline={cardInfo?.dueDate || ''}
+=======
+          deadline={cardInfo?.dueDate ? cardInfo.dueDate : ''}
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
         />
       )}
       <div className={styles.rowDiv}>
@@ -265,6 +277,7 @@ const TaskCardModal = ({
             <StatusTag status={status} />
             <Divider />
             <div className={styles.tagDiv}>
+<<<<<<< HEAD
               {(cardInfo?.tags || []).map((tag) => (
                 <TagIcon
                   key={tag}
@@ -274,6 +287,18 @@ const TaskCardModal = ({
                   onValueChange={() => {}}
                 />
               ))}
+=======
+              {cardInfo?.tags &&
+                cardInfo.tags.map((tag) => (
+                  <TagIcon
+                    key={tag}
+                    tagName={tag}
+                    tagStyleType="smallTag"
+                    deleteOption={false}
+                    onValueChange={() => {}}
+                  />
+                ))}
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
             </div>
           </div>
           <div className={styles.contentDiv}>{cardInfo?.description}</div>
@@ -307,7 +332,11 @@ const TaskCardModal = ({
             <React.Fragment key={comment.id}>
               <OtherComment
                 writer={comment.author.nickname}
-                writerProfile={comment.author.profileImageUrl}
+                writerProfile={
+                  comment.author.profileImageUrl
+                    ? comment.author.profileImageUrl
+                    : ''
+                }
                 content={comment.content}
                 date={comment.createdAt}
                 deleteComment={deleteComment}
@@ -321,9 +350,15 @@ const TaskCardModal = ({
           <ManagerInfoBox
             managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
             managerProfileImageUrl={
-              cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
+              cardInfo?.assignee && cardInfo.assignee.profileImageUrl
+                ? cardInfo.assignee.profileImageUrl
+                : ''
             }
+<<<<<<< HEAD
             deadline={cardInfo?.dueDate || ''}
+=======
+            deadline={cardInfo?.dueDate ? cardInfo.dueDate : ''}
+>>>>>>> edd4922b8f4552b3bedaf95c119dd754c6ba2251
           />
         )}
       </div>

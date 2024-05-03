@@ -17,6 +17,7 @@ interface CardDetailStateType {
     };
     imageUrl: string | null;
     teamId: string;
+    dashboardId: number;
     columnId: number;
     createdAt: string;
     updatedAt: string;

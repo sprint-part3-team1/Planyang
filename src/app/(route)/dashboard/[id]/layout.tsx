@@ -81,8 +81,8 @@ const DashBoardDetailLayout = ({
   return (
     <div style={{ width: '100%' }}>
       <DashboardNavBar
-        createdByMe={dashboardDetailDatas?.createdByMe}
-        dashboardTitle={dashboardDetailDatas?.title}
+        createdByMe={dashboardDetailDatas?.createdByMe ?? false}
+        dashboardTitle={dashboardDetailDatas?.title ?? ''}
         userInfo={userInfo}
         boardId={params.id}
       />

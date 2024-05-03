@@ -8,6 +8,7 @@ import useAppSelector from '@/app/_hooks/useAppSelector';
 import Link from 'next/link';
 import SideMenu from './_components/SideMenu';
 import styles from './layout.module.css';
+import AccessError from './_components/AccessError';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -40,17 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className={styles.childrenWrapper}>{children}</div>
         </>
       ) : (
-        <>
-          <div style={{ fontSize: '100px' }}>로그인이 필요합니다</div>
-          <div>
-            <Link href="/login">
-              <button>로그인 하러가기</button>
-            </Link>
-            <Link href="/">
-              <button>메인 페이지로</button>
-            </Link>
-          </div>
-        </>
+        <AccessError />
       )}
     </div>
   );

@@ -51,7 +51,7 @@ const Card = ({
     <div
       className={image ? styles.imageContainer : styles.container}
       onClick={() => setOpenModalType(MODAL_TYPES.taskCard)}
-      // ref={drag}
+      ref={drag}
     >
       {image ? (
         <img
