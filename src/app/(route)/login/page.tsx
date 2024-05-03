@@ -14,6 +14,7 @@ import Link from 'next/link';
 import ErrorToast from '@/app/_components/_toast/_errorToast/ErrorToast';
 import SuccessToast from '@/app/_components/_toast/_successToast/SuccessToast';
 import styles from './page.module.css';
+import Head from 'next/head';
 
 const LoginPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -36,6 +37,11 @@ const LoginPage = () => {
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     formData.current.email = e.currentTarget.value.trimEnd();
   };
+
+  if (typeof window !== 'undefined') {
+    const signUpSuccess = localStorage.getItem('signupSuccess');
+    const successToastState = signUpSuccess === 'true';
+  }
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     formData.current.password = e.currentTarget.value;
@@ -111,7 +117,17 @@ const LoginPage = () => {
   }, [login]);
 
   return (
-    <>
+    <div>
+      <Head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            const signUpSuccess = localStorage.getItem('signupSuccess');
+            const successToastState = signUpSuccess === 'true';
+            `,
+          }}
+        />
+      </Head>
       <div className={styles.entireWrapper}>
         <div className={styles.logoWrapper}>
           <Link href="/">
@@ -171,7 +187,7 @@ const LoginPage = () => {
           setSuccessToastState(false);
         }}
       />
-    </>
+    </div>
   );
 };
 
