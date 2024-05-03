@@ -139,7 +139,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
 
   const handleDescriptionInput = () => {
     if (descriptionRef.current) {
-      setdescriptionInputValue(descriptionRef.current.value);
+      setdescriptionInputValue(descriptionRef.current.value.trim());
     }
   };
 
