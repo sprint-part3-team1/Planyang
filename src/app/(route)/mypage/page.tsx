@@ -22,6 +22,7 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userResponse).data;
   const [tryChangePassword, setTryChangePassword] = useState(false);
+  const [isChange, setIsChange] = useState(false);
 
   const logoutModalText = `정말 로그아웃 하시겠습니까?`;
   const [openModalType, setOpenModalType] = useState('');
@@ -31,6 +32,13 @@ const Page = () => {
     setOpenModalType(MODAL_TYPES.custom);
   };
 
+  useEffect(() => {
+    if (isChange) {
+      alert('비밀번호가 변경되었습니다.');
+    }
+    setIsChange(false);
+  });
+
   const logout = () => {
     router.push('/logout');
     dispatch(registerActions.resetData());
@@ -38,9 +46,9 @@ const Page = () => {
     localStorage.removeItem('accessToken');
   };
 
-  // useEffect(() => {
-  //   dispatch(registerActions.asynchFetchgetUserInfo());
-  // }, [dispatch, tryChangePassword]);
+  useEffect(() => {
+    dispatch(registerActions.asynchFetchgetUserInfo());
+  }, [dispatch, tryChangePassword]);
 
   const viewportSize: string = useGetViewportSize();
 
@@ -84,6 +92,7 @@ const Page = () => {
               inputWidth={changePasswordInputWidth}
               tryChangePassword={tryChangePassword}
               setTryChangePassword={setTryChangePassword}
+              setIsChange={setIsChange}
             />
             <button
               type="button"

@@ -43,7 +43,6 @@ const ManagerDropDown = ({
 
   const handleDivClick = (index: number) => {
     setSelectedDivIndex(index);
-    console.log(index);
 
     if (setClickedMember && memberDataList && memberDataList.members[index]) {
       const clickMemberInfo = memberDataList.members[index];
