@@ -76,7 +76,6 @@ const asyncFetchCreateCard = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );
@@ -95,7 +94,6 @@ const asyncFetchGetCards = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );
@@ -141,7 +139,6 @@ const asyncFetchPutCard = createAsyncThunk(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   },
 );
@@ -160,7 +157,6 @@ const asyncFetchDeleteCard = createAsyncThunk(
         },
       },
     );
-    console.log(cardId);
     return cardId;
   },
 );

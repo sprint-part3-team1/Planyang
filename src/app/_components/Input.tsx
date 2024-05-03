@@ -90,8 +90,6 @@ const Input = ({
     if (date !== undefined) {
       let [year, month, day] = date.split('-').map((x) => parseInt(x));
 
-      console.log(date);
-
       setDateValue(value);
       setToday(new Date(year, month - 1, day, 0, 0, 0));
       setCalendarVisibility(false);

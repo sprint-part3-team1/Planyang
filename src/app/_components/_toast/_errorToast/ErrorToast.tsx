@@ -9,7 +9,6 @@ const ErrorToast = ({errorMessage, errorState, onClose}: ErrorToastProps) => {
 
     useEffect(() => {
         if(errorState) {
-            console.log(errorState);
             setShow(true);
         } else {
             setShow(false);

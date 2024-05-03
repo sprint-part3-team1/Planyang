@@ -11,14 +11,17 @@ const ChangePasswordDiv = ({
   inputWidth,
   tryChangePassword,
   setTryChangePassword,
+  setIsChange,
 }: {
   inputWidth: number;
   tryChangePassword: boolean;
   setTryChangePassword: React.Dispatch<SetStateAction<boolean>>;
+  setIsChange: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const dispatch = useAppDispatch();
   const errorMessage = useAppSelector(userResponse).error;
   const errorStatus = useAppSelector(userResponse).status;
+  const [errorText, setErrorText] = useState(errorMessage);
 
   const currentPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
@@ -56,16 +59,19 @@ const ChangePasswordDiv = ({
       setIsSamePassword(true);
     }
   };
-
   useEffect(() => {
-    if (errorMessage && errorStatus !== 204 && tryChangePassword) {
+    if (errorMessage && errorStatus === 400) {
+      setErrorText(errorMessage);
       setOpenModalType(MODAL_TYPES.custom);
-    } else if (errorStatus === 204 && tryChangePassword) {
+    } else if (errorStatus === 204) {
+      setIsChange(true);
       setOpenModalType('');
-      alert('비밀번호가 변경되었습니다.');
+    } else if (errorStatus === 200) {
+      setIsChange(true);
+      null;
     }
-    setTryChangePassword(false);
-  }, [errorStatus, tryChangePassword]);
+    dispatch(registerActions.asynchFetchgetUserInfo());
+  }, [tryChangePassword, errorMessage, errorText]);
 
   const changePassword = () => {
     dispatch(
@@ -74,13 +80,12 @@ const ChangePasswordDiv = ({
         newPassword,
       }),
     ).then(() => {
-      setTryChangePassword(true);
+      setTryChangePassword(!tryChangePassword);
     });
   };
 
   const changeButtonHandler = () => {
     changePassword();
-    dispatch(registerActions.asynchFetchgetUserInfo());
   };
 
   const condition =
@@ -153,7 +158,7 @@ const ChangePasswordDiv = ({
       <ModalPortal
         openModalType={openModalType}
         setOpenModalType={setOpenModalType}
-        modalText={errorMessage}
+        modalText={errorText}
       />
     </div>
   );

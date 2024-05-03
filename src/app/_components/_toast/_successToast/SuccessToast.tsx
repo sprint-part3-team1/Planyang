@@ -9,7 +9,6 @@ const SuccessToast = ({successMessage, successState, onClose}: SuccessToastProps
 
     useEffect(() => {
         if(successState) {
-            console.log(successState);
             setShow(true);
         } else {
             setShow(false);
