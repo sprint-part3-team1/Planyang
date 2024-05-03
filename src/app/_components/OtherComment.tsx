@@ -32,12 +32,28 @@ const OtherComment = forwardRef<HTMLDivElement, OtherCommentProps>(
 
     const handleEditSave = () => {
       // 수정 후 저장!
-      updateComment(editedContent, commentId);
-      setIsEditing(false);
+      if (editedContent.trim() !== '') {
+        updateComment(editedContent, commentId);
+        setIsEditing(false);
+      } else {
+        alert('내용을 입력해주세요.');
+      }
     };
 
     const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setEditedContent(e.target.value);
+    };
+
+    const commentKeyboardHandler = (
+      e: React.KeyboardEvent<HTMLTextAreaElement>,
+    ) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (editedContent.trim() !== '') {
+          updateComment(editedContent, commentId);
+          setIsEditing(false);
+        }
+      }
     };
 
     useEffect(() => {
@@ -62,6 +78,7 @@ const OtherComment = forwardRef<HTMLDivElement, OtherCommentProps>(
                 className={styles.otherCommentTextarea}
                 onChange={commentInputChangeHandler}
                 ref={commentRef}
+                onKeyDown={commentKeyboardHandler}
               />
               {editedContent && (
                 <button
@@ -74,7 +91,14 @@ const OtherComment = forwardRef<HTMLDivElement, OtherCommentProps>(
               )}
             </div>
           ) : (
-            <div className={styles.contentDiv}>{content}</div>
+            <div className={styles.contentDiv}>
+              {content.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </div>
           )}
           <div className={styles.commentOptionsDiv}>
             {isEditing ? (

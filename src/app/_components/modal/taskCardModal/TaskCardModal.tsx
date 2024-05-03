@@ -108,12 +108,14 @@ const TaskCardModal = ({
   useEffect(() => {
     fetchComment();
   }, [dispatch]);
+
   const postComment = async () => {
     if (cardInfo) {
       try {
+        const trimmedComment = myCommentInputValue.trim();
         await dispatch(
           commentActions.asyncFetchLeaveComment({
-            content: myCommentInputValue,
+            content: trimmedComment,
             cardId: Number(requestId),
             columnId: cardInfo.columnId,
             dashboardId: Number(params.id),
@@ -153,13 +155,16 @@ const TaskCardModal = ({
 
   const updateComment = async (content: string, commentId: number) => {
     try {
-      await dispatch(
-        commentActions.asyncFetchUpdateComment({
-          content,
-          commentId,
-        }),
-      );
-      await fetchComment();
+      const trimmedComment = content.trim();
+      if (trimmedComment !== '') {
+        await dispatch(
+          commentActions.asyncFetchUpdateComment({
+            content: trimmedComment,
+            commentId,
+          }),
+        );
+        await fetchComment();
+      }
     } catch (error) {
       console.error('Error update comment:', error);
     }
@@ -185,7 +190,7 @@ const TaskCardModal = ({
   };
 
   const commentInputChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setMyCommentInputValue(e.target.value);
+    setMyCommentInputValue(e.target.value.trim());
   };
 
   const moreIconClickHandler = () => {
@@ -238,8 +243,19 @@ const TaskCardModal = ({
   const commentKeyboardHandler = (
     e: React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (myCommentInputValue.trim() !== '') {
+        postComment();
+        setMyCommentInputValue('');
+      }
+    }
+  };
+
+  const commentInputButtonHandler = () => {
+    if (myCommentInputValue.trim() !== '') {
       postComment();
+      setMyCommentInputValue('');
     }
   };
 
@@ -278,7 +294,14 @@ const TaskCardModal = ({
                 ))}
             </div>
           </div>
-          <div className={styles.contentDiv}>{cardInfo?.description}</div>
+          <div className={styles.contentDiv}>
+            {cardInfo?.description.split('\n').map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
+          </div>
           {cardInfo?.imageUrl && (
             <div className={styles.ImageDiv}>
               <img width="100%" src={cardInfo?.imageUrl} alt="card-img" />
@@ -298,7 +321,7 @@ const TaskCardModal = ({
                 <button
                   type="button"
                   className={styles.inputButton}
-                  onClick={postComment}
+                  onClick={commentInputButtonHandler}
                 >
                   입력
                 </button>

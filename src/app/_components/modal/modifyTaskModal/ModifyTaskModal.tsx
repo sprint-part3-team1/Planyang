@@ -39,8 +39,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const managerIndex = memberDataList?.members.findIndex(
     (member) => cardInfo?.assignee && member.userId === cardInfo.assignee.id,
   );
-  console.log(memberDataList?.members);
-  console.log(cardInfo?.assignee.id);
+
   const viewportType = useGetViewportSize();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -141,7 +140,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
 
   const handleDescriptionInput = () => {
     if (descriptionRef.current) {
-      setdescriptionInputValue(descriptionRef.current.value);
+      setdescriptionInputValue(descriptionRef.current.value.trim());
     }
   };
 
