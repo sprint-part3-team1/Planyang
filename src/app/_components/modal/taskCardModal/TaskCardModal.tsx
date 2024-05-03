@@ -255,7 +255,7 @@ const TaskCardModal = ({
           managerProfileImageUrl={
             cardInfo?.assignee && cardInfo.assignee.profileImageUrl
               ? cardInfo.assignee.profileImageUrl
-              : ''
+              : null
           }
           deadline={cardInfo?.dueDate || ''}
         />
@@ -329,7 +329,7 @@ const TaskCardModal = ({
             managerProfileImageUrl={
               cardInfo?.assignee && cardInfo.assignee.profileImageUrl
                 ? cardInfo.assignee.profileImageUrl
-                : ''
+                : null
             }
             deadline={cardInfo?.dueDate || ''}
           />

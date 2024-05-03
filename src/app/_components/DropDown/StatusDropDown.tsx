@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DropDownPropsType } from '@/app/_types/dropdownProps';
 import { columnActions, columnData } from '@/app/_slice/columnSlice';
 import useAppSelector from '@/app/_hooks/useAppSelector';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'next/navigation';
 import styles from './StatusDropDown.module.css';
 import ArrowDown from '../../../../public/assets/icons/arrowDown.svg';
@@ -97,7 +96,7 @@ const StatusDropDown = ({
               <button
                 onClick={() => handleDivClick(index)}
                 type="button"
-                key={status}
+                key={index}
                 className={styles.choiceButton}
               >
                 <div className={styles.choiceDiv}>
