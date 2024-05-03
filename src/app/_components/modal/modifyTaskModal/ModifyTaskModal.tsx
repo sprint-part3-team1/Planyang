@@ -39,10 +39,6 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const managerIndex = memberDataList?.members.findIndex(
     (member) => cardInfo?.assignee && member.userId === cardInfo.assignee.id,
   );
-<<<<<<< HEAD
-=======
-
->>>>>>> 546c72ff79ff88de8cec07b0a019097e44e8b414
   const viewportType = useGetViewportSize();
 
   const ref = useRef<HTMLDivElement>(null);
