@@ -24,9 +24,7 @@ const LoginPage = () => {
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [errorToastState, setErrorToastState] = useState(false);
-  const [successToastState, setSuccessToastState] = useState(
-    localStorage.getItem('signupSuccess') === 'true',
-  );
+  const [successToastState, setSuccessToastState] = useState(false); // 이 부분을 수정했습니다.
   const [loginButtonActive, setLoginButtonActive] = useState(true);
   const [toastMessage, setToastMessage] = useState('');
 
@@ -37,11 +35,6 @@ const LoginPage = () => {
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     formData.current.email = e.currentTarget.value.trimEnd();
   };
-
-  if (typeof window !== 'undefined') {
-    const signUpSuccess = localStorage.getItem('signupSuccess');
-    const successToastState = signUpSuccess === 'true';
-  }
 
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     formData.current.password = e.currentTarget.value;
@@ -122,8 +115,8 @@ const LoginPage = () => {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            const signUpSuccess = localStorage.getItem('signupSuccess');
-            const successToastState = signUpSuccess === 'true';
+              const signUpSuccess = localStorage.getItem('signupSuccess');
+              const successToastState = signUpSuccess === 'true';
             `,
           }}
         />
