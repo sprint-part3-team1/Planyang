@@ -1,4 +1,4 @@
-import React, { useEffect, useState, SetStateAction } from 'react';
+import React, { useEffect, useState, SetStateAction, useRef } from 'react';
 import Image from 'next/image';
 import AddTodoButton from '@/app/_components/Button/AddTodoButton/AddTodoButton';
 
@@ -28,6 +28,8 @@ interface Props {
 }
 
 const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
+  const dropRef = useRef<HTMLDivElement>(null);
+
   const [{ isOver }, drop] = useDrop({
     accept: 'item',
     drop: (item: number) => onDrop(item, columnData.id),
@@ -35,6 +37,13 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
       isOver: monitor.isOver(),
     }),
   });
+
+  useEffect(() => {
+    if (dropRef.current) {
+      drop(dropRef.current);
+    }
+  });
+
   const ELLIPSE_ICON = '/assets/icons/profileEllipse.svg';
   const SETTING_ICON = '/assets/icons/setting.svg';
 
@@ -93,7 +102,7 @@ const Column = ({ columnData, onDrop, isUpdated, setIsUpdated }: Props) => {
   return (
     <div
       className={styles.container}
-      ref={drop}
+      ref={dropRef}
       style={{ filter: isOver ? 'brightness(90%)' : undefined }}
     >
       <div className={styles.title}>
