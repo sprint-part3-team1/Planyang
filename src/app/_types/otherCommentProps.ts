@@ -1,6 +1,6 @@
 export type OtherCommentProps = {
   writer: string;
-  writerProfile: string;
+  writerProfile: string | null;
   content: string;
   date: string;
   deleteComment: (commentId: number) => void;

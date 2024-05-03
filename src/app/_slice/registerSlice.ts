@@ -204,15 +204,23 @@ const registerSlice = createSlice({
       },
     );
 
+    // builder.addCase(
+    //   asynchFetchChangePassword.rejected,
+    //   (state: RegisterStateType, action) => {
+    //     const payload = action.payload as { status?: number; error?: string };
+    //     return {
+    //       ...state,
+    //       error: payload?.error,
+    //       status: payload?.status,
+    //     };
+    //   },
+    // );
     builder.addCase(
       asynchFetchChangePassword.rejected,
       (state: RegisterStateType, action) => {
         const payload = action.payload as { status?: number; error?: string };
-        return {
-          ...state,
-          error: payload?.error,
-          status: payload?.status,
-        };
+        state.error = payload?.error ?? null;
+        state.status = payload?.status ?? null;
       },
     );
 
@@ -246,39 +254,45 @@ const registerSlice = createSlice({
       },
     );
 
-    builder.addCase(
-      asynchFetchgetUserInfo.rejected,
-      (state: RegisterStateType, action) => {
-        const payload = action.payload as { status?: number; error?: string };
-        return {
-          ...state,
-          error: payload?.error,
-          status: payload?.status,
-        };
-      },
-    );
+    // builder.addCase(
+    //   asynchFetchgetUserInfo.rejected,
+    //   (state: RegisterStateType, action) => {
+    //     const payload = action.payload as { status?: number; error?: string };
+    //     return {
+    //       ...state,
+    //       error: payload?.error,
+    //       status: payload?.status,
+    //     };
+    //   },
+    // );
 
     builder.addCase(
       asynchFetchUpdateInformation.rejected,
       (state: RegisterStateType, action) => {
         const payload = action.payload as { status?: number; error?: string };
-        return {
-          ...state,
-          error: payload?.error,
-          status: payload?.status,
-        };
+        state.error = payload?.error ?? null;
+        state.status = payload?.status ?? null;
       },
     );
+
+    // builder.addCase(
+    //   asynchFetchSignUp.rejected,
+    //   (state: RegisterStateType, action) => {
+    //     const payload = action.payload as { status?: number; error?: string };
+    //     return {
+    //       ...state,
+    //       error: payload?.error,
+    //       status: payload?.status,
+    //     };
+    //   },
+    // );
 
     builder.addCase(
       asynchFetchSignUp.rejected,
       (state: RegisterStateType, action) => {
         const payload = action.payload as { status?: number; error?: string };
-        return {
-          ...state,
-          error: payload?.error,
-          status: payload?.status,
-        };
+        state.error = payload?.error ?? null;
+        state.status = payload?.status ?? null;
       },
     );
   },

@@ -109,18 +109,18 @@ const TaskCardModal = ({
     fetchComment();
   }, [dispatch]);
   const postComment = async () => {
-    if(cardInfo) {
+    if (cardInfo) {
       try {
         await dispatch(
           commentActions.asyncFetchLeaveComment({
             content: myCommentInputValue,
             cardId: Number(requestId),
             columnId: cardInfo.columnId,
-            dashboardId: cardInfo.dashboardId,
+            dashboardId: Number(params.id),
           }),
         );
         await fetchComment();
-        if(commentRef.current) {
+        if (commentRef.current) {
           commentRef.current.value = '';
         }
       } catch (error) {
@@ -194,7 +194,9 @@ const TaskCardModal = ({
 
   const deleteOptionClickHandler = () => {
     handleCloseClick();
-    deleteCard(cardInfo?.id);
+    if (cardInfo) {
+      deleteCard(cardInfo?.id);
+    }
   };
 
   const editOptionclickHandler = () => {
@@ -247,14 +249,14 @@ const TaskCardModal = ({
   }
 
   return (
-    <ModalContainer title={cardInfo?.title} ref={ref}>
+    <ModalContainer title={cardInfo?.title || ''} ref={ref}>
       {isMobile && (
         <ManagerInfoBox
           managerName={cardInfo?.assignee ? cardInfo.assignee.nickname : ''}
           managerProfileImageUrl={
             cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
           }
-          deadline={cardInfo?.dueDate}
+          deadline={cardInfo?.dueDate || ''}
         />
       )}
       <div className={styles.rowDiv}>
@@ -263,7 +265,7 @@ const TaskCardModal = ({
             <StatusTag status={status} />
             <Divider />
             <div className={styles.tagDiv}>
-              {cardInfo?.tags.map((tag) => (
+              {(cardInfo?.tags || []).map((tag) => (
                 <TagIcon
                   key={tag}
                   tagName={tag}
@@ -321,7 +323,7 @@ const TaskCardModal = ({
             managerProfileImageUrl={
               cardInfo?.assignee ? cardInfo.assignee.profileImageUrl : ''
             }
-            deadline={cardInfo?.dueDate}
+            deadline={cardInfo?.dueDate || ''}
           />
         )}
       </div>

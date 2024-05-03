@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, SetStateAction } from 'react';
 import { ModalPropsType } from '@/app/_types/modalProps';
 import VIEWPORT_TYPES from '@/app/constants/viewPortTypes';
 import ArrowDown from '@/../public/assets/icons/arrowDown.svg';
@@ -30,11 +30,25 @@ const CreateTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   );
   const [titleInputValue, setTitleInputValue] = useState('');
   const [descriptionInputValue, setdescriptionInputValue] = useState('');
-  const [dueDateValue, setDueDateValue] = useState('');
-  const [tagInputValue, setTagInputValue] = useState<string[]>([]);
-  const [selectedImagePath, setSelectedImagePath] = useState<string>('');
+  const [dueDateValue, setDueDateValue] = useState<string | null | undefined>(
+    '',
+  );
+  const [tagInputValue, setTagInputValue] = useState<
+    string[] | null | undefined
+  >([]);
+  const [selectedImagePath, setSelectedImagePath] = useState<
+    string | null | undefined
+  >('');
 
-  const imageInputProps = {
+  const imageInputProps:
+    | {
+        columnId: number | undefined;
+        selectedImagePath: string | null | undefined;
+        setSelectedImagePath: React.Dispatch<
+          React.SetStateAction<string | null | undefined>
+        >;
+      }
+    | undefined = {
     columnId: requestId,
     selectedImagePath,
     setSelectedImagePath,

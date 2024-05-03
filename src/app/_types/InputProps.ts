@@ -14,5 +14,7 @@ export interface InputProps {
   dueDateValue?: string | null | undefined;
   tagInputValue?: string[] | null | undefined;
   setDueDateValue?: React.Dispatch<SetStateAction<string | null | undefined>>;
-  setTagInputValue?: React.Dispatch<SetStateAction<string[] | null | undefined>>;
+  setTagInputValue?: React.Dispatch<
+    SetStateAction<string[] | null | undefined>
+  >;
 }

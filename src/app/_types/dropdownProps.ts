@@ -13,13 +13,11 @@ export type MemberInfoType = {
 
 export type DropDownPropsType = {
   title: string;
-  setStatusColumnId?: React.Dispatch<React.SetStateAction<number | undefined>>
+  setStatusColumnId?: React.Dispatch<React.SetStateAction<number | undefined>>;
   columnId?: number | null;
   clickedMember?: MemberInfoType | null;
   clickedMemberIndex?: number | null;
-  setClickedMember?:
-    | React.Dispatch<SetStateAction<MemberInfoType | null | undefined>>
-    | undefined;
+  setClickedMember?: React.Dispatch<SetStateAction<MemberInfoType>> | undefined;
 };
 
 export type StatusTagPropsType = {

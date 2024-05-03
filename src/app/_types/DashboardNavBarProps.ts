@@ -6,5 +6,5 @@ export interface DashboardNavBarProps {
   createdByMe: boolean | undefined;
   dashboardTitle: string | undefined;
   userInfo: RegisterStateType;
-  boardId: string | undefined;
+  boardId: undefined | number;
 }

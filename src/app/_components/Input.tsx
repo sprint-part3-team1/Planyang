@@ -32,14 +32,16 @@ const Input = ({
 
   const initialTagValue = new Set(tagInputValue) || new Set<string>();
 
-  const [tags, setTags] = useState(initialTagValue);
+  const [tags, setTags] = useState<any>(initialTagValue);
   const [visibilityIcon, setVisibilityIcon] = useState(true);
   const [calendarVisibility, setCalendarVisibility] = useState(false);
   const [today, setToday] = useState(new Date());
 
-  const initialDateValue = dueDateValue || (() => {
-    return `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} 00:00:00`
-  })
+  const initialDateValue =
+    dueDateValue ||
+    (() => {
+      return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')} 00:00:00`;
+    });
 
   const [dateValue, setDateValue] = useState(initialDateValue);
 
@@ -74,33 +76,37 @@ const Input = ({
         return;
       }
 
-      const newTags = new Set(tags);
-      newTags.add(value);
-      e.currentTarget.value = '';
-      setTags(newTags);
-      setTagInputValue([...newTags]);
+      if (setTagInputValue) {
+        const newTags = new Set<string>(tags);
+        newTags.add(value);
+        e.currentTarget.value = '';
+        setTags(newTags);
+        setTagInputValue(Array.from(newTags));
+      }
     }
   };
 
   const getDateValue = (value: string) => {
     let date = value.split(' ').at(0);
 
-    if(date !== undefined) {
+    if (date !== undefined) {
       let [year, month, day] = date.split('-').map((x) => parseInt(x));
 
       console.log(date);
 
       setDateValue(value);
-      setToday(new Date(year, month-1, day, 0, 0, 0));
+      setToday(new Date(year, month - 1, day, 0, 0, 0));
       setCalendarVisibility(false);
     }
   };
 
   const getDeleteOrder = (value: string) => {
-    const newTags = new Set(tags);
-    newTags.delete(value);
-    setTags(newTags);
-    setTagInputValue([...newTags]);
+    if (setTagInputValue) {
+      const newTags = new Set<string>(tags);
+      newTags.delete(value);
+      setTags(newTags);
+      setTagInputValue(Array.from(newTags));
+    }
   };
 
   const setInputType = () => {
@@ -189,7 +195,7 @@ const Input = ({
               ref={inputRef}
             />
             <div className={styles.innerTags}>
-              {Array.from(tags).map((value, index) => {
+              {(Array.from(tags || []) as string[]).map((value: string) => {
                 return (
                   <TagIcon
                     key={Math.random()}
