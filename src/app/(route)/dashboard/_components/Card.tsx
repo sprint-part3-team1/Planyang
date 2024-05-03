@@ -126,7 +126,7 @@ const Card = ({
             <UserIcon
               nickname={cardInfo.assignee ? cardInfo.assignee.nickname : ''}
               profileImageUrl={
-                cardInfo.assignee ? cardInfo.assignee.profileImageUrl : ''
+                cardInfo.assignee ? cardInfo.assignee.profileImageUrl : null
               }
             />
           </div>

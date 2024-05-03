@@ -39,7 +39,8 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const managerIndex = memberDataList?.members.findIndex(
     (member) => cardInfo?.assignee && member.userId === cardInfo.assignee.id,
   );
-
+  console.log(memberDataList?.members);
+  console.log(cardInfo?.assignee.id);
   const viewportType = useGetViewportSize();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
   const [isDownArrowClicked, setIsDownArrowClicked] = useState(false);
   const [statusColumnId, setStatusColumnId] = useState(cardInfo?.columnId);
   const [manager, setManager] = useState<MemberInfoType | null | undefined>(
-    managerIndex ? memberDataList?.members[managerIndex] : null,
+    managerIndex !== undefined ? memberDataList?.members[managerIndex] : null,
   );
   const [titleInputValue, setTitleInputValue] = useState(cardInfo?.title);
   const [descriptionInputValue, setdescriptionInputValue] = useState(
@@ -88,7 +89,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
     description: string,
     dueDate: string | undefined,
     tags: string[] | undefined,
-    imageUrl: string | undefined,
+    imageUrl: string | null,
   ) => {
     try {
       changeCards();
@@ -121,7 +122,7 @@ const ModifyTaskModal = ({ setOpenModalType, requestId }: ModalPropsType) => {
         descriptionInputValue,
         dueDateValue || undefined,
         tagInputValue || [],
-        selectedImagePath || undefined,
+        selectedImagePath || null,
       );
     }
     setOpenModalType(MODAL_TYPES.taskCard);

@@ -15,7 +15,9 @@ type InputModalProps = {
   imageInputProps?: {
     columnId: number | undefined;
     selectedImagePath: string | null | undefined;
-    setSelectedImagePath: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+    setSelectedImagePath: React.Dispatch<
+      React.SetStateAction<string | null | undefined>
+    >;
   };
 };
 
@@ -68,7 +70,7 @@ const InputModal = forwardRef<HTMLDivElement, InputModalProps>(
     const onDeleteImageButtonClickHandler = (
       e: React.MouseEvent<HTMLButtonElement>,
     ) => {
-      if(imageInputProps) {
+      if (imageInputProps) {
         const { columnId, selectedImagePath, setSelectedImagePath } =
           imageInputProps;
         e?.preventDefault();

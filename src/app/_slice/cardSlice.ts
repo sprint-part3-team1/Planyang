@@ -111,7 +111,7 @@ const asyncFetchPutCard = createAsyncThunk(
     description: string;
     dueDate: string | undefined;
     tags: string[] | undefined;
-    imageUrl: string | undefined;
+    imageUrl: string | null;
   }) => {
     const {
       columnId,
@@ -170,17 +170,14 @@ const cardSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      asyncFetchCreateCard.fulfilled,
-      (state, action) => {
-        if (state.data && state.data.cards) {
-          state.data.cards.unshift(action.payload?.cards);
-          if (state.data.totalCount !== null) {
-            state.data.totalCount++;
-          }
+    builder.addCase(asyncFetchCreateCard.fulfilled, (state, action) => {
+      if (state.data && state.data.cards) {
+        state.data.cards.unshift(action.payload?.cards);
+        if (state.data.totalCount !== null) {
+          state.data.totalCount++;
         }
-      },
-    );
+      }
+    });
     builder.addCase(
       asyncFetchGetCards.fulfilled,
       (state, action: PayloadAction<GetCardsResponseType['data']>) => {
